@@ -1,0 +1,100 @@
+{% extends 'layout/admin.html' %}
+{% block content %}
+
+
+
+<style>
+  table {
+      width: 100% !important;
+      margin-left: 0 !important;
+  }
+
+</style> 
+
+
+
+<div class="content-wrapper">
+  <div class="main-panel">
+
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Due (Data Base)</h4> 
+      <div class="table-responsive">
+        <table class="table table-striped" id="datatables">
+          <thead>
+            <tr>
+              <th scope="col">ID Fiscal</th>
+              <th scope="col">Name Provider</th>
+              <th scope="col">Account Bank</th>
+              <th scope="col">Beneficiary Bank</th>
+              <th scope="col">Bank Code</th>
+              <th scope="col">Politic of paid</th> 
+              <th scope="col">Email notification</th>
+             
+          </tr>
+          </thead>
+          <tbody>    
+            
+              <tr>
+                  <td>11.246.340-8</td>
+                  <td>Alan Youlton</td>
+                  <td>2390555000</td>
+                  <td>Banco Santander</td>
+                  <td>37</td>
+                  <td> 30 </td>
+                  <td>example@gmail.com</td>
+                 
+              </tr>
+
+              <tr>
+                <td>11.246.340-8</td>
+                <td>Alan Youlton</td>
+                <td>2390555000</td>
+                <td>Banco Santander</td>
+                <td>37</td>
+                <td> 30 </td>
+                <td>example@gmail.com</td>
+               
+            </tr>
+
+
+            <tr>
+              <td>11.246.340-8</td>
+              <td>Alan Youlton</td>
+              <td>2390555000</td>
+              <td>Banco Santander</td>
+              <td>37</td>
+              <td> 30 </td>
+              <td>example@gmail.com</td>
+             
+          </tr>
+                 
+  
+          </tbody>
+      </table>
+
+      </div>
+    </div>
+  </div>
+  
+
+  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+  <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+  <script src="https://nightly.datatables.net/js/jquery.dataTables.js"></script>
+
+
+<script>
+$(document).ready(function() {
+    $('#datatables').DataTable( {
+        scrollX: true,
+ 
+
+       
+    });
+});
+</script>
+
+  
+
+{%endblock%}
