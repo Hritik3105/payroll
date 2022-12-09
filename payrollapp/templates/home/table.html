@@ -1,102 +1,50 @@
 {% extends 'layout/admin.html' %}
-{% block content %}
+      <!-- Content wrapper -->
+{%block content %}
+      <div class="content-wrapper">
 
+        <!-- Content -->
+        
+          <div class="container-xxl flex-grow-1 container-p-y">
+            
+            
+<h4 class="py-3 breadcrumb-wrapper mb-4">
+  <span class="text-muted fw-light">Invoice /</span> List
+</h4>
 
-
-<style>
-  table {
-      width: 100% !important;
-      margin-left: 0 !important;
-  }
-
-</style> 
-
-
-
-<div class="content-wrapper">
-  <div class="main-panel">
-
-  <div class="card">
-    <div class="card-body">
-      <h4 class="card-title">Due (Data Base)</h4> 
-      <button class="btn btn-primary" style="float:right;margin-bottom: 12px;"> + Invoice</button>
-      <div class="table-responsive">
-        <table class="table table-striped text-center" id="datatables">
-          <thead>
-            <tr>
-                <th scope="col">Provider name</th>
-                <th scope="col">Invoice</th>
-                <th scope="col">Issue date</th>
-                <th scope="col">Total Amount</th>
-                <th scope="col">Amount Paid</th>
-                <th scope="col">Balance Payble</th> 
-                <th scope="col">Month of Payment</th>
-               
-            </tr>
-            </thead>
-            <tbody>    
-              
-                <tr>
-                    <td>Global</td>
-                    <td>12</td>
-                    <td> 12-12-2022</td>
-                    <td>1000</td>
-                    <td>700</td>
-                    <td style="color:rgb(4, 5, 4)"> <span class="badge" style="background-color: #9ee8a8;opacity: 0.6;">Paid</span> </td>
-                    <td>December</td>
-                   
-                </tr>
-  
-                <tr>
-                  <td>Global</td>
-                  <td>12</td>
-                  <td> 12-12-2022</td>
-                  <td>1000</td>
-                  <td>700</td>
-                  <td style="color:rgb(4, 5, 4)"> <span class="badge" style="background-color: #9ee8a8;opacity: 0.6;">Paid</span> </td>
-                  <td>March</td>
-                 
-              </tr>
-  
-              <tr>
-                <td>Global</td>
-                <td>12</td>
-                <td> 12-12-2022</td>
-                <td>1000</td>
-                <td>700</td>
-                <td style="color:rgb(4, 5, 4)"> <span class="badge" style="background-color: #9ee8a8;opacity: 0.6;">Paid</span> </td>
-                <td>October</td>
-               
-            </tr>
-  
-  
-                 
-  
-          </tbody>
-      </table>
-
-      </div>
-    </div>
+<!-- Invoice List Table -->
+<div class="card">
+  <div class="card-datatable table-responsive">
+    <table class="invoice-list-table table border-top">
+      <thead>
+        <tr>
+          <th></th>
+          <th>#ID</th>
+          <th><i class='bx bx-trending-up'></i></th>
+          <th>Client</th>
+          <th>Total</th>
+          <th class="text-truncate">Issued Date</th>
+          <th>Balance</th>
+          <th>Invoice Status</th>
+          <th class="cell-fit">Actions</th>
+        </tr>
+      </thead>
+      
+    </table>
   </div>
+</div>
+
+
+            
+          </div>
+          <!-- / Content -->
+
+          
+          
   
 
-  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+  {%endblock%}
 
-  <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
-  <script src="https://nightly.datatables.net/js/jquery.dataTables.js"></script>
-
-
-<script>
-$(document).ready(function() {
-    $('#datatables').DataTable( {
-        scrollX: true,
- 
-
-       
-    });
-});
-</script>
-
+  <!-- Core JS -->
+  <!-- build:js assets/vendor/js/core.js -->
   
-
-{%endblock%}

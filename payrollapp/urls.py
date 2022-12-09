@@ -1,6 +1,5 @@
 from django.urls import path
-from payrollapp.views import SignupView,LoginView,DueView,ProviderView
-
+from payrollapp.views import SignupView,LoginView,DueView,ProviderView,InvoiceView,PayrollView,PaidView,PayableView
 urlpatterns = [
     #home
     path('home',SignupView.home,name="home"),
@@ -19,5 +18,17 @@ urlpatterns = [
 
     # Provider table 
     path('provider',ProviderView.index,name="provider"),
+
+    # invoice table 
+    path('invoice',InvoiceView.invoice,name="invoice"),
+
+    # payroll table 
+    path('payroll',PayrollView.payroll,name="payroll"),
+
+    # paid table 
+    path('paid',PaidView.paid,name="paid"),
+
+    # payable table 
+    path('payable',PayableView.payable,name="payable"),
 
 ]
