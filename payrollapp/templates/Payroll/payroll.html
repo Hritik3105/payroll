@@ -1,1 +1,100 @@
 {% extends 'layout/admin.html' %}
+
+{% block content %}
+
+<div class="main">
+    <h5>Payroll</h5>
+
+    <form class="row">
+        <label for="date" class="col-1 col-form-label">Date</label>
+        <div class="col-5">
+        <div class="input-group date" id="datepicker">
+        <input type="date" class="form-control" id="date"/>
+        {% comment %} <span class="input-group-append">
+         </span> {% endcomment %}
+         </div>
+         </div>
+        </form><br>
+        
+        
+    <h5>Week1</h5>
+    <ul class="clickerfour">
+        <li>
+            Payroll B 
+            
+        </li>
+        <li>
+            <button type="submit" class="btn btn-primary">View</button>
+        </li>
+        <li>
+            <button type="submit" class="btn btn-primary">Download</button>
+        </li>
+        <li>
+            <button type="submit" class="btn btn-primary">Total Amount Payroll</button>
+        </li>
+    </ul>
+
+    <h5>Week2</h5>
+    <ul class="clickerfour">
+        <li>
+            Payroll B 
+            
+        </li>
+        <li>
+            <button type="submit" class="btn btn-primary">View</button>
+        </li>
+        <li>
+            <button type="submit" class="btn btn-primary">Download</button>
+        </li>
+        <li>
+            <button type="submit" class="btn btn-primary">Total Amount Payroll</button>
+        </li>
+    </ul>
+    <h5>Week3</h5>
+    <ul class="clickerfour">
+        <li>
+            Payroll B 
+            
+        </li>
+        <li>
+            <button type="submit" class="btn btn-primary">View</button>
+        </li>
+        <li>
+            <button type="submit" class="btn btn-primary">Download</button>
+        </li>
+        <li>
+            <button type="submit" class="btn btn-primary">Total Amount Payroll</button>
+        </li>
+    </ul>
+    <h5>Week4</h5>
+    <ul class="clickerfour">
+        <li>
+            Payroll B 
+            
+        </li>
+        <li>
+            <button type="submit" class="btn btn-primary">View</button>
+        </li>
+        <li>
+            <button type="submit" class="btn btn-primary">Download</button>
+        </li>
+        <li>
+            <button type="submit" class="btn btn-primary">Total Amount Payroll</button>
+        </li>
+    </ul>
+</div>
+
+
+<style>
+    ul.clickerfour li {
+        display: inline-block;
+        margin: 15px
+    }
+
+    .main{
+        padding: 15px;
+    }
+</style>
+
+
+{% endblock content%}

@@ -1,1 +1,120 @@
 {% extends 'layout/admin.html' %}
+
+{%block content%}
+
+
+{% comment %} <link href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet" /> {% endcomment %}
+<script src="static/assets/vendor/libs/jquery/jquery.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+
+
+
+
+
+<div class="content-wrapper">
+
+    <!-- Content -->
+    
+    <h4 class="py-3 breadcrumb-wrapper mb-4">
+        <span class="text-muted fw-light"></span>Date of Paid Invoice
+    </h4>
+    <div class="row-fluid">
+        <form id="form"> 
+          <input type="search" id="query" name="q" placeholder="Find a provider...">
+        
+         
+          <button class="btn btn-primary">Search</button>
+          
+          
+        </form>
+      </div>
+      <div class="container-xxl flex-grow-1 container-p-y">
+<table id="example" class="datatables-ajax table table-bordered" style="width:100%">
+  <thead>
+    {% comment %} <tr>
+      <th></th>
+      <th class="all">1)Sum de Saldo Por Pagar(CLP)</th>
+      <th class="all"></th>
+      <th class="all">3)Atrasadas S/Vencimiento</th>
+      <th class="all"></th>
+      <th class="all"></th>
+      <th class="all"></th>
+      <th class="all"></th>
+      <th class="all"></th>
+     
+    </tr> {% endcomment %}
+    <tr>
+      <th></th>
+      <th class="all">1) VIGENTE</th>
+      <th class="all">2)-1 a -30 Dias</th>
+      <th class="all">3)-31 a -60 Dias</th>
+      <th class="all">4)-31 a -90 Dias</th>
+      <th class="all">5)-61 a -90 Dias</th>
+      <th class="all">6)-91 a -120 Dias date</th>
+      <th class="all">7)-121 a -150 Dias</th>
+      <th class="all">8)-151 a -150 Dias</th>
+      <th class="none">Start date</th>
+      <th class="none">Salary</th>
+      <th class="none">Extn.</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+        <td></td>
+        <td>Test</td>
+        <td>Test</td>
+        <td>Test</td>
+        <td>Test</td>
+        <td>61</td>
+        <td>2011/04/25</td>
+        <td>$320,800</td>
+        <td>5421</td>
+        <td>2011/04/25</td>
+        <td>$320,800</td>
+        <td>5421</td>
+      </tr> 
+      <tr>
+        <td></td>
+        <td>Test</td>
+        <td>Test</td>
+        <td>Test</td>
+        <td>Test</td>
+        <td>61</td>
+        <td>2011/04/25</td>
+        <td>$320,800</td>
+        <td>5421</td>
+        <td>2011/04/25</td>
+        <td>$320,800</td>
+        <td>5421</td>
+      </tr> 
+
+    </tr>
+  </tbody>
+
+
+  <script>
+    var table = $('#example').DataTable({
+        responsive: {
+          details: {
+            type: 'column'
+          }
+        },
+        columnDefs: [{
+          className: 'control',
+          orderable: false,
+          targets: 0
+        }],
+        order: [1, 'asc']
+      });
+      
+      $('#btn-show-all-doc').on('click', expandCollapseAll);
+      
+      function expandCollapseAll() {
+        table.rows('.parent').nodes().to$().find('td:first-child').trigger('click').length || 
+        table.rows(':not(.parent)').nodes().to$().find('td:first-child').trigger('click')
+      }
+</script>
+{%endblock%}
+

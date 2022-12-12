@@ -1,1 +1,98 @@
 {% extends 'layout/admin.html' %}
+
+{% block title %} Due {% endblock %}
+
+
+{% block content %}
+
+<div class="content-wrapper">
+
+  <!-- Content -->
+  
+    <div class="container-xxl flex-grow-1 container-p-y">
+      
+      
+<h4 class="py-3 breadcrumb-wrapper mb-4">
+<span class="text-muted fw-light"></span> Provider Parameter 
+</h4>
+<div class="row-fluid">
+  <form id="form"> 
+    <input type="search" id="query" name="q" placeholder="Find a provider...">
+  
+    <input type="search" id="query" name="q" placeholder="Filter: Provider...">
+   
+    <input type="search" id="query" name="q" placeholder="Insert 1 invoice due...">
+    <button class="btn btn-primary">Search</button>
+    
+    
+  </form>
+</div>
+<!-- Ajax Sourced Server-side -->
+<div class="card">
+<h5 class="card-header"> Provider Parameter </h5>
+<div class="card-datatable text-nowrap">
+<table class="datatables-ajax table table-bordered" id="datatables">
+<thead>
+  <tr>
+    <th>Full name</th>
+    <th>Email</th>
+    <th>Position</th>
+    <th>Office</th>
+    <th>Start date</th>
+    <th>Salary</th>
+  </tr>
+</thead>
+<tbody>    
+            
+  <tr>
+      <td>Mandeep</td>
+      <td>example@gmail.com</td>
+      <td>2390555000</td>
+      <td>Banco Santander</td>
+      <td>37</td>
+      <td> 30 </td>
+     
+  </tr>
+
+  <tr>
+    <td>hritik</td>
+    <td>example@gmail.com</td>
+    <td>2390555000</td>
+    <td>Banco Santander</td>
+    <td>37</td>
+    <td> 30 </td>
+
+</tr>
+
+
+
+     
+
+</tbody>
+</table>
+</div>
+</div>
+<!--/ Ajax Sourced Server-side -->
+
+
+  
+
+{% endblock content %}
+
+
+{% block javascripts %}
+  {{ block.super }}
+
+  <script>
+    $(document).ready(function() {
+        $('#datatables').DataTable( {
+          
+           
+        });
+    });
+    </script>
+
+
+
+
+{% endblock javascripts %}

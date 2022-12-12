@@ -1,50 +1,100 @@
 {% extends 'layout/admin.html' %}
-      <!-- Content wrapper -->
-{%block content %}
-      <div class="content-wrapper">
 
-        <!-- Content -->
-        
-          <div class="container-xxl flex-grow-1 container-p-y">
-            
-            
-<h4 class="py-3 breadcrumb-wrapper mb-4">
-  <span class="text-muted fw-light">Invoice /</span> List
-</h4>
+{% block title %} Due {% endblock %}
 
-<!-- Invoice List Table -->
-<div class="card">
-  <div class="card-datatable table-responsive">
-    <table class="invoice-list-table table border-top">
-      <thead>
-        <tr>
-          <th></th>
-          <th>#ID</th>
-          <th><i class='bx bx-trending-up'></i></th>
-          <th>Client</th>
-          <th>Total</th>
-          <th class="text-truncate">Issued Date</th>
-          <th>Balance</th>
-          <th>Invoice Status</th>
-          <th class="cell-fit">Actions</th>
-        </tr>
-      </thead>
+
+{% block content %}
+
+
+<div class="content-wrapper">
+
+  <!-- Content -->
+  
+    <div class="container-xxl flex-grow-1 container-p-y">
       
-    </table>
-  </div>
+      
+<h4 class="py-3 breadcrumb-wrapper mb-4">
+<span class="text-muted fw-light">DataTables /</span> Advanced
+
+</h4>
+<div class="row-fluid">
+  <form id="form"> 
+    <input type="search" id="query" name="q" placeholder="Find a provider...">
+  
+    <input type="search" id="query" name="q" placeholder="Filter: Provider...">
+   
+    <input type="search" id="query" name="q" placeholder="Insert 1 invoice due...">
+    <button class="btn btn-primary">Search</button>
+    
+    
+  </form>
 </div>
-
-
+<!-- Ajax Sourced Server-side -->
+<div class="card">
+<h5 class="card-header">DUE DATABASE</h5>
+<div class="card-datatable text-nowrap">
+<table class="datatables-ajax table table-bordered" id="datatables">
+<thead>
+  <tr>
+    <th>Full name</th>
+    <th>Email</th>
+    <th>Position</th>
+    <th>Office</th>
+    <th>Start date</th>
+    <th>Salary</th>
+  </tr>
+</thead>
+<tbody>    
             
-          </div>
-          <!-- / Content -->
+  <tr>
+      <td>Mandeep</td>
+      <td>example@gmail.com</td>
+      <td>2390555000</td>
+      <td>Banco Santander</td>
+      <td>37</td>
+      <td> 30 </td>
+     
+  </tr>
 
-          
-          
+  <tr>
+    <td>hritik</td>
+    <td>example@gmail.com</td>
+    <td>2390555000</td>
+    <td>Banco Santander</td>
+    <td>37</td>
+    <td> 30 </td>
+
+</tr>
+
+
+
+     
+
+</tbody>
+</table>
+</div>
+</div>
+<!--/ Ajax Sourced Server-side -->
+
+
   
 
-  {%endblock%}
+{% endblock content %}
 
-  <!-- Core JS -->
-  <!-- build:js assets/vendor/js/core.js -->
-  
+
+{% block javascripts %}
+  {{ block.super }}
+
+  <script>
+    $(document).ready(function() {
+        $('#datatables').DataTable( {
+          
+           
+        });
+    });
+    </script>
+
+
+
+
+{% endblock javascripts %}
