@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/puppeteer@19.4.0/lib/cjs/puppeteer/puppeteer.min.js"></script>    
+    </head>
+<body>
+<div>
+  Opposite of ?
+  <input type="text" id="input" placeholder="Input">
+  <input type="submit" id='opp' value="Submit" onclick="opposite();">
+  <br><br>Result : <h id='result'></h>
+</div>
+</body>
+</html>
+
+<script puppeteer="https://requirejs.org/docs/release/2.3.5/minified/require.js"></script>
+
+<script>
+
+    function opposite(){
+    const app = async ()=>{
+        function sleep(milliSeconds) {
+        return new Promise((resolve, reject) => {
+        setTimeout(resolve, milliSeconds);
+        });
+        }
+        const browser = await puppeteer.launch({ headless: false });
+        const page = await browser.newPage();
+        await page.setViewport({ width: 1920, height: 1080 });
+        await page.goto('https://zeusr.sii.cl//AUT2000/InicioAutenticacion/IngresoRutClave.html?https://misiir.sii.cl/cgi_misii/siihome.cgi');
+        // await page.screenshot({path: 'sii.jpg'});
+        const username = await page.$("[name=rutcntr]");
+        await username.focus();
+        var rut = "765429161";
+        var pass = "nimokspa";
+        console.log("llenando formulario");
+        await page.keyboard.type(rut);
+        await page.keyboard.press("Tab");
+        await page.keyboard.type(pass);
+        await page.click('#bt_ingresar');
+        await page.waitForSelector('#cerrar-sesion');
+        console.log("sesion iniciada");
+        
+        // const texto = await page.$("#titulo");
+        // var login = "";
+        // if(texto === null){
+        // login = "ok";
+        // }else{
+        // login = "Er";
+        // }
+        // const titulo = await page.$eval('#titulo',el => el.innerHTML);
+        // const isNotHidden = await page.$eval('#cerrar-sesion', (elem) => {
+        // return elem.style.display;
+        // });
+        // console.log(isNotHidden);
+        await page.goto('https://www4.sii.cl/consdcvinternetui/#/index');
+        await page.waitForTimeout(1000);
+        console.log("rcv");
+        
+        // await page.click('//*[@id="my-wrapper"]/div[2]/div[1]/div[1]/div/div[1]/div/div[3]/div/form/div[3]/button');
+        await page.click('[type="submit"]');
+        await page.waitForTimeout(1000);
+        page.click('a[href="#venta/"]');
+        await page.waitForTimeout(1000);
+        console.log("venta");
+        
+        const downloadPath = '/Users/pedro/node/scrapy/';
+        const client = await page.target().createCDPSession();
+        await client.send('Page.setDownloadBehavior', {
+        behavior : 'allow',
+        downloadPath: downloadPath
+        });
+        await page.click('#my-wrapper > div.web-sii.cuerpo > div.container > div:nth-child(2) > div > div:nth-child(3) > div:nth-child(4) > div:nth-child(1) > div:nth-child(5) > button');
+        let filename = await ((async () => {
+        let filename;
+        while ( ! filename || filename.endsWith('.crdownload')) {
+        filename = fs.readdirSync(downloadPath)[0];
+        await sleep(1000);
+        }
+        return filename
+        })());
+        await page.waitForTimeout(2000);
+        page.click('a[href="#compra/"]');
+        await page.waitForTimeout(1000);
+        console.log("compra");
+        
+        const downloadPathCompra = '/Users/pedro/node/scrapy/';
+        const clientCompra = await page.target().createCDPSession();
+        await clientCompra.send('Page.setDownloadBehavior', {
+        behavior : 'allow',
+        downloadPath: downloadPathCompra
+        });
+        await page.click('#pendiente > div:nth-child(4) > div:nth-child(1) > div:nth-child(5) > button');
+        let filenameCompra = await ((async () => {
+        let filenameCompra;
+        while ( ! filenameCompra || filenameCompra.endsWith('.crdownload')) {
+        filenameCompra = fs.readdirSync(downloadPathCompra)[0];
+        await sleep(1000);
+        }
+        return filenameCompra
+        })());
+        // const titulos = await page.evaluate(()=> {
+        // const titles = Array.from(document.querySelectorAll('table.table thead tr th'));
+        // return titles.map(th => th.innerText)
+        // });
+        
+        // const resumen = await page.$$eval(
+        // 'table.table tbody tr',
+        // trs => trs.map(trReporte => Array
+        // .from(trReporte.querySelectorAll('td'))
+        // .reduce((data, td, index) => {
+        // const value = td.innerText; // se generaliza porque es consistente.
+        // switch (index) {
+        // // case 0 es un documento pdf
+        // // case 1 es envío por correo
+        // case 0:
+        // data.tipoDocumento = value;
+        // break;
+        // case 1:
+        // data.totalDocumentos = value;
+        // break;
+        // case 2:
+        // data.montoExento = parseInt(value.replace('.', ''));
+        // break;
+        // case 3:
+        // data.montoNeto = parseInt(value.replace('.', ''));
+        // break;
+        // case 4:
+        // data.montoIva = parseInt(value.replace('.', ''));
+        // break;
+        // case 5:
+        // data.montoTotal = parseInt(value.replace('.', ''));
+        // break;
+        // default:
+        // break;
+        // }
+        
+        // return data;
+        // })
+        // )
+        // );
+        
+        // console.log(resumen);
+        // await page.screenshot({path: 'sii.jpg'});
+        await browser.close();
+        // return login;
+        };
+        app();
+    }
+</script>
+
+    

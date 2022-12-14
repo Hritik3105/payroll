@@ -5,6 +5,7 @@ from django.contrib.auth.models import PermissionsMixin
 from django.utils.translation import gettext_lazy as _
 
 
+
 # Create your models here.
 class User(AbstractBaseUser,PermissionsMixin):
     username  = models.CharField(max_length=255,default="")
@@ -25,3 +26,22 @@ class User(AbstractBaseUser,PermissionsMixin):
         return self.email
 
 
+class Provider(models.Model):
+  provider_name=models.CharField(max_length=250,null=True,blank=True)
+  invoice=models.CharField(max_length=250,null=True,blank=True)
+  issue_date=models.DateField(blank=True)
+  total_amount_paid=models.CharField(max_length=250,null=True,blank=True)
+  amount_paid=models.CharField(max_length=250,null=True,blank=True)
+  balance_payable=models.CharField(max_length=250,null=True,blank=True)
+  payment_policy=models.CharField(max_length=250,null=True,blank=True)
+  expiration_date=models.DateField(blank=True)
+  payment_week=models.CharField(max_length=250,null=True,blank=True)
+  month_of_payment=models.CharField(max_length=250,null=True,blank=True)
+  year_of_payment=models.CharField(max_length=250,null=True,blank=True)
+  range_to_pay=models.CharField(max_length=250,null=True,blank=True)
+  days_overdue=models.CharField(max_length=250,null=True,blank=True)
+  overdue=models.CharField(max_length=250,null=True,blank=True)
+  business_name=models.CharField(max_length=250,null=True,blank=True)
+  month=models.CharField(max_length=250,null=True,blank=True)
+  year=models.DateField(blank=True,null=True)
+  out_of_time=models.CharField(max_length=250,null=True,blank=True)

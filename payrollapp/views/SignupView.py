@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 
 @login_required 
 def home(request):
-    return render(request,"home/index.html")
+    return render(request,"home/cvvv.html")
 
 
 def user_signup(request):
