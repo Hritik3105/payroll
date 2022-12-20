@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-is@ig0!b_95wgv1$fw_x(eo^rb5#nnox_z8))*(t8t-^cg(4rf
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS =['184.168.122.169']
 
 
 # Application definition
@@ -91,13 +91,24 @@ AUTH_USER_MODEL = 'payrollapp.user'
 # }
 
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'payroll',
+#         'USER':'root',
+#         "HOST":"localhost",
+#         'PASSWORD':""
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'payroll',
-        'USER':'root',
+        'USER':'py_db',
         "HOST":"localhost",
-        'PASSWORD':""
+        'PASSWORD':"?6Jw1o7e4",
+        "PORT":"3306"
     }
 }
 
