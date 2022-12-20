@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+     'django_crontab',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'payrollapp',
-     'active_link',
+    'active_link',
+   
 ]
 
 MIDDLEWARE = [
@@ -120,6 +122,10 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+CRONJOBS = [
+('*/5 * * * *', 'payrollapp.cron.my_cron_job')
+]
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -144,3 +150,11 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+# EMAIL_USE_SSL = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'testsood981@gmail.com'
+EMAIL_HOST_PASSWORD = 'jivyydbevbsscuoi'
+EMAIL_PORT = 587

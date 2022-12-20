@@ -26,15 +26,16 @@ class User(AbstractBaseUser,PermissionsMixin):
         return self.email
 
 
-class Provider(models.Model):
+class Providers(models.Model):
+  user=models.ForeignKey(User, on_delete=models.CASCADE)
   provider_name=models.CharField(max_length=250,null=True,blank=True)
-  invoice=models.CharField(max_length=250,null=True,blank=True)
-  issue_date=models.DateField(blank=True)
+  invoice=models.CharField(max_length=1000,null=True,blank=True)
+  issue_date=models.DateField(blank=True,null=True)
   total_amount_paid=models.CharField(max_length=250,null=True,blank=True)
   amount_paid=models.CharField(max_length=250,null=True,blank=True)
   balance_payable=models.CharField(max_length=250,null=True,blank=True)
   payment_policy=models.CharField(max_length=250,null=True,blank=True)
-  expiration_date=models.DateField(blank=True)
+  expiration_date=models.DateField(blank=True,null=True)
   payment_week=models.CharField(max_length=250,null=True,blank=True)
   month_of_payment=models.CharField(max_length=250,null=True,blank=True)
   year_of_payment=models.CharField(max_length=250,null=True,blank=True)

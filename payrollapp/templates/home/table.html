@@ -5,8 +5,19 @@
 
 {% block content %}
 
+<style>
+  .preload { width:100px;
+      height: 100px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      display:none;
+    }
+  </style>
 
+<section class="mainload">
 <div class="content-wrapper">
+  <div class="loader"></div>
 
   <!-- Content -->
   
@@ -18,7 +29,7 @@
 
 </h4>
 <div class="row-fluid">
-  <form id="form"> 
+  <form method="POST"> 
     <input type="search" id="query" name="q" placeholder="Find a provider...">
   
     <input type="search" id="query" name="q" placeholder="Filter: Provider...">
@@ -26,54 +37,47 @@
     <input type="search" id="query" name="q" placeholder="Insert 1 invoice due...">
     <button class="btn btn-primary">Search</button>
     
-    
+      {%csrf_token%}
+    <button type="submit" class="sbtn btn btn-secondary btn-c" onclick="spinner()">Csv</button>
+    {% comment %} <button type="submit" class="sbtn btn btn-secondary btn-c" onclick="spinner()">Read Csv</button> {% endcomment %}
   </form>
 </div>
 <!-- Ajax Sourced Server-side -->
 <div class="card">
 <h5 class="card-header">DUE DATABASE</h5>
-<div class="card-datatable text-nowrap">
-<table class="datatables-ajax table table-bordered" id="datatables">
-<thead>
-  <tr>
-    <th>Full name</th>
-    <th>Email</th>
-    <th>Position</th>
-    <th>Office</th>
-    <th>Start date</th>
-    <th>Salary</th>
-  </tr>
-</thead>
-<tbody>    
-            
-  <tr>
-      <td>Mandeep</td>
-      <td>example@gmail.com</td>
-      <td>2390555000</td>
-      <td>Banco Santander</td>
-      <td>37</td>
-      <td> 30 </td>
-     
-  </tr>
-
-  <tr>
-    <td>hritik</td>
-    <td>example@gmail.com</td>
-    <td>2390555000</td>
-    <td>Banco Santander</td>
-    <td>37</td>
-    <td> 30 </td>
-
-</tr>
-
-
-
-     
-
-</tbody>
-</table>
+<div class="preload"><img src="http://i.imgur.com/KUJoe.gif">
+</div>
+<div class="content">
+  <div class="card-datatable text-nowrap">
+    <table class="datatables-ajax table table-bordered" id="datatables" >
+    <thead>
+      <tr>
+        <th>S.NO</th>
+        <th>Invoice</th>
+        <th>Provider name</th>
+        <th>Issue date</th>
+        <th>Business name</th>
+        <th>Total amount</th>
+      </tr>
+    </thead>
+    <tbody>    
+      {%for i in obj%}          
+      <tr>
+       
+          <td>{{forloop.counter}}</td>
+          <td>{{i.invoice}}</td>
+          <td>{{i.provider_name}}</td>
+          <td>{{i.issue_date}}</td>
+          <td>{{i.business_name}}</td>
+          <td>{{i.total_amount_paid}}</td>
+        {%endfor%}
+      </tr>
+    </tbody>
+    </table>
+  </div>
 </div>
 </div>
+<section>
 <!--/ Ajax Sourced Server-side -->
 
 
@@ -88,13 +92,35 @@
   <script>
     $(document).ready(function() {
         $('#datatables').DataTable( {
+          scrollX: true,
           
            
         });
     });
+    {% comment %} $(function() {
+      $(".preload").fadeOut(2000, function() {
+          $(".content").fadeIn(1000);        
+      });
+  }); {% endcomment %}
+
+  function spinner(){
+    console.log('hekooo')
+    $('.mainload').css("opcaity ", "12")
+    //mainload
+    $('.preload').css("display", "block")
+//opcaity on body css
+    $(".preload").fadeOut(200000, function() {
+//end opacity css
+      $(".content").fadeIn(1000);        
+  });
+  }
     </script>
-
-
+      
+  {% comment %} <script type="text/javascript">
+    function spinner() {
+        document.getElementsByClassName("loader")[0].style.display = "block";
+    }
+</script> {% endcomment %}
 
 
 {% endblock javascripts %}
