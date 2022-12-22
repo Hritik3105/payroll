@@ -35,11 +35,16 @@
     <input type="search" id="query" name="q" placeholder="Filter: Provider...">
    
     <input type="search" id="query" name="q" placeholder="Insert 1 invoice due...">
+
     <button class="btn btn-primary">Search</button>
     
-      {%csrf_token%}
-    <button type="submit" class="sbtn btn btn-secondary btn-c" onclick="spinner()">Csv</button>
-    {% comment %} <button type="submit" class="sbtn btn btn-secondary btn-c" onclick="spinner()">Read Csv</button> {% endcomment %}
+    {%csrf_token%}
+    {%if len == 0%}
+    <button type="submit" class="sbtn btn btn-secondary btn-c" onclick="spinner()">Insert Data</button>
+    {%else%}
+    <button type="submit" class="sbtn btn btn-secondary btn-c" onclick="spinner()">Update Data</button>
+    {%endif%}
+    
   </form>
 </div>
 <!-- Ajax Sourced Server-side -->
@@ -58,18 +63,28 @@
         <th>Issue date</th>
         <th>Business name</th>
         <th>Total amount</th>
+        <th>Expiration Date</th>
+        <th>Payment week</th>
+        <th>Month of Payment</th>
+        <th>Year of Payment</th>
+        <th>Days Overdue</th>
       </tr>
     </thead>
     <tbody>    
       {%for i in obj%}          
       <tr>
-       
           <td>{{forloop.counter}}</td>
           <td>{{i.invoice}}</td>
           <td>{{i.provider_name}}</td>
           <td>{{i.issue_date}}</td>
           <td>{{i.business_name}}</td>
           <td>{{i.total_amount_paid}}</td>
+          <td>{{i.expiration_date}}</td>
+          <td>{{i.payment_week}}</td>
+          <td>{{i.month_of_payment}}</td>
+          <td>{{i.year_of_payment}}</td>
+          <td>{{i.days_overdue}}</td>
+          
         {%endfor%}
       </tr>
     </tbody>

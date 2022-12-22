@@ -18,7 +18,9 @@ def my_cron_job():
         fail_silently=False,
          )
     print(res)
-    z=os.getcwd()+"/payrollapp/csv"
+    
+    z='/home/nirmla/Desktop/payroll/payrollapp/csv'
+    
     options = webdriver.ChromeOptions()
     options.add_argument('--headless=chrome')
     prefs = {"download.default_directory" : z}
