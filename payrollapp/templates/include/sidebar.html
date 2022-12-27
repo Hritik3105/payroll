@@ -5,7 +5,7 @@
 
   
   <div class="app-brand demo ">
-    <a href="{% url '' %}" class="app-brand-link">
+    <a href="{% url 'home' %}" class="app-brand-link">
       <span class="app-brand-logo demo">
 <svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
   <title>icon</title>
@@ -38,7 +38,7 @@
       <span class="app-brand-text demo menu-text fw-bold ms-2">Payroll</span>
     </a>
 
-    <a href="{% url '' %}" class="layout-menu-toggle menu-link text-large ms-auto">
+    <a href="{% url 'home' %}" class="layout-menu-toggle menu-link text-large ms-auto">
       <i class="bx menu-toggle-icon d-none d-xl-block fs-4 align-middle"></i>
       <i class="bx bx-x d-block d-xl-none bx-sm align-middle"></i>
     </a>
@@ -54,9 +54,9 @@
   
   <ul class="menu-inner py-1">
     <!-- Dashboards -->
-    <li class="menu-item {% active_link '' 'active' %}">
+    <li class="menu-item {% active_link 'home' 'active' %}">
       
-      <a class="menu-link"   href="{% url ''%}" >
+      <a class="menu-link"   href="{% url 'home'%}" >
         <i class="menu-icon tf-icons bx bx-home-circle"></i>
         <div >Home</div>
       </a>

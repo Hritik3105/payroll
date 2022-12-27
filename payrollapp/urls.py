@@ -3,10 +3,10 @@ from payrollapp.views import SignupView,LoginView,DueView,ProviderView,InvoiceVi
 urlpatterns = [
     
     #home
-    path('',SignupView.home,name=""),
+    path('home',SignupView.home,name="home"),
     
     #signup
-    path('signup',SignupView.user_signup,name="signup"),
+    path('',SignupView.user_signup,name=""),
 
     #login
     path('login',LoginView.user_login,name="login"),
