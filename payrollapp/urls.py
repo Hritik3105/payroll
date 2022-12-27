@@ -3,7 +3,7 @@ from payrollapp.views import SignupView,LoginView,DueView,ProviderView,InvoiceVi
 urlpatterns = [
     
     #home
-    path('home',SignupView.home,name="home"),
+    path('',SignupView.home,name=""),
     
     #signup
     path('signup',SignupView.user_signup,name="signup"),

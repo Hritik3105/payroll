@@ -44,5 +44,5 @@ class Providers(models.Model):
   overdue=models.CharField(max_length=250,null=True,blank=True)
   business_name=models.CharField(max_length=250,null=True,blank=True)
   month=models.CharField(max_length=250,null=True,blank=True)
-  year=models.DateField(blank=True,null=True)
+  year=models.CharField(max_length=250,blank=True,null=True)
   out_of_time=models.CharField(max_length=250,null=True,blank=True)

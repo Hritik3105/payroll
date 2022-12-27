@@ -17,8 +17,7 @@ def my_cron_job():
         recipient_list = ['hritik@codenomad.net'],
         fail_silently=False,
          )
-    print(res)
-    
+   
     z='/home/nirmla/Desktop/payroll/payrollapp/csv'
     
     options = webdriver.ChromeOptions()
@@ -32,7 +31,7 @@ def my_cron_job():
 
     # # Logging into LinkedIn
     driver.get("https://zeusr.sii.cl/AUT2000/InicioAutenticacion/IngresoRutClave.html?https://www4.sii.cl/consdcvinternetui/")
-    time.sleep(3)
+    time.sleep(8)
 
     username = driver.find_element(By.ID,"rutcntr")
     username.send_keys("767509367")  # Enter Your Email Address
@@ -43,15 +42,15 @@ def my_cron_job():
     driver.find_element(By.ID,"bt_ingresar").click()
 
     driver.get('https://www4.sii.cl/consdcvinternetui/#/index')
-    time.sleep(3)
+    time.sleep(6)
 
     dropdown1 = Select(driver.find_element(By.ID,'periodoMes'))
     dropdown1.select_by_visible_text('Marzo')
-    time.sleep(3)
+    time.sleep(6)
 
     dropdown2 = Select(driver.find_element(By.XPATH,"//select[@ng-model='periodoAnho']"))
-    dropdown2.select_by_visible_text('2020')
-    time.sleep(3)
+    dropdown2.select_by_visible_text('2022')
+    time.sleep(8)
 
     driver.find_element(By.CLASS_NAME,"btn.btn-default.btn-xs-block.btn-block").click()
     time.sleep(3)
@@ -59,4 +58,4 @@ def my_cron_job():
     driver.find_element(By.XPATH,"//button[text()='Descargar Detalles']").click()
     time.sleep(3)
 
-
+    
