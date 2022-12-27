@@ -113,3 +113,41 @@
   text-align: center;
   margin-top: 1rem;
 }
+
+input[type="text"] {
+    border: 1px solid #bdbdbd;
+}
+button.serch_st {
+    color: #fff;
+    background: #3b71ca;
+    padding: 2px 12px;
+    border: none;
+    margin-left: -4px;
+}
+
+input#query {
+  border: 1px solid #bdbdbd !important;
+  margin-bottom: 15px;
+  margin-right: 8px;
+}
+label.col-1.col-form-label {
+  font-weight: 500;
+  max-width: 58px !important;
+  font-size: 15px;
+}
+.main h5 {
+  font-size: 22px;
+  width: 7%;
+  padding-bottom: 4px;
+  border-bottom: 1px solid;
+}
+.week-st {
+  box-shadow: 0 0 2px;
+  padding: 12px;
+  margin-bottom: 50px;
+}
+.week-st1 {
+  box-shadow: 0 0 2px;
+  padding: 12px;
+  margin-bottom: 15px;
+}
