@@ -30,22 +30,15 @@
 </h4>
 <div class="row-fluid">
   <form method="POST"> 
-    <input type="search" id="query" name="q" placeholder="Find a provider...">
-  
-    <input type="search" id="query" name="q" placeholder="Filter: Provider...">
-   
-    <input type="search" id="query" name="q" placeholder="Insert 1 invoice due...">
-
-    <button class="btn btn-primary">Search</button>
-    
     {%csrf_token%}
     {%if len == 0%}
     <button type="submit" class="sbtn btn btn-secondary btn-c" onclick="spinner()">Insert Data</button>
-    {%else%}
-    <button type="submit" class="sbtn btn btn-secondary btn-c" onclick="spinner()">Update Data</button>
-    {%endif%}
-    
   </form>
+    {%else%}  
+    <a  href="{% url 'manual' %}"class="sbtn btn btn-secondary btn-c" onclick="spinner()">Manual Data</a  >
+    <a  href="{% url 'update' %}"class="sbtn btn btn-secondary btn-c" onclick="spinner()">Update Data</a  >
+    {%endif%}
+ 
 </div>
 <!-- Ajax Sourced Server-side -->
 <div class="card">
@@ -59,10 +52,12 @@
       <tr>
         <th>S.NO</th>
         <th>Invoice</th>
-        <th>Provider name</th>
+        <th>VAT ID </th>
         <th>Issue date</th>
         <th>Business name</th>
         <th>Total amount</th>
+        <th>Balance paid</th>
+        <th>Balance payable</th>
         <th>Expiration Date</th>
         <th>Payment week</th>
         <th>Month of Payment</th>
@@ -79,6 +74,8 @@
           <td>{{i.issue_date}}</td>
           <td>{{i.business_name}}</td>
           <td>{{i.total_amount_paid}}</td>
+          <td>{{i.amount_paid}}</td>
+          <td>{{i.balance_payable}}</td>
           <td>{{i.expiration_date}}</td>
           <td>{{i.payment_week}}</td>
           <td>{{i.month_of_payment}}</td>

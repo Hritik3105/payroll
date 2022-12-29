@@ -32,6 +32,12 @@ urlpatterns = [
     # payable table 
     path('payable',PayableView.payable,name="payable"),
 
+    #update
+    path('update',DueView.update,name="update"),
+
+    #manual
+    path('manual',DueView.manual,name="manual"),
+
 
 
 ]

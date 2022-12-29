@@ -16,17 +16,7 @@
 <span class="text-muted fw-light"></span> Provider Parameter 
 </h4>
 <div class="row-fluid">
-  <form id="form"> 
-    <input type="search" id="query" name="q" placeholder="Find a provider...">
-  
-    <input type="search" id="query" name="q" placeholder="Filter: Provider...">
-   
-    <input type="search" id="query" name="q" placeholder="Insert 1 invoice due...">
-      <button type="submit" class="serch_st"><i class="fa fa-search"></i></button>
-  
-    
-    
-  </form>
+
 </div>
 <!-- Ajax Sourced Server-side -->
 <div class="card">
@@ -35,35 +25,29 @@
 <table class="datatables-ajax table table-bordered" id="datatables">
 <thead>
   <tr>
-    <th>Full name</th>
-    <th>Email</th>
-    <th>Position</th>
-    <th>Office</th>
-    <th>Start date</th>
-    <th>Salary</th>
+    <th>ID Fiscal</th>
+    <th>VAT ID</th>
+    <th>Bank Account</th>
+    <th>Bank Beneficiary</th>
+    <th>Bank Code</th>
+    <th>Payment Term</th>
+    <th>Email Notification</th>
   </tr>
 </thead>
 <tbody>    
             
   <tr>
-      <td>Mandeep</td>
-      <td>example@gmail.com</td>
+      <td>11.246.340-8</td>
+      <td>Tester</td> 
       <td>2390555000</td>
       <td>Banco Santander</td>
       <td>37</td>
-      <td> 30 </td>
+      <td>30</td>
+      <td>example@gmail.com </td>
      
   </tr>
 
-  <tr>
-    <td>hritik</td>
-    <td>example@gmail.com</td>
-    <td>2390555000</td>
-    <td>Banco Santander</td>
-    <td>37</td>
-    <td> 30 </td>
-
-</tr>
+ 
 
 
 
@@ -87,6 +71,7 @@
   <script>
     $(document).ready(function() {
         $('#datatables').DataTable( {
+          scrollX: true,
           
            
         });

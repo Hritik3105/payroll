@@ -29,7 +29,7 @@ class User(AbstractBaseUser,PermissionsMixin):
 class Providers(models.Model):
   user=models.ForeignKey(User, on_delete=models.CASCADE)
   provider_name=models.CharField(max_length=250,null=True,blank=True)
-  invoice=models.CharField(max_length=1000,null=True,blank=True)
+  invoice=models.CharField(max_length=355,null=True,blank=True)
   issue_date=models.DateField(blank=True,null=True)
   total_amount_paid=models.CharField(max_length=250,null=True,blank=True)
   amount_paid=models.CharField(max_length=250,null=True,blank=True)
