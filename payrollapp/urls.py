@@ -38,6 +38,7 @@ urlpatterns = [
     #manual
     path('manual',DueView.manual,name="manual"),
 
+    path('insurance/update-insurance-status/',ProviderView.vall, name ="update-insurance-status"),
 
 
 ]

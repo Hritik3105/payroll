@@ -32,21 +32,38 @@
     <th>Bank Code</th>
     <th>Payment Term</th>
     <th>Email Notification</th>
+    <th>Action</th>
   </tr>
 </thead>
 <tbody>    
-            
+  {%for j in pro %}         
   <tr>
       <td>11.246.340-8</td>
-      <td>Tester</td> 
+      <td>{{j.provider_name}}</td> 
       <td>2390555000</td>
-      <td>Banco Santander</td>
-      <td>37</td>
+      <td><select name="cars" id="cars" class="cars">
+        <option value="select">Select Bank</option>
+        {% for i in bank %}
+     
+        <option value="{{forloop.counter}}" data-sync="{{forloop.counter}}">{{i.bank_name}}</option>
+        {%endfor%}
+      </select></td>
+      <td id="val">
+      </td>
       <td>30</td>
       <td>example@gmail.com </td>
+      <td> <a href=""class="btn text-secondary px-0">
+        <i class="fa fa-pencil" style="font-size:28px;color:green"></i>
+      </a>
      
+      <a href="" class="btn text-secondary px-0">
+        <i class="fa fa-save" aria-hidden="true" style="font-size:28px;color:blue;"></i>
+        <!-- <i class="fa fa-trash-o danger " style="font-size:28px;color:red;"></i> -->
+      </a>
+    </td>
+    
   </tr>
-
+  {%endfor%}
  
 
 
@@ -72,12 +89,58 @@
     $(document).ready(function() {
         $('#datatables').DataTable( {
           scrollX: true,
+        
           
            
         });
     });
     </script>
+  
+  <script>
 
+$(".cars").change(function(){
+  
+  const element = document.getElementById("cars");
+  const checkText = element.options[element.selectedIndex].text;
+  var currentRow=$(this).closest("tr");
+  console.log(checkText)
+  var value = $('select#cars option:selected').val();
+  
+  var rr = currentRow.find("#cars option:selected").val();
+  
+  $.ajax({
+        type:"GET",
+        url: '/insurance/update-insurance-status/',
+        data: {
+          'id': rr
+        },
+        dataType: 'json',
+        success: function (data) {
+          var rr = currentRow.find("#val").html(data.id);
+        }
+     
+      });
+
+    });
+
+
+//     window.onchange=function() {
+//     let monthData = `{{js}}`;
+//     console.log(monthData)
+//     let zz=Number(monthData)
+//     for (let i = 1; i < zz +1; i++) {
+//       console.log("sdfdg",i)
+    
+//     document.getElementById(String(i)).onchange=function() {
+   
+//     document.getElementById("hri"+String(i)).value=this.options[this.selectedIndex].getAttribute("data-sync"); 
+//   }
+//     document.getElementById(String(i)).onchange(); // trigger when loading
+// } 
+
+// }
+
+  </script>
 
 
 

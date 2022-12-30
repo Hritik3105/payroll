@@ -46,3 +46,8 @@ class Providers(models.Model):
   month=models.CharField(max_length=250,null=True,blank=True)
   year=models.CharField(max_length=250,blank=True,null=True)
   out_of_time=models.CharField(max_length=250,null=True,blank=True)
+
+
+class Bank(models.Model):
+  bank_name=models.CharField(max_length=250,null=True,blank=True)
+  bank_code=models.CharField(max_length=250,null=True,blank=True)
