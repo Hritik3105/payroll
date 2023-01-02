@@ -41,4 +41,8 @@ urlpatterns = [
     path('insurance/update-insurance-status/',ProviderView.vall, name ="update-insurance-status"),
 
 
+    #save value of bank 
+    path('bank/details/',ProviderView.save_val, name ="bank-details"),
+
+
 ]

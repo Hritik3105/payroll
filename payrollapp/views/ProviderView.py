@@ -14,6 +14,7 @@ def index(request):
 @login_required 
 def vall(request):
     app=request.GET.get("id")
+    print(app)
 
     
     match= Bank.objects.filter(id=app).values_list("bank_code",flat=True)
@@ -26,4 +27,22 @@ def vall(request):
     "id":apps,
     }
 
+    return JsonResponse(data)
+
+
+@login_required 
+def save_val(request):
+
+    bank_c = request.GET.get("id")
+    bank_n = request.GET.get("bank_name")
+    vat_id = request.GET.get("vat_id")
+    print("dgdfh",vat_id)
+    pro = Providers.objects.filter(provider_name = vat_id) 
+    ba = pro.update(bank_name=bank_n,bank_code = bank_c)
+
+
+    data = {
+        "status":"OK",
+
+    }
     return JsonResponse(data)

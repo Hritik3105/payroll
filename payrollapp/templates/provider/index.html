@@ -38,11 +38,11 @@
 <tbody>    
   {%for j in pro %}         
   <tr>
-      <td>11.246.340-8</td>
+      <td>{{j.provider_name}}</td>
       <td>{{j.provider_name}}</td> 
       <td>2390555000</td>
       <td><select name="cars" id="cars" class="cars">
-        <option value="select">Select Bank</option>
+        <option value="0">Select Bank</option>
         {% for i in bank %}
      
         <option value="{{forloop.counter}}" data-sync="{{forloop.counter}}">{{i.bank_name}}</option>
@@ -52,14 +52,14 @@
       </td>
       <td>30</td>
       <td>example@gmail.com </td>
-      <td> <a href=""class="btn text-secondary px-0">
-        <i class="fa fa-pencil" style="font-size:28px;color:green"></i>
-      </a>
+      <td> <input type='button' class='myclass'  value='save'/>
+        <!-- <i class="" style="font-size:28px;color:green">save</i>
+      </a> -->
      
-      <a href="" class="btn text-secondary px-0">
-        <i class="fa fa-save" aria-hidden="true" style="font-size:28px;color:blue;"></i>
+      <!-- <a href="" class="btn text-secondary px-0">
+        <i class="fa fa-save" aria-hidden="true" style="font-size:28px;color:blue;"></i> -->
         <!-- <i class="fa fa-trash-o danger " style="font-size:28px;color:red;"></i> -->
-      </a>
+      <!-- </a> -->
     </td>
     
   </tr>
@@ -122,6 +122,48 @@ $(".cars").change(function(){
       });
 
     });
+
+$(document).ready(function() {
+  $(".myclass").click(function () {
+  
+  var currentRow=$(this).closest("tr");
+  
+  var bank_code = currentRow.find("td:eq(4)").html();
+  var bank_name = currentRow.find("#cars option:selected").html();
+  var vatid= currentRow.find("td:eq(0)").html();
+
+  var value = $('select#cars option:selected').val();
+  if(value == 0){
+    alert("Please Select Bank");
+  }
+  else{
+
+    alert("ok bank done");
+
+  
+
+  $.ajax({
+        type:"GET",
+        url: '/bank/details/',
+        data: {
+          'id': bank_code,
+          'bank_name':bank_name,
+          'vat_id':vatid,
+        },
+        dataType: 'json',
+        success: function (data) {
+          $('#cars option:selected').val(data.result);
+          
+        }
+     
+      });
+
+  }
+
+
+  });
+});
+
 
 
 //     window.onchange=function() {
