@@ -25,6 +25,7 @@
 <table class="datatables-ajax table table-bordered" id="datatables">
 <thead>
   <tr>
+    <td hidden >id</td>
     <th>ID Fiscal</th>
     <th>VAT ID</th>
     <th>Bank Account</th>
@@ -38,21 +39,36 @@
 <tbody>    
   {%for j in pro %}         
   <tr>
+    <td hidden>{{j.id}}</td>
       <td>{{j.provider_name}}</td>
       <td>{{j.provider_name}}</td> 
       <td>2390555000</td>
       <td><select name="cars" id="cars" class="cars">
-        <option value="0">Select Bank</option>
+        <option value="{{forloop.counter}}" data-sync="{{forloop.counter}}">Select Bank</option>
         {% for i in bank %}
-     
+        {%if i.bank_name == j.bank_name%}
+        <option value="{{forloop.counter}}" data-sync="{{forloop.counter}}" selected>{{j.bank_name}}</option>
+        {%else%}
         <option value="{{forloop.counter}}" data-sync="{{forloop.counter}}">{{i.bank_name}}</option>
+        {%endif%}
         {%endfor%}
       </select></td>
+        
+      {%if j.bank_code%}
+      <td id="val">{{j.bank_code}}
+      {%else%}
       <td id="val">
-      </td>
+      {%endif%}
+        
+    </td> 
+     
+   
+     
+      {% comment %} <td id ="val"></td> {% endcomment %}
+    
       <td>30</td>
-      <td>example@gmail.com </td>
-      <td> <input type='button' class='myclass'  value='save'/>
+      <td>example@gmail.com</td>
+      <td> <input type='button' class='myclass'  value='save'  onclick='myTest(this)'/>
         <!-- <i class="" style="font-size:28px;color:green">save</i>
       </a> -->
      
@@ -103,10 +119,15 @@ $(".cars").change(function(){
   const element = document.getElementById("cars");
   const checkText = element.options[element.selectedIndex].text;
   var currentRow=$(this).closest("tr");
-  console.log(checkText)
+  console.log("hello1",currentRow)
+
+  var bank_name = currentRow.find("#cars option:selected").html();
+  console.log("fgggggggggggggggggggg",bank_name)
   var value = $('select#cars option:selected').val();
+  console.log("hello2",value)
   
   var rr = currentRow.find("#cars option:selected").val();
+  console.log("hello3",(rr))
   
   $.ajax({
         type:"GET",
@@ -123,14 +144,58 @@ $(".cars").change(function(){
 
     });
 
+    function myTest(a)
+  {
+    var currentRow=$(a).closest("tr");
+  
+    var bank_id = currentRow.find("td:eq(0)").html();
+    var bank_name = currentRow.find("#cars option:selected").html();
+ 
+    var bank_code = currentRow.find("td:eq(5)").html();
+    {% comment %} var value = currentRow.find("#cars option:selected").html();
+    console.log("hritik",value) {% endcomment %}
+    // var value = $('select#cars option:selected').val();
+    
+    if(bank_name == "Select Bank"){
+      alert("Please Select Bank");
+    }
+    else{
+  
+      alert("Bank data Saved Successfully");
+  
+    
+    $.ajax({
+          type:"GET",
+          url: '/bank/details/',
+          data: {
+            'id': bank_id,
+            'bank_name':bank_name,
+            'bank_code':bank_code
+          },
+          dataType: 'json',
+          success: function (data) {
+            $('#cars option:selected').val(data.result);
+            
+          }
+       
+        });
+  
+    }
+  
+  }
+{% comment %} 
 $(document).ready(function() {
+  
   $(".myclass").click(function () {
+  console.log("Enter")
   
   var currentRow=$(this).closest("tr");
   
-  var bank_code = currentRow.find("td:eq(4)").html();
+  var bank_id = currentRow.find("td:eq(0)").html();
+  
   var bank_name = currentRow.find("#cars option:selected").html();
-  var vatid= currentRow.find("td:eq(0)").html();
+  
+  var bank_code = currentRow.find("td:eq(5)").html();
 
   var value = $('select#cars option:selected').val();
   if(value == 0){
@@ -141,14 +206,13 @@ $(document).ready(function() {
     alert("ok bank done");
 
   
-
   $.ajax({
         type:"GET",
         url: '/bank/details/',
         data: {
-          'id': bank_code,
+          'id': bank_id,
           'bank_name':bank_name,
-          'vat_id':vatid,
+          'bank_code':bank_code
         },
         dataType: 'json',
         success: function (data) {
@@ -162,7 +226,7 @@ $(document).ready(function() {
 
 
   });
-});
+}); {% endcomment %}
 
 
 

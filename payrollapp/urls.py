@@ -1,5 +1,5 @@
 from django.urls import path
-from payrollapp.views import SignupView,LoginView,DueView,ProviderView,InvoiceView,PayrollView,PaidView,PayableView
+from payrollapp.views import SignupView,LoginView,DueView,ProviderView,InvoiceView,PayrollView,PaidView,PayableView,CredView
 urlpatterns = [
     
     #home
@@ -38,11 +38,17 @@ urlpatterns = [
     #manual
     path('manual',DueView.manual,name="manual"),
 
+    #provider update data
     path('insurance/update-insurance-status/',ProviderView.vall, name ="update-insurance-status"),
 
 
     #save value of bank 
     path('bank/details/',ProviderView.save_val, name ="bank-details"),
+
+
+
+    #Credential view 
+    path('cred',CredView.credential, name ="cred"),
 
 
 ]

@@ -145,3 +145,9 @@ def manual(request):
         
         pro_obj.save()
     return redirect("due")
+
+
+#     a = datetime.strptime(str(datetime.now().date()), date_format)
+# b = datetime.strptime(str(posting_date), date_format)
+# delta = b - a
+# print delta.days

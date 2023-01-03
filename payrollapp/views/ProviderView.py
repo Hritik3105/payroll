@@ -5,7 +5,7 @@ from django.http import JsonResponse
 
 @login_required 
 def index(request):
-    bank_obj=Bank.objects.all()
+    bank_obj=Bank.objects.all()            
     pro_obj=Providers.objects.filter(user_id=request.user.id)
     z=len(pro_obj)
     return render(request,"provider/index.html",{"bank":bank_obj,"pro":pro_obj,"js":z})
@@ -35,10 +35,10 @@ def save_val(request):
 
     bank_c = request.GET.get("id")
     bank_n = request.GET.get("bank_name")
-    vat_id = request.GET.get("vat_id")
-    print("dgdfh",vat_id)
-    pro = Providers.objects.filter(provider_name = vat_id) 
-    ba = pro.update(bank_name=bank_n,bank_code = bank_c)
+    vat_id = request.GET.get("bank_code")
+    print("dgdfh",bank_c,bank_n,vat_id)
+    pro = Providers.objects.filter(id = bank_c).update(bank_name=bank_n,bank_code=vat_id) 
+    
 
 
     data = {

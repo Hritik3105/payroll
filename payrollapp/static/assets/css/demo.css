@@ -155,3 +155,30 @@ label.col-1.col-form-label {
 .card {
   padding: 15px;
 }
+
+h1.credential_heading {
+  padding: 28px 0 0px 25px;
+}
+.datepickerclick.d-flex {
+  justify-content: space-between;
+}
+.share_info {
+  max-width: 739px;
+
+}
+input#exampleCheck1 {
+  margin-right: 8px;
+}
+.infoshare {
+  display: flex;
+  justify-content: space-between;
+}
+.form-group_infoshare {
+  width: 47%;
+}
+.form-check_datepik {
+  width: 47%;
+}
+.clicker {
+  max-width: 739px;
+}
