@@ -5,6 +5,7 @@
 
 {% block content %}
 
+
 <div class="content-wrapper">
 
   <!-- Content -->
@@ -42,7 +43,11 @@
     <td hidden>{{j.id}}</td>
       <td>{{j.provider_name}}</td>
       <td>{{j.provider_name}}</td> 
-      <td><input type='text'></td>
+      {%if j.account%}
+      <td><input type='text' class="val" value={{j.account}}></td>
+      {%else%}
+      <td><input type='text' class="val"></td>
+      {%endif%}
       <td><select name="cars" id="cars" class="cars">
         <option value="{{forloop.counter}}" data-sync="{{forloop.counter}}">Select Bank</option>
         {% for i in bank %}
@@ -62,34 +67,139 @@
         
     </td> 
      
-   
-     
-      {% comment %} <td id ="val"></td> {% endcomment %}
-    
-      <td>30</td>
-      <td>example@gmail.com</td>
+    <td><select name="payment" id="payment" class="payment">
+      {%if j.payment_term == "90" %}
+      <option value="Select">Payment term</option>
+      <option value="{{j.payment_term}}" selected>{{j.payment_term}} days</option>
+      <option value="0">Counted</option>
+      <option value="7">7 days</option>
+      <option value="15">15 days</option>
+      <option value="30">30 days</option>
+      <option value="45">45 days</option>
+      <option value="60">60 days</option>
+      <option value="75">75 days</option>
+      <option value="90">90 days</option>
+      <option value="Custom">Custom</option>
+
+      {%elif j.payment_term == "7" %}
+      <option value="Select">Payment term</option>
+      <option value="{{j.payment_term}}" selected>{{j.payment_term}} days</option>
+      <option value="0">Counted</option>
+      <option value="15">15 days</option>
+      <option value="30">30 days</option>
+      <option value="45">45 days</option>
+      <option value="60">60 days</option>
+      <option value="75">75 days</option>
+      <option value="90">90 days</option>
+      <option value="Custom">Custom</option>
+
+      {%elif j.payment_term == "15" %}
+      <option value="Select">Payment term</option>
+      <option value="{{j.payment_term}}" selected>{{j.payment_term}} days</option>
+      <option value="0">Counted</option>
+      <option value="7">7 days</option>
+      <option value="30">30 days</option>
+      <option value="45">45 days</option>
+      <option value="60">60 days</option>
+      <option value="75">75 days</option>
+      <option value="90">90 days</option>
+      <option value="Custom">Custom</option>
+
+      {%elif j.payment_term == "30" %}
+      <option value="Select">Payment term</option>
+      <option value="{{j.payment_term}}" selected>{{j.payment_term}} days</option>
+      <option value="0">Counted</option>
+      <option value="7">7 days</option>
+      <option value="15">15 days</option>
+      <option value="45">45 days</option>
+      <option value="60">60 days</option>
+      <option value="75">75 days</option>
+      <option value="90">90 days</option>
+      <option value="Custom">Custom</option>
+
+      {%elif j.payment_term == "45" %}
+      <option value="Select">Payment term</option>
+      <option value="{{j.payment_term}}" selected>{{j.payment_term}} days</option>
+      <option value="0">Counted</option>
+      <option value="7">7 days</option>
+      <option value="15">15 days</option>
+      <option value="30">30 days</option>
+      <option value="60">60 days</option>
+      <option value="75">75 days</option>
+      <option value="90">90 days</option>
+      <option value="Custom">Custom</option>
+
+      {%elif j.payment_term == "60" %}
+      <option value="Select">Payment term</option>
+      <option value="{{j.payment_term}}" selected>{{j.payment_term}} days</option>
+      <option value="0">Counted</option>
+      <option value="7">7 days</option>
+      <option value="15">15 days</option>
+      <option value="30">30 days</option>
+      <option value="45">45 days</option>
+      <option value="75">75 days</option>
+      <option value="90">90 days</option>
+      <option value="Custom">Custom</option>
+
+      {%elif j.payment_term == "75" %}
+      <option value="Select">Payment term</option>
+      <option value="{{j.payment_term}}" selected>{{j.payment_term}} days</option>
+      <option value="0">Counted</option>
+      <option value="7">7 days</option>
+      <option value="15">15 days</option>
+      <option value="30">30 days</option>
+      <option value="45">45 days</option>
+      <option value="60">60 days</option>
+      <option value="90">90 days</option>
+      <option value="Custom">Custom</option>
+
+      {%elif j.payment_term == None %}
+      <option value="Select">Payment term</option>
+      <option value="0">Counted</option>
+      <option value="7">7 days</option>
+      <option value="15">15 days</option>
+      <option value="30">30 days</option>
+      <option value="45">45 days</option>
+      <option value="60">60 days</option>
+      <option value="75">75 days</option>
+      <option value="90">90 days</option>
+      <option value="Custom">Custom</option>
+
+      {%else%}
+      <option value="Select">Payment term</option>
+      <option value="{{j.payment_term}}" selected>{{j.payment_term}} days</option>
+      <option value="0">Counted</option>
+      <option value="7">7 days</option>
+      <option value="15">15 days</option>
+      <option value="30">30 days</option>
+      <option value="45">45 days</option>
+      <option value="60">60 days</option>
+      <option value="75">75 days</option>
+      <option value="90">90 days</option>
+      
+      {%endif%}
+    </select>
+  
+    <div id="other_box"></div>
+    </td>
+    {%if j.email%}
+    <td><input type='text' class="vals" value={{j.email}}></td>
+    {%else%}
+    <td><input type='text' class="val"></td>
+    {%endif%}
       <td> <input type='button' class='myclass'  value='save'  onclick='myTest(this)'/>
-        <!-- <i class="" style="font-size:28px;color:green">save</i>
-      </a> -->
-     
-      <!-- <a href="" class="btn text-secondary px-0">
-        <i class="fa fa-save" aria-hidden="true" style="font-size:28px;color:blue;"></i> -->
-        <!-- <i class="fa fa-trash-o danger " style="font-size:28px;color:red;"></i> -->
-      <!-- </a> -->
     </td>
     
   </tr>
+
   {%endfor%}
- 
-
-
-
-     
 
 </tbody>
 </table>
 </div>
 </div>
+
+
 <!--/ Ajax Sourced Server-side -->
 
 
@@ -122,7 +232,6 @@ $(".cars").change(function(){
   console.log("hello1",currentRow)
 
   var bank_name = currentRow.find("#cars option:selected").html();
-  console.log("fgggggggggggggggggggg",bank_name)
   var value = $('select#cars option:selected').val();
   console.log("hello2",value)
   
@@ -144,17 +253,22 @@ $(".cars").change(function(){
 
     });
 
+  
+
     function myTest(a)
   {
     var currentRow=$(a).closest("tr");
   
     var bank_id = currentRow.find("td:eq(0)").html();
+    var bank_account = currentRow.find("td:eq(3)").html(); 
+    var email = currentRow.find("td:eq(7)").find('input').val(); 
+    var asd01 =currentRow.find('td:eq(3)').find('input').val();// value of input box
+    var days = currentRow.find("td:eq(6) input[id='test']").val()
     var bank_name = currentRow.find("#cars option:selected").html();
+    
+    var payment_term = currentRow.find("#payment option:selected").val();
  
     var bank_code = currentRow.find("td:eq(5)").html();
-    {% comment %} var value = currentRow.find("#cars option:selected").html();
-    console.log("hritik",value) {% endcomment %}
-    // var value = $('select#cars option:selected').val();
     
     if(bank_name == "Select Bank"){
       alert("Please Select Bank");
@@ -170,10 +284,15 @@ $(".cars").change(function(){
           data: {
             'id': bank_id,
             'bank_name':bank_name,
-            'bank_code':bank_code
+            'bank_code':bank_code,
+            'bank_no':asd01,
+            'payment':payment_term,
+            'days':days,
+            'email':email
           },
           dataType: 'json',
           success: function (data) {
+
             $('#cars option:selected').val(data.result);
             
           }
@@ -183,71 +302,45 @@ $(".cars").change(function(){
     }
   
   }
-{% comment %} 
-$(document).ready(function() {
-  
-  $(".myclass").click(function () {
-  console.log("Enter")
-  
-  var currentRow=$(this).closest("tr");
-  
-  var bank_id = currentRow.find("td:eq(0)").html();
-  
-  var bank_name = currentRow.find("#cars option:selected").html();
-  
-  var bank_code = currentRow.find("td:eq(5)").html();
+</script>
 
-  var value = $('select#cars option:selected').val();
-  if(value == 0){
-    alert("Please Select Bank");
-  }
-  else{
 
-    alert("ok bank done");
+<script>
 
   
-  $.ajax({
-        type:"GET",
-        url: '/bank/details/',
-        data: {
-          'id': bank_id,
-          'bank_name':bank_name,
-          'bank_code':bank_code
-        },
-        dataType: 'json',
-        success: function (data) {
-          $('#cars option:selected').val(data.result);
-          
-        }
-     
-      });
-
-  }
-
-
-  });
-}); {% endcomment %}
-
-
-
-//     window.onchange=function() {
-//     let monthData = `{{js}}`;
-//     console.log(monthData)
-//     let zz=Number(monthData)
-//     for (let i = 1; i < zz +1; i++) {
-//       console.log("sdfdg",i)
-    
-//     document.getElementById(String(i)).onchange=function() {
+    $(".payment").change(function () {
    
-//     document.getElementById("hri"+String(i)).value=this.options[this.selectedIndex].getAttribute("data-sync"); 
-//   }
-//     document.getElementById(String(i)).onchange(); // trigger when loading
-// } 
-
-// }
-
-  </script>
-
-
-
+      var currentRow=$(this).closest("tr");
+      var payment = currentRow.find("td:eq(0)").html();
+      var payment_term = currentRow.find("#payment option:selected").val();
+      
+      if (payment_term == "Custom") {
+        currentRow.find("td:eq(6) #other_box").append('<input id="test">');
+        var days = currentRow.find("td:eq(6) input[id='test']").val()
+        console.log(days)
+        //var col1=currentRow.find("td:eq(1) input[type='time']").val();
+      }
+      else{
+        currentRow.find("td:eq(6) input[id='test']").remove();
+        //var days = get value of selected value
+      }
+      
+      $.ajax({
+            type:"GET",
+            url: '/payment/details/',
+            data: {
+              'id':payment_term ,
+            },
+            dataType: 'json',
+            success: function (data) {
+              
+              
+              
+            }
+        
+          }); 
+      });
+   
+    
+</script>
 {% endblock javascripts %}

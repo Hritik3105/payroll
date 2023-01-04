@@ -45,7 +45,8 @@ urlpatterns = [
     #save value of bank 
     path('bank/details/',ProviderView.save_val, name ="bank-details"),
 
-
+    #save value of bank 
+    path('payment/details/',ProviderView.pay, name ="paymrnt"),
 
     #Credential view 
     path('cred',CredView.credential, name ="cred"),

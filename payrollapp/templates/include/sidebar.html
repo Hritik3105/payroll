@@ -95,12 +95,12 @@
         <div>Date Of Paid Invoice</div>
       </a>
      
-    <li class="menu-item {% active_link 'payable' 'active' %}">
+    {% comment %} <li class="menu-item {% active_link 'payable' 'active' %}">
       <a href="{% url 'payable'%}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-spreadsheet"></i>
         <div>Payable Overdue</div>
       </a>
-    </li>
+    </li> {% endcomment %}
     <li class="menu-item {% active_link 'payroll' 'active' %}">
       <a href="{% url 'payroll'%}" class="menu-link">
         <i class="menu-icon tf-icons bx bx-window-open"></i>

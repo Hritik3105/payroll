@@ -36,11 +36,27 @@ def save_val(request):
     bank_c = request.GET.get("id")
     bank_n = request.GET.get("bank_name")
     vat_id = request.GET.get("bank_code")
-    print("dgdfh",bank_c,bank_n,vat_id)
-    pro = Providers.objects.filter(id = bank_c).update(bank_name=bank_n,bank_code=vat_id) 
-    
+    account_no = request.GET.get("bank_no")
+    payment_term = request.GET.get("payment")
+    days = request.GET.get("days")
+    email = request.GET.get("email")
+#payment
+    print("dgdfh",days)
+    if days:
+        pro = Providers.objects.filter(id = bank_c).update(bank_name=bank_n,bank_code=vat_id,account=account_no,payment_term=days,email=email) 
+    else:
+        pro = Providers.objects.filter(id = bank_c).update(bank_name=bank_n,bank_code=vat_id,account=account_no,payment_term=payment_term,email=email) 
+    data = {
+        "status":"OK",
+
+    }
+    return JsonResponse(data)
 
 
+@login_required 
+def pay(request):
+    bank_c = request.GET.get("id")
+    print("dgdfh",bank_c) 
     data = {
         "status":"OK",
 

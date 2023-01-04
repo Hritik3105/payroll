@@ -48,6 +48,9 @@ class Providers(models.Model):
   out_of_time=models.CharField(max_length=250,null=True,blank=True)
   bank_name=models.CharField(max_length=250,null=True,blank=True)
   bank_code=models.CharField(max_length=250,null=True,blank=True)
+  account=models.CharField(max_length=250,null=True,blank=True)
+  payment_term=models.CharField(max_length=250,null=True,blank=True)
+  email=models.EmailField(null=True,blank=True)
 
 
 class Bank(models.Model):
