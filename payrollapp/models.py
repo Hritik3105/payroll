@@ -17,7 +17,10 @@ class User(AbstractBaseUser,PermissionsMixin):
 		Unselect this instead of deleting accounts.')
     created_at = models.DateTimeField(auto_now_add=True,null=True)
     updated_at =  models.DateTimeField(auto_now=True)
-    
+    siiusername = models.CharField(max_length=255,default="",blank=True,null=True)
+    siipassword = models.CharField(max_length=255,default="",blank=True,null=True)
+    startdate = models.DateField(blank=True,null=True)
+    enddate = models.DateField(blank=True,null=True)
 
     USERNAME_FIELD 	='email'
     objects 		= CustomUserManager()
@@ -51,6 +54,7 @@ class Providers(models.Model):
   account=models.CharField(max_length=250,null=True,blank=True)
   payment_term=models.CharField(max_length=250,null=True,blank=True)
   email=models.EmailField(null=True,blank=True)
+  manual_data=models.FileField(null=True,blank=True)
 
 
 class Bank(models.Model):

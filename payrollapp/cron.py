@@ -7,9 +7,12 @@ import pandas as pd
 import time
 from django.core.mail import send_mail
 from django.core.mail import send_mail as sm
+from payrollapp.models import Providers
+
 
 
 def my_cron_job():
+   
     res = sm(
         subject = 'Subject here',
         message = 'Hii there. I am in function',

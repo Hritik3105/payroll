@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from payrollapp.models import *
 from django.http import JsonResponse
+from django.core.mail import send_mail as sm
 
 @login_required 
 def index(request):
@@ -40,6 +41,13 @@ def save_val(request):
     payment_term = request.GET.get("payment")
     days = request.GET.get("days")
     email = request.GET.get("email")
+    res = sm(
+        subject = 'Subject here',
+        message = 'Successfully Register as Provider',
+        from_email = 'testsood981@gmail.com',
+        recipient_list = [email],
+        fail_silently=False,
+         )
 #payment
     print("dgdfh",days)
     if days:

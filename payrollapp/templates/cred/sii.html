@@ -12,13 +12,13 @@
             {% csrf_token %}
                 <div class="infoshare">
                         <div class="form-group_infoshare">
-                        <label for="exampleInputEmail1">Username</label>
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter username" name="username">
+                        <label for="exampleInputEmail1">Sii Username</label>
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter sii username" name="siiusername" value={{user.siiusername}}>
                         
                         </div>
                         <div class="form-group_infoshare">
                         <label for="exampleInputPassword1">Password</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
+                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password" value={{user.siipassword}}>
                         </div>
                 </div>
                 <div class="datepickerclick d-flex mt-3">
@@ -26,20 +26,23 @@
                                 <label for="date">Start-date</label>
 
                                 <div class="input-group date" id="datepicker">
-                                <input type="date" class="form-control" id="date" name='startdate'/>
+                                <input type="date" class="form-control" id="date" name='startdate'value={{user.startdate|date:'Y-m-d'}} />
                              
                                 </div>
                             </div>
                             <div class="form-check_datepik">
                                 <label for="date" >End-Date</label>
                                 <div class="input-group date" id="datepicker">
-                                <input type="date" class="form-control" id="date" name='enddate'/>
+                                <input type="date" class="form-control" id="date" name='enddate' value={{user.enddate|date:'Y-m-d'}} />
                                 
                                 </div>
                             </div>  
                         </div>
                     </div>
-                </div>
+                <div class="form-group_infoshare mt-2"style="width: 49%;">
+                    <label for="exampleInputEmail1"> Username</label>
+                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter username" name="username" value={{user.username}}>
+                    </div>  
                 <div class="clicker text-center mt-4">
                    <button type="submit" class="btn btn-primary">Submit</button>
                 </div>

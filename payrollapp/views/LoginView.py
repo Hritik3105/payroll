@@ -8,7 +8,7 @@ from django.contrib import auth
 
 
 def user_login(request):
-  print("qwee")  
+  
   if request.method == "POST":
     print("enter")
     form = LoginForm(request.POST)

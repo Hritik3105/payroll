@@ -12,7 +12,10 @@ from selenium.webdriver.chrome.service import Service
 import numpy
 
 
-
+def covid_data(request):                                                          
+      vas= Providers.objects.filter(user_id=request.user.id)     
+      vas1="hritjklhgkjh"                                                                
+      return vas,vas1
   
 #insert data
 @login_required 
@@ -20,7 +23,7 @@ def due_table(request):
     print(datetime.date.today())
     all_obj=Providers.objects.filter(user_id=request.user.id)
     len_obj=len(all_obj) 
-    if request.method =="POST":
+    if request.method =="POST" and  'due' in request.POST:
         filename=os.getcwd()+"/payrollapp/csv/RCV_COMPRA_REGISTRO_76750936-7_202203.csv"              
         empexceldata = pd.read_csv(filename,error_bad_lines=False,sep=r';',usecols =[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18])
         empexceldata.columns = empexceldata.columns.str.replace(' ', '')
@@ -66,6 +69,59 @@ def due_table(request):
                 pro_obj.amount_paid=int(i.MontoTotal)
             pro_obj.save()        
         return redirect("due")
+    if request.method =="POST" and "manual" in request.POST:
+        q=covid_data(request)
+        
+        print("ddddddddddddddddddddddddddddddddg",q)
+        val=request.FILES.get("image")
+        if val:
+            filenames=val    
+            empexceldata = pd.read_csv(filenames,error_bad_lines=False,sep=r';')
+            empexceldata.columns = empexceldata.columns.str.replace(' ', '')
+            val=empexceldata.columns
+            for i in empexceldata.itertuples():
+                testeddate = i.FechaDocto
+                dt_obj = datetime.datetime.strptime(testeddate,'%d-%m-%y')
+                valll=datetime.datetime.strftime(dt_obj,'%Y-%m-%d')
+                print(valll)
+                date_format = "%Y-%m-%d"
+                a = datetime.datetime.strptime(str(datetime.datetime.now().date()), date_format)
+                b = datetime.datetime.strptime(str(valll), date_format)
+                today= a-b      
+                total = i.FechaDocto
+                date=pd.to_datetime(total).date()
+                exp=date+pd.Timedelta(days=30)
+                mon=pd.to_datetime(exp).month_name()
+                yea=exp.strftime('%Y')
+            
+
+                pro_obj=Providers()
+
+                pro_obj.user_id=request.user.id
+                pro_obj.issue_date=valll
+                pro_obj.provider_name=i.RUTProveedor
+                pro_obj.invoice=i.Folio
+                pro_obj.business_name=i.RazonSocial  
+                pro_obj.balance_payable=0  
+                pro_obj.year_of_payment=yea
+                pro_obj.expiration_date=exp
+                pro_obj.month_of_payment=mon
+                pro_obj.days_overdue=today.days
+                pro_obj.payment_week=4
+                
+                if numpy.isnan(i.MontoTotal):
+                    pro_obj.amount_paid=0
+                else:   
+                    pro_obj.total_amount_paid=int(i.MontoTotal)
+                if numpy.isnan(i.MontoTotal):
+                    pro_obj.amount_paid=0
+                else:   
+                    pro_obj.amount_paid=int(i.MontoTotal)
+                pro_obj.save()
+            return redirect("due")
+        return redirect("due")
+
+        
     return render(request,"home/table.html",{"obj":all_obj,"len":len_obj})
 
 
@@ -98,56 +154,3 @@ def update(request):
     return redirect("due")
 
 
-
-#insert data
-def manual(request):
-    filename=os.getcwd()+"/payrollapp/csv/Manual.xlsx"    
-    empexceldata = pd.read_excel(filename,sheet_name='RCV_COMPRA_REGISTRO_76822618-0_')
-    empexceldata.columns = empexceldata.columns.str.replace(' ', '')
-    val=empexceldata.columns
-    
-    for i in empexceldata.itertuples():
-        valll=datetime.datetime.strftime(i.FechaDocto,'%Y-%m-%d')
-        print(valll)
-        date_format = "%Y-%m-%d"
-        a = datetime.datetime.strptime(str(datetime.datetime.now().date()), date_format)
-        b = datetime.datetime.strptime(str(valll), date_format)
-        today= a-b      
-        total = i.FechaDocto
-        date=pd.to_datetime(total).date()
-        exp=date+pd.Timedelta(days=30)
-        mon=pd.to_datetime(exp).month_name()
-        print("dfgfdf",mon)
-        yea=exp.strftime('%Y')
-        print("sdffsddsdf",yea)
-
-        pro_obj=Providers()
-
-        pro_obj.user_id=request.user.id
-        pro_obj.issue_date=valll
-        pro_obj.provider_name=i.RUTProveedor
-        pro_obj.invoice=i.Folio
-        pro_obj.business_name=i.RazonSocial  
-        pro_obj.balance_payable=0  
-        pro_obj.year_of_payment=yea
-        pro_obj.month_of_payment=mon
-        pro_obj.days_overdue=today.days
-        pro_obj.payment_week=4
-         
-        if numpy.isnan(i.MontoTotal):
-            pro_obj.amount_paid=0
-        else:   
-            pro_obj.total_amount_paid=int(i.MontoTotal)
-        if numpy.isnan(i.MontoTotal):
-            pro_obj.amount_paid=0
-        else:   
-            pro_obj.amount_paid=int(i.MontoTotal)
-        
-        pro_obj.save()
-    return redirect("due")
-
-
-#     a = datetime.strptime(str(datetime.now().date()), date_format)
-# b = datetime.strptime(str(posting_date), date_format)
-# delta = b - a
-# print delta.days

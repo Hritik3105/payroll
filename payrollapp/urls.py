@@ -35,8 +35,6 @@ urlpatterns = [
     #update
     path('update',DueView.update,name="update"),
 
-    #manual
-    path('manual',DueView.manual,name="manual"),
 
     #provider update data
     path('insurance/update-insurance-status/',ProviderView.vall, name ="update-insurance-status"),
