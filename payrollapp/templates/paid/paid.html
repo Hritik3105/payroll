@@ -27,8 +27,8 @@
   <thead>
     <tr>
       <th></th>
-      <th class="all">Razon Social</th>
-      <th class="all">Folio</th>
+      <th class="all">Business Name</th>
+      <th class="all">Invoice</th>
       <th class="all">Semana 1</th>
       <th class="all">Semana 2</th>
       <th class="all">Semana 3</th>
@@ -38,10 +38,11 @@
     </tr>
   </thead>
   <tbody>
+    {%for i in obj%}
     <tr>
         <td></td>
-        <td>Test</td>
-        <td>Test</td>
+        <td>{{i.business_name}}</td>
+        <td>{{i.invoice}}</td>
         <td>Test</td>
         <td>Test</td>
         <td>61</td>
@@ -51,6 +52,7 @@
       </tr>
 
     </tr>
+    {%endfor%}
   </tbody>
 
 
