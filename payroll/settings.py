@@ -88,6 +88,19 @@ AUTH_USER_MODEL = 'payrollapp.user'
 
 
 
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'payroll',
+#         'USER':'root',
+#         "HOST":"localhost",
+#         'PASSWORD':"",
+#         "PORT":"3306"
+#     }
+# }
+
+
 # git
 
 DATABASES = {
@@ -155,6 +168,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 # EMAIL_USE_SSL = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'testsood981@gmail.com'
-EMAIL_HOST_PASSWORD = 'jivyydbevbsscuoi'
+EMAIL_HOST_USER = 'tester3105200@gmail.com'
+EMAIL_HOST_PASSWORD = 'fxfwxzcgtbslnrkx'
 EMAIL_PORT = 587

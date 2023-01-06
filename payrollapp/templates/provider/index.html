@@ -268,11 +268,14 @@ $(".cars").change(function(){
     var bank_id = currentRow.find("td:eq(0)").html();
     var bank_account = currentRow.find("td:eq(3)").html(); 
     var email = currentRow.find("td:eq(7)").find('input').val(); 
+    
     var asd01 =currentRow.find('td:eq(3)').find('input').val();// value of input box
     var days = currentRow.find("td:eq(6) input[id='test']").val()
+    
     var bank_name = currentRow.find("#cars option:selected").html();
     
     var payment_term = currentRow.find("#payment option:selected").val();
+    alert(payment_term)
  
     var bank_code = currentRow.find("td:eq(5)").html();
     
@@ -293,7 +296,7 @@ $(".cars").change(function(){
             'bank_code':bank_code,
             'bank_no':asd01,
             'payment':payment_term,
-            'days':days,
+            'dayss':days,
             'email':email
           },
           dataType: 'json',

@@ -1,87 +1,88 @@
 {% extends 'layout/admin.html' %}
 
-{%block content%}
-<link rel="stylesheet" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
 
 
+ 
+ 
+ {% block content %}
+ 
+ 
+ 
+ <section class="mainload">
+ <div class="content-wrapper">
 
-
-
-<div class="content-wrapper">
-
-    <!-- Content -->
-    <div class="container-xxl flex-grow-1 container-p-y">
-    
-    <h4 class="py-3 breadcrumb-wrapper mb-4">
-        <span class="text-muted fw-light"></span>Invoice Due for paid
-    </h4>
-    <div class="row-fluid">
-    
-          
-          
-          </div>
-
+ 
+   <!-- Content -->
+   
+     <div class="container-xxl flex-grow-1 container-p-y">
+       
+       
+ <h4 class="py-3 breadcrumb-wrapper mb-4">
+ <span class="text-muted fw-light">DataTables /</span> Advanced
+ 
+ </h4>
+ <div class="row-fluid d-flex">
   
-        <div class="card">
-<table id="example" class="datatables-ajax table table-bordered" style="width:100%">
-  <thead>
-    <tr>
-      <th></th>
-      <th class="all">Razon Social</th>
-      <th class="all">Folio</th>
-      <th class="all">Vigente</th>
-      <th class="all">2)-1 a -30 Dias</th>
-      <th class="all">3)-31 a -60 Dias</th>
-      <th class="all">4)-31 a -90 Dias</th>
-      <th class="all">5)-61 a -90 Dias</th>
-      <th class="all">6)-91 a -120 Dias date</th>
-    
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td></td>
-      <td>Test</td>
-      <td>223445</td>
-      <td>Test</td>
-      <td>Test</td>
-      <td>61</td>
-      <td>2011/04/25</td>
-      <td>$320,800</td>
-      <td>5421</td>
-    </tr>
-
-    </tr>
-  </tbody>
-
-
-  <script>
-    var table = $('#example').DataTable({
-        responsive: {
-          details: {
-            type: 'column'
-          }
-        },
-        columnDefs: [{
-          className: 'control',
-          orderable: false,
-          targets: 0
-        }],
-        order: [1, 'asc']
-      });
-      
-      $('#btn-show-all-doc').on('click', expandCollapseAll);
-      
-      function expandCollapseAll() {
-        table.rows('.parent').nodes().to$().find('td:first-child').trigger('click').length || 
-        table.rows(':not(.parent)').nodes().to$().find('td:first-child').trigger('click')
-      }
-</script>
-{%endblock%}
-
-
-
-
+ </div>
+ <!-- Ajax Sourced Server-side -->
+ <div class="card">
+  <h5 class="card-header">Invoice Due For Paid</h5>
+ <div class="preload">
+ </div>
+ <div class="content">
+   <div class="card-datatable text-nowrap">
+     <table class="datatables-ajax table table-bordered" id="datatables" >
+     <thead>
+       <tr>
+        <th>Business Name</th>
+        <th>Invoice</th>
+        <th>Expiration Date</th>
+        <th>1) -1 a -30 Dias</th>
+        <th>2) -31 a -60 Dias</th>
+        <th>3) -31 a -90 Dias</th>
+        <th>4) -61 a -90 Dias</th>
+        <th>5) -91 a -120 Dias date</th>
+       </tr>
+     </thead>
+     <tbody>    
+       {%for i in obj%}          
+       <tr>
+        <td>{{i.business_name}}</td>
+        <td>{{i.invoice}}</td>
+        <td>{{i.expiration_date}}</td>
+        <td>0</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+           
+         {%endfor%}
+       </tr>
+     </tbody>
+     </table>
+   </div>
+ </div>
+ </div>
+ <section>
+ <!--/ Ajax Sourced Server-side -->
+ 
+ 
+   
+ 
+ {% endblock content %}
+ 
+ 
+ {% block javascripts %}
+   {{ block.super }}
+ 
+   <script>
+     $(document).ready(function() {
+         $('#datatables').DataTable( {
+           scrollX: true,
+           "aaSorting": []
+           
+            
+         });
+     });
+    </script>
+{%endblock javascripts%}

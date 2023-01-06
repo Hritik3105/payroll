@@ -1,6 +1,9 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
+from payrollapp.models import *
+import pandas as pd
 
 @login_required 
 def invoice(request):
-    return render(request,"Invoice/invoice.html")
+    obj_pro=Providers.objects.filter(user_id=request.user.id)
+    return render(request,"Invoice/invoice.html",{'obj':obj_pro})
