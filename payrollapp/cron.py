@@ -44,7 +44,7 @@ def my_cron_job():
 
     driver.find_element(By.ID,"bt_ingresar").click()
 
-    driver.get('https://www4.sii.cl/consdcvinternetui/#/index')
+    driver.get('https://ww  w4.sii.cl/consdcvinternetui/#/index')
     time.sleep(6)
 
     dropdown1 = Select(driver.find_element(By.ID,'periodoMes'))

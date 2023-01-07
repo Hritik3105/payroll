@@ -39,22 +39,63 @@
         <th>Expiration Date</th>
         <th>1) -1 a -30 Dias</th>
         <th>2) -31 a -60 Dias</th>
-        <th>3) -31 a -90 Dias</th>
-        <th>4) -61 a -90 Dias</th>
-        <th>5) -91 a -120 Dias date</th>
+        <th>3) -61 a -90 Dias</th>
+        <th>4) -91 a -120 Dias</th>
+        <th>5) -121 a -150 Dias date</th>
+        <th>6) -151 Dias date</th> 
        </tr>
      </thead>
-     <tbody>    
-       {%for i in obj%}          
+     <tbody>
+          
+       {%for i in obj%}    
        <tr>
         <td>{{i.business_name}}</td>
         <td>{{i.invoice}}</td>
         <td>{{i.expiration_date}}</td>
-        <td>0</td>
+        {%if i.days_overdue < "30" %}
+        <td>{{i.balance_payable}}</td>
+        {%else%}
         <td></td>
+        {%endif%}
+        {%if i.days_overdue > "30" and i.days_overdue <= "60" %}
+        <td>{{i.balance_payable}}</td>
+        {%else%}
         <td></td>
+        {%endif%}
+        {%if i.days_overdue > "60"  and i.days_overdue <= "90"  %}
+        <td>{{i.balance_payable}}</td>
+        {%else%}
         <td></td>
+        {%endif%}
+        {%if i.days_overdue > "90" and i.days_overdue  <= "120"  %}
+        <td>{{i.balance_payable}}</td>
+        {%else%}
         <td></td>
+        {%endif%}
+        {%if  i.days_overdue > "121"  and i.days_overdue <= "150"  %}
+        <td>{{i.balance_payable}}</td>
+        {%else%}
+        <td></td>
+        {%endif%}
+        {%if i.days_overdue > "151" and i.days_overdue <= 1000 %}
+        <td>{{i.balance_payable}}</td>
+        {%else%}
+        <td></td>
+        {%endif%}
+        
+
+        
+
+        
+        {% comment %} {%elif i.days_overdue > 60  and i.days_overdue <= 90  %}
+        <td>{{balance_payable}}</td>
+        {%elif  i.days_overdue > 90 and i.days_overdue <= 120  %}
+        <td>{{balance_payable}}</td>
+        {%elif  i.days_overdue > 121  and i.days_overdue <= 150  %}
+        <td>{{balance_payable}}</td>
+        {%elif  i.days_overdue > 151 %}
+        <td>{{balance_payable}}</td> {% endcomment %}
+       
            
          {%endfor%}
        </tr>
