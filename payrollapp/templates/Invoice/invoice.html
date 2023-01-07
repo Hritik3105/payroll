@@ -53,32 +53,32 @@
         <td>{{i.invoice}}</td>
         <td>{{i.expiration_date}}</td>
         {%if i.days_overdue < "30" %}
-        <td>{{i.balance_payable}}</td>
+        <td>{{i.amount_paid}}</td>
         {%else%}
         <td></td>
         {%endif%}
         {%if i.days_overdue > "30" and i.days_overdue <= "60" %}
-        <td>{{i.balance_payable}}</td>
+        <td>{{i.amount_paid}}</td>
         {%else%}
         <td></td>
         {%endif%}
         {%if i.days_overdue > "60"  and i.days_overdue <= "90"  %}
-        <td>{{i.balance_payable}}</td>
+        <td>{{i.amount_paid}}</td>
         {%else%}
         <td></td>
         {%endif%}
         {%if i.days_overdue > "90" and i.days_overdue  <= "120"  %}
-        <td>{{i.balance_payable}}</td>
+        <td>{{i.amount_paid}}</td>
         {%else%}
         <td></td>
         {%endif%}
         {%if  i.days_overdue > "121"  and i.days_overdue <= "150"  %}
-        <td>{{i.balance_payable}}</td>
+        <td>{{i.amount_paid}}</td>
         {%else%}
         <td></td>
         {%endif%}
         {%if i.days_overdue > "151" and i.days_overdue <= 1000 %}
-        <td>{{i.balance_payable}}</td>
+        <td>{{i.amount_paid}}</td>
         {%else%}
         <td></td>
         {%endif%}
