@@ -8,9 +8,12 @@ import datetime
 
 @login_required 
 def index(request):
+   
     bank_obj=Bank.objects.all()            
-    pro_obj=Providers.objects.filter(user_id=request.user.id)
+    pro_obj=Providers.objects.filter(user_id=request.user.id).values("provider_name","business_name").distinct()
+     
     z=len(pro_obj)
+    print(z)
     return render(request,"provider/index.html",{"bank":bank_obj,"pro":pro_obj,"js":z})
 
 
