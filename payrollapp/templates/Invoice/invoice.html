@@ -48,36 +48,40 @@
      <tbody>
           
        {%for i in obj%}    
+   
        <tr>
         <td>{{i.business_name}}</td>
         <td>{{i.invoice}}</td>
         <td>{{i.expiration_date}}</td>
-        {%if i.days_overdue < "30" %}
+        
+        {%if i.days_overdue < 30 %}
         <td>{{i.amount_paid}}</td>
         {%else%}
         <td></td>
         {%endif%}
-        {%if i.days_overdue > "30" and i.days_overdue <= "60" %}
+        
+        {%if i.days_overdue > 30 and i.days_overdue <= 60 %}
         <td>{{i.amount_paid}}</td>
         {%else%}
         <td></td>
         {%endif%}
-        {%if i.days_overdue > "60"  and i.days_overdue <= "90"  %}
+        {%if i.days_overdue > 60  and i.days_overdue <= 90  %}
+       
         <td>{{i.amount_paid}}</td>
         {%else%}
         <td></td>
         {%endif%}
-        {%if i.days_overdue > "90" and i.days_overdue  <= "120"  %}
+        {%if i.days_overdue > 90 and i.days_overdue  <= 120  %}
         <td>{{i.amount_paid}}</td>
         {%else%}
         <td></td>
         {%endif%}
-        {%if  i.days_overdue > "121"  and i.days_overdue <= "150"  %}
+        {%if  i.days_overdue > 120  and  i.days_overdue < 151  %}
         <td>{{i.amount_paid}}</td>
         {%else%}
         <td></td>
         {%endif%}
-        {%if i.days_overdue > "151" and i.days_overdue <= 1000 %}
+        {%if i.days_overdue > 151 and i.days_overdue <= 1000 %}
         <td>{{i.amount_paid}}</td>
         {%else%}
         <td></td>

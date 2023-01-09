@@ -169,5 +169,5 @@ EMAIL_USE_TLS = True
 # EMAIL_USE_SSL = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'tester3105200@gmail.com'
-EMAIL_HOST_PASSWORD = 'fxfwxzcgtbslnrkx'
+EMAIL_HOST_PASSWORD = 'znpzjlzzjyqebpgd'
 EMAIL_PORT = 587

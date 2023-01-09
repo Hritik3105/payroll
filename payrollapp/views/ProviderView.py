@@ -10,10 +10,10 @@ import datetime
 def index(request):
    
     bank_obj=Bank.objects.all()            
-    pro_obj=Providers.objects.filter(user_id=request.user.id).values("provider_name","business_name").distinct()
+    pro_obj=Providers.objects.filter(user_id=request.user.id).values("provider_name","business_name","id").distinct()
      
     z=len(pro_obj)
-    print(z)
+    print("================",pro_obj)
     return render(request,"provider/index.html",{"bank":bank_obj,"pro":pro_obj,"js":z})
 
 
@@ -39,6 +39,7 @@ def vall(request):
 @login_required 
 def save_val(request):
     bank_c = request.GET.get("id")
+    print("-----------------------",bank_c)
     bank_n = request.GET.get("bank_name")
     vat_id = request.GET.get("bank_code")
     account_no = request.GET.get("bank_no")
@@ -47,6 +48,8 @@ def save_val(request):
     email = request.GET.get("email")
     if days == None :
         days=payment_term
+
+
     res = sm(
         subject = 'Payroll',
         message = 'You are Successfully Register as Provider',

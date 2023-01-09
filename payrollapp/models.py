@@ -24,7 +24,8 @@ class User(AbstractBaseUser,PermissionsMixin):
 
     USERNAME_FIELD 	='email'
     objects 		= CustomUserManager()
-    
+    # REQUIRED_FIELDS = []
+
     def __str__(self):
         return self.email
 
@@ -43,7 +44,7 @@ class Providers(models.Model):
   month_of_payment=models.CharField(max_length=250,null=True,blank=True)
   year_of_payment=models.CharField(max_length=250,null=True,blank=True)
   range_to_pay=models.CharField(max_length=250,null=True,blank=True)
-  days_overdue=models.CharField(max_length=250,null=True,blank=True)
+  days_overdue=models.IntegerField(max_length=250,null=True,blank=True)
   overdue=models.CharField(max_length=250,null=True,blank=True)
   business_name=models.CharField(max_length=250,null=True,blank=True)
   month=models.CharField(max_length=250,null=True,blank=True)

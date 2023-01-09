@@ -29,9 +29,8 @@ def due_table(request):
         filename=os.getcwd()+"/payrollapp/csv/RCV_COMPRA_REGISTRO_76750936-7_202211.csv" 
         
         empexceldata = pd.read_csv(filename,error_bad_lines=False,sep=r';',usecols =[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18])
-        print(empexceldata)
         zz=empexceldata.drop_duplicates(subset='Folio', keep="first")
-        print("\n\nDuplicate Rows : \n {}".format(zz))
+       
 
         # DF_RM_DUP = empexceldata.drop_duplicates()
         # print("-----------------------------------------",DF_RM_DUP)
@@ -45,10 +44,11 @@ def due_table(request):
       
             
             total = i.FechaDocto
+            print(type(total))
             
-            
-            date=pd.to_datetime(total).date()
-           
+            Begindate = datetime.datetime.strptime(total,"%d/%m/%Y").strftime('%Y-%m-%d')
+            print("sdfffffffffffff",Begindate)
+            date=pd.to_datetime(Begindate).date()
             exp=date+pd.Timedelta(days=30)
            
             months=pd.to_datetime(exp).month_name()
