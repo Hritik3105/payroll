@@ -5,16 +5,24 @@ from django.http import JsonResponse
 from django.core.mail import send_mail as sm
 import pandas as pd
 import datetime
+from django.db.models import F
+
 
 @login_required 
 def index(request):
    
     bank_obj=Bank.objects.all()            
-    pro_obj=Providers.objects.filter(user_id=request.user.id).values("provider_name","business_name","id").distinct()
-     
+    pro_obj=Providers.objects.filter(user_id=request.user.id).distinct().values("provider_name","business_name")
+    lst=[]
+    count=0
+    dict1={}
+    for i in pro_obj:
+        count=count+1
+        get=Providers.objects.filter(provider_name=i["provider_name"]).first()
+        print(count)
+       
     z=len(pro_obj)
-    print("================",pro_obj)
-    return render(request,"provider/index.html",{"bank":bank_obj,"pro":pro_obj,"js":z})
+    return render(request,"provider/index.html",{"bank":bank_obj,"pro":lst,"js":z})
 
 
 @login_required 
