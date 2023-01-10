@@ -6,31 +6,11 @@
     <div class="week-st1">
         <h5>Payroll</h5>
         <form class="row">
-            <label for="date" class="col-1 col-form-label"> Month</label>
+            
             <div class="col-5">
             <div class="input-group date" id="datepicker">
-                <select placeholder="Month">
-                    <option name="" value="" style="display:none;">Month</option>
-                    <option name="January" value="Jan">January</option>
-                    <option name="February" value="Feb">February</option>
-                    <option name="March" value="Mar">March</option>
-                    <option name="April" value="Apr">April</option>
-                      <option name="May" value="May">May</option>
-                    <option name="June" value="Jun">June</option>
-                    <option name="July" value="Jul">July</option>
-                    <option name="August" value="Aug">August</option>
-                      <option name="September" value="Sep">September</option>
-                    <option name="October" value="Oct">October</option>
-                    <option name="November" value="Nov">November</option>
-                    <option name="December" value="Dec">December</option>
-                  </select>
-                  
-                  <select name="cars" id="cars" class="cars">
-                    <option value="" ></option>
-                    {% for i in lst %}
-                    <option value="{{forloop.counter}}" data-sync="{{forloop.counter}}" selected>{{i}}</option>
-                    {%endfor%}
-                  </select>
+            <label>Date: </label>
+             <input type ="Date">
             {% comment %} <span class="input-group-append">
             </span> {% endcomment %}
             </div>

@@ -1,82 +1,185 @@
 {% extends 'layout/admin.html' %}
 
 {%block content%}
+<style>
+    tbody tr {
+        display : none;
+    }
+    tr.parent {
+        display : table-row;
+    }
+    tr.open {
+        display : table-row;
+    }
 
-<link rel="stylesheet" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
-<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-
-
-
-
-
-<div class="content-wrapper">
-  <div class="container-xxl flex-grow-1 container-p-y">
-    <!-- Content -->
     
-    <h4 class="py-3 breadcrumb-wrapper mb-4">
-        <span class="text-muted fw-light"></span>Date of Paid Invoice
-    </h4>
-    <div class="input-group mb-2">
-     
-    </div>
+    select {
+      width: 86px;
+      height: 39px;
+  }
+  
+</style>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+
+<form method ="POST" class="">
+  {%csrf_token%}
+
+<label>Select Month: <select name="month" id="sort-item"></label>
+  
+  <option value="Ja"> Month</option>
+
+  <option value="January"  {% if month == "January" %} selected {%else %} {%endif%}  >January</option>
+  
+  <option value="February" {% if month == "February" %} selected {%else %} {%endif%} >February</option>
+  
+  <option value="March" {% if month == "March" %} selected {%else %} {%endif%}>March</option>
  
-        <div class="card">
-<table id="example" class="datatables-ajax table table-bordered" style="width:100%">
-  <thead>
+  <option value="April" {% if month == "April" %} selected {%else %} {%endif%}>April</option>
+
+  <option value="May" {% if month == "May" %} selected {%else %} {%endif%}>May</option>
+ 
+  <option value="June" {% if month == "June" %} selected {%else %} {%endif%}>June</option>
+  
+  <option value="July" {% if month == "July" %} selected {%else %} {%endif%}>July</option>
+ 
+  <option value="August" {% if month == "August" %} selected {%else %} {%endif%}>August</option>
+  
+  <option value="September"{% if month == "September" %} selected {%else %} {%endif%}>September</option>
+  
+  <option value="October"{% if month == "October" %} selected {%else %} {%endif%}>October</option>
+
+  <option value="November" {% if month == "November" %} selected {%else %} {%endif%}>November</option>
+  
+  <option value="December" {% if month == "December" %} selected {%else %} {%endif%}>December</option>
+</select>
+
+<label>Select Year: <select name="year" id="sort-items"></label>
+  <option value="">Year</option>
+  {% for i in lst %}
+  
+  <option value="{{i}}" {% if year == i %} selected {%else %} {%endif%}  >{{i}}</option>
+  {%endfor%}
+
+</select>
+
+<button type="submit">Submit</button>
+</form>
+
+
+<table id="products"  class="datatables-ajax table table-bordered mb-d">
+    <thead>
     <tr>
-      <th></th>
-      <th class="all">Business Name</th>
-      <th class="all">Invoice</th>
-      <th class="all">Semana 1</th>
-      <th class="all">Semana 2</th>
-      <th class="all">Semana 3</th>
-      <th class="none">Semana 4</th>
-    
+        <th>Business Name</th>
+        <th>Invoice</th>
+        <th>Semana1</th>
+        <th>Semana2</th>
+        <th>Semana3</th>
+        <th>Semana4</th>
     </tr>
-  </thead>
-  <tbody>
-    {%for i in obj%}
+    </thead>
+    <tbody>
+ 
+    {% if obj|length == 0 %} 
+  
+    <tr class="parent">
+       
+      <td><a href="#"> </a></td>
+
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+  </tr>
+ 
+  <tr>
+      
+      <td></td> 
+      <td></td>
+      
+      <td></td>
+      <td></td>
+      <td></td>
+      
+  </tr>
+  {%else%}
+    {% for i,j in obj.items %}
+      
+    <tr class="parent">
+       
+        <td><a href="#"> + {{i}}</a></td>
+
+        <td>{{j.0}}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    {%for z in j|slice:"1:"%}
     <tr>
-        <td></td>
-        <td>{{i.business_name}}</td>
-        <td>{{i.invoice}}</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
         
-      </tr>
-
+        <td></td> 
+        <td>{{z}}</td>
+        
+        <td></td>
+        <td></td>
+        <td></td>
+        {%endfor%}
     </tr>
-    {%endfor%}
-  </tbody>
+     {%endfor%}{%endif%}
+    </tbody>
+</table>
 
+<script>
 
-  <script>
-    var table = $('#example').DataTable({
-        responsive: {
-          details: {
-            type: 'column'
-          }
-        },
-        columnDefs: [{
-          className: 'control',
-          orderable: false,
-          targets: 0
-        }],
-        order: [1, 'asc']
-      });
+    document.getElementById("products").addEventListener("click", function(e) {
+        if (e.target.tagName === "A") {
+            e.preventDefault();
+            var row = e.target.parentNode.parentNode;
+            while ((row = nextTr(row)) && !/\bparent\b/.test(row.className))
+                toggle_it(row);
+        }
+    });
+    
+    function nextTr(row) {
+        while ((row = row.nextSibling) && row.nodeType != 1);
+        return row;
+    }
+    
+    function toggle_it(item){ 
+         if (/\bopen\b/.test(item.className))
+              
+             item.className = item.className.replace(/\bopen\b/," ");
+            
+
+         else
+             item.className += " open";
+     } 
+
+     {% comment %} window.onload = function() {
+      var selItem = sessionStorage.getItem("SelItem");  
+      $('#sort-item').val(selItem);
+      var year = sessionStorage.getItem("year");  
+      $('#sort-items').val(year);
       
-      $('#btn-show-all-doc').on('click', expandCollapseAll);
-      
-      function expandCollapseAll() {
-        table.rows('.parent').nodes().to$().find('td:first-child').trigger('click').length || 
-        table.rows(':not(.parent)').nodes().to$().find('td:first-child').trigger('click')
       }
+      $('#sort-item').change(function() { 
+          var selVal = $(this).val();
+          console.log(selVal)
+          sessionStorage.setItem("SelItem", selVal);
+      
+        });
+
+      
+   
+      $('#sort-items').change(function() { 
+          var selVals = $(this).val();
+          console.log(selVals)
+          sessionStorage.setItem("year", selVals);
+      }); {% endcomment %}
+
+
 </script>
 {%endblock%}
-
-
-

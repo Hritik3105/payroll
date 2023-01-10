@@ -1,116 +1,9 @@
 {% extends 'layout/admin.html' %}
 
 {%block content%}
-<style>
-    tbody tr {
-        display : none;
-    }
-    tr.parent {
-        display : table-row;
-    }
-    tr.open {
-        display : table-row;
-    }
-</style>
 
 
-
-<table id="products"  class="datatables-ajax table table-bordered">
-    <thead>
-    <tr>
-        <th>Business Name</th>
-        <th>Invoice</th>
-        <th>Semana1</th>
-        <th>Semana2</th>
-        <th>Semana3</th>
-        <th>Semana4</th>
-    </tr>
-    </thead>
-    <tbody>
-    {% for i in obj%}
-    <tr class="parent">
-       
-        <td><a href="#">{{i.business_name}}</a></td>
-        <td>{{i.invoice}}</td>
-        <td>Oranges</td>
-        <td>22/10</td>
-        <td>22/10</td>
-        <td>22/10</td>
-    </tr>
-   
-
-    <tr>
-        
-        <td></td>
-        <td>{{i.invoice}}</td>
-        <td>City 1</td>
-        <td>22/10</td>
-        <td>22/10</td>
-      
-    </tr>
-    {%endfor%}
-    
-    {% comment %} <tr>
-        <td></td>
-        <td>140</td>
-        <td>City 2</td>
-        <td>22/10</td>
-        <td>22/10</td>
-        <td>22/10</td>
-
-    </tr> {% endcomment %}
-    {% comment %} <tr class="parent">
-        <td><a href="#">+ On Store</a></td>
-        <td>100</td>
-        <td>Apples</td>
-        <td>22/10</td>
-        <td>22/10</td>
-        <td>22/10</td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>120</td>
-        <td>City 1</td>
-        <td>22/10</td>
-        <td>22/10</td>
-        <td>22/10</td>
-    </tr>
-    <tr>
-        <td></td>
-        <td>140</td>
-        <td>City 2</td>
-        <td>22/10</td>
-        <td>22/10</td>
-        <td>22/10</td>
-    </tr> {% endcomment %}
-    </tbody>
-</table>
-
-<script>
-
-    document.getElementById("products").addEventListener("click", function(e) {
-        if (e.target.tagName === "A") {
-            e.preventDefault();
-            var row = e.target.parentNode.parentNode;
-            while ((row = nextTr(row)) && !/\bparent\b/.test(row.className))
-                toggle_it(row);
-        }
-    });
-    
-    function nextTr(row) {
-        while ((row = row.nextSibling) && row.nodeType != 1);
-        return row;
-    }
-    
-    function toggle_it(item){ 
-         if (/\bopen\b/.test(item.className))
-             item.className = item.className.replace(/\bopen\b/," ");
-         else
-             item.className += " open";
-     } 
-</script>
-{%endblock%}
-{% comment %} <h1 class="credential_heading ">SII Credential</h1>
+ <h1 class="credential_heading ">SII Credential</h1>
 <div class="container">
     <div class="row share_info">
         <div class="col-md-12 ">
@@ -155,7 +48,8 @@
             </form>
         </div>
     </div>
-</div> {% endcomment %}
+</div>
+{%endblock%}
 
 
 
