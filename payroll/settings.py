@@ -89,30 +89,30 @@ AUTH_USER_MODEL = 'payrollapp.user'
 
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'payroll',
-        'USER':'root',
-        "HOST":"localhost",
-        'PASSWORD':"",
-        "PORT":"3306"
-    }
-}
-
-
-# git
-
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
 #         'NAME': 'payroll',
 #         'USER':'root',
 #         "HOST":"localhost",
-#         'PASSWORD':"AdMiN@1234",
+#         'PASSWORD':"",
 #         "PORT":"3306"
 #     }
 # }
+
+
+# git
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'payroll',
+        'USER':'root',
+        "HOST":"localhost",
+        'PASSWORD':"AdMiN@1234",
+        "PORT":"3306"
+    }
+}
 
 
 

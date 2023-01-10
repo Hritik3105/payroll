@@ -19,7 +19,9 @@ def index(request):
     for i in pro_obj:
         count=count+1
         get=Providers.objects.filter(provider_name=i["provider_name"]).first()
+        lst.append(get)
         print(count)
+    print(lst)
        
     z=len(pro_obj)
     return render(request,"provider/index.html",{"bank":bank_obj,"pro":lst,"js":z})

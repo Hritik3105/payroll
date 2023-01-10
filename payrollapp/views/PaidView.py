@@ -11,5 +11,3 @@ def paid(request):
 
 
 
-
-#from where we will know balance is paid or not ??
