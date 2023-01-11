@@ -56,7 +56,7 @@ class Providers(models.Model):
   payment_term=models.CharField(max_length=250,null=True,blank=True)
   email=models.EmailField(null=True,blank=True)
   manual_data=models.FileField(null=True,blank=True)
-
+  week=models.FloatField(blank=True,null=True)
 
 class Bank(models.Model):
   bank_name=models.CharField(max_length=250,null=True,blank=True)

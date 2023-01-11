@@ -17,73 +17,59 @@
       width: 86px;
       height: 39px;
   }
-  
+  .table-main {
+    padding: 17px;
+    box-shadow: 0 0 2px !important;
+    margin-bottom:15px;
+  }
+  .table:not(.table-dark) thead:not(.table-dark) th {
+    color: #000000 !important;
+  }
+  .table-bordered {
+    border: 1px solid #ddd;
+  } 
+  .table-bordered {
+    border: 1px solid #ddd;
+    box-shadow: 0 0 0px 1px !important;
+  }
+  .resultmsg {
+    height: 68vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  a.result_clicker {
+    background: #182535;
+    padding: 7px 15px;
+    color: #fff;
+    border-radius: 8px;
+  }
+  a.result_clicker {
+    color: #fff !important;
+    text-decoration: none;
+}
 </style>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
 
-<form method ="POST" class="">
-  {%csrf_token%}
-
-<label>Select Month: <select name="month" id="sort-item"></label>
-  
-  <option value="Ja"> Month</option>
-
-  <option value="January"  {% if month == "January" %} selected {%else %} {%endif%}  >January</option>
-  
-  <option value="February" {% if month == "February" %} selected {%else %} {%endif%} >February</option>
-  
-  <option value="March" {% if month == "March" %} selected {%else %} {%endif%}>March</option>
- 
-  <option value="April" {% if month == "April" %} selected {%else %} {%endif%}>April</option>
-
-  <option value="May" {% if month == "May" %} selected {%else %} {%endif%}>May</option>
- 
-  <option value="June" {% if month == "June" %} selected {%else %} {%endif%}>June</option>
-  
-  <option value="July" {% if month == "July" %} selected {%else %} {%endif%}>July</option>
- 
-  <option value="August" {% if month == "August" %} selected {%else %} {%endif%}>August</option>
-  
-  <option value="September"{% if month == "September" %} selected {%else %} {%endif%}>September</option>
-  
-  <option value="October"{% if month == "October" %} selected {%else %} {%endif%}>October</option>
-
-  <option value="November" {% if month == "November" %} selected {%else %} {%endif%}>November</option>
-  
-  <option value="December" {% if month == "December" %} selected {%else %} {%endif%}>December</option>
-</select>
-
-<label>Select Year: <select name="year" id="sort-items"></label>
-  <option value="">Year</option>
-  {% for i in lst %}
-  
-  <option value="{{i}}" {% if year == i %} selected {%else %} {%endif%}  >{{i}}</option>
-  {%endfor%}
-
-</select>
-
-<button type="submit">Submit</button>
-</form>
 
 
-<table id="products"  class="datatables-ajax table table-bordered mb-d">
-    <thead>
-    <tr>
-        <th>Business Name</th>
-        <th>Invoice</th>
-        <th>Semana1</th>
-        <th>Semana2</th>
-        <th>Semana3</th>
-        <th>Semana4</th>
-    </tr>
-    </thead>
-    <tbody>
+
+
  
     {% if obj|length == 0 %} 
+ <div class="row w-100">
+    <div class="col-md-12 resultmsg">
+        <div class="text-center">
+        <h1 class="no_result_msg">No Result Found </h1>
+        <a href="{% url 'paid' %}" class="result_clicker">Back</a>
+        </div>
+    </div>
+</div>
+    
   
-    <tr class="parent">
+    {% comment %} <tr class="parent">
        
       <td><a href="#"> </a></td>
 
@@ -103,35 +89,82 @@
       <td></td>
       <td></td>
       
-  </tr>
+  </tr> {% endcomment %}
   {%else%}
+  <div class="table-main">
+  <table id="products"  class="datatables-ajax table table-bordered mb-d">
+    <thead>
+    <tr>
+        <th>Business Name</th>
+        <th>Invoice</th>
+        <th>Semana1</th>
+        <th>Semana2</th>
+        <th>Semana3</th>
+        <th>Semana4</th>
+    </tr>
+    </thead>
+    <tbody>
     {% for i,j in obj.items %}
-      
+    
     <tr class="parent">
        
         <td><a href="#"> + {{i}}</a></td>
 
-        <td>{{j.0}}</td>
+        <td>{{j.0.0}}</td>
+        {%if j.0.1 >= 0 and j.0.1 <= 1.75 %}
+        <td>{{j.0.2}}</td>
+        {%else%}
         <td></td>
+        {%endif%}
+        {%if j.0.1 > 1.75 and j.0.1 <= 3.75 %}
+        <td>{{j.0.2}}</td>
+        {%else%}
         <td></td>
+        {%endif%}
+        {%if j.0.1 > 3.75 and j.0.1 <= 5.75 %}
+        <td>{{j.0.2}}</td>
+        {%else%}
         <td></td>
+        {%endif%}
+        {%if j.0.1 > 5.75 and j.0.1 <= 7.75 %}
+        <td>{{j.0.2}}</td>
+        {%else%}
         <td></td>
+        {%endif%}
     </tr>
     {%for z in j|slice:"1:"%}
+    
     <tr>
         
         <td></td> 
-        <td>{{z}}</td>
+        <td>{{z.0}}</td>
+        {%if z.1 >= 0 and z.1 <= 1.75 %}
+         <td>{{z.2}}</td>
+        {%else%}
+        <td></td>
+        {%endif%}
+        {%if z.1 > 1.75 and z.1 <= 3.75 %}
+        <td>{{z.2}}</td>
+        {%else%}
+        <td></td>
+        {%endif%}
+        {%if z.1 > 3.75 and z.1 <= 5.75 %}
+        <td>{{z.2}}</td>
+        {%else%}
+        <td></td>
+        {%endif%}
+        {%if z.1 > 5.75 and z.1 <= 7.75 %}
+        <td>{{z.2}}</td>
+        {%else%}
+        <td></td>
+        {%endif%}
         
-        <td></td>
-        <td></td>
-        <td></td>
         {%endfor%}
     </tr>
      {%endfor%}{%endif%}
     </tbody>
 </table>
-
+</div>
 <script>
 
     document.getElementById("products").addEventListener("click", function(e) {
