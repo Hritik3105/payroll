@@ -24,7 +24,7 @@ def paid(request):
         count=0
         for i in edit_pro:
             count+=1
-            paid_dict[i] = Providers.objects.filter(Q(business_name=i),Q(month_of_payment=month) & Q(year_of_payment=year)).values_list("invoice","week","amount_paid")
+            paid_dict[i] = Providers.objects.filter(Q(business_name=i),Q(month_of_payment=month) & Q(year_of_payment=year) & Q(user_id=request.user.id)).values_list("invoice","week","amount_paid")
         
         for i in range(2000,2075):
              lst.append(str(i))
