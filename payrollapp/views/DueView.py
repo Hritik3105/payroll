@@ -155,17 +155,20 @@ def due_table(request):
 #updade data
 vals=[]
 def update(request):
-    filename=os.getcwd()+"/payrollapp/csv/RCV_COMPRA_REGISTRO_76750936-7_202203.csv"              
+    filename=os.getcwd()+"/payrollapp/csv/RCV_COMPRA_REGISTRO_76750936-7_202211.csv"              
     empexceldata = pd.read_csv(filename,error_bad_lines=False,sep=r';',usecols =[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18])
-    empexceldata.columns = empexceldata.columns.str.replace(' ', '')
-    val=empexceldata.columns
+    dup=empexceldata.drop_duplicates(subset='Folio', keep="first")
+       
+    dup.columns = dup.columns.str.replace(' ', '')
+
+    val=dup.columns
     zz=Providers.objects.all()
     ids = []                 
     zz=Providers.objects.all().values_list("id",flat =True)
     for i in zz:
         ids.append(i)
     count = 0
-    for i in empexceldata.itertuples():
+    for i in dup.itertuples():
         total = i.FechaDocto
         date=pd.to_datetime(total).date()
         exp=date+pd.Timedelta(days=30)
