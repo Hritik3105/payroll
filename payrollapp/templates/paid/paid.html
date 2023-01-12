@@ -68,28 +68,7 @@
     </div>
 </div>
     
-  
-    {% comment %} <tr class="parent">
-       
-      <td><a href="#"> </a></td>
 
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-  </tr>
- 
-  <tr>
-      
-      <td></td> 
-      <td></td>
-      
-      <td></td>
-      <td></td>
-      <td></td>
-      
-  </tr> {% endcomment %}
   {%else%}
   <div class="table-main">
   <table id="products"  class="datatables-ajax table table-bordered mb-d">
@@ -145,13 +124,15 @@
         
         {%endfor%}
     </tr>
-     {%endfor%}{%endif%}
+     {%endfor%}
+     
     </tbody>
 </table>
+
 <div class="d-flex mb-4" style="display: flex !important;
 justify-content: space-between;border-bottom: 1px solid;padding-right: 10px;">
-<h3 class="m-0">Sum total</h3><div class="pt-2"style="color: #000;"><span style="padding-right:50px;">{{week1}} </span><span style="padding-right:53px;"> {{week2}} </span> <span style="padding-right:31px;">{{week3}} </span> {{week4}}
-</div></div>
+<h3 class="m-0">Sum Total</h3><div class="pt-2"style="color: #000;"><span style="padding-right:50px;">{{week1}} </span><span style="padding-right:53px;"> {{week2}} </span> <span style="padding-right:31px;">{{week3}} </span> {{week4}}
+</div></div>{%endif%}
 <hr>
 </div>
 <script>
