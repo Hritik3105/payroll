@@ -13,7 +13,7 @@ import datetime
 def paid(request):
     lst=[]
     paid_dict={}
-    paid_dict1={}
+   
     if request.method == "POST":
         month=request.POST.get("month")
         year=request.POST.get("year")
@@ -24,12 +24,49 @@ def paid(request):
         count=0
         for i in edit_pro:
             count+=1
-            paid_dict[i] = Providers.objects.filter(Q(business_name=i),Q(month_of_payment=month) & Q(year_of_payment=year) & Q(user_id=request.user.id)).values_list("invoice","week","amount_paid")
+            paid_dict[i] = Providers.objects.filter(Q(business_name=i),Q(month_of_payment=month) & Q(year_of_payment=year) & Q(user_id=request.user.id)).values_list("invoice","week","amount_paid").order_by("amount_paid")
+        print("------------------",paid_dict)
+        
+        week1_lst=[]
+        week2_lst=[]
+        week3_lst=[]
+        week4_lst=[]
+        for k,j in paid_dict.items():
+            for a in j:
+                if a[1] >= 0 and a[1] <= 1.75: 
+                   
+                    week1_lst.append(int(a[2]))
+                  
+
+                if a[1] > 1.75 and a[1] <= 3.75: 
+                 
+                    week2_lst.append(int(a[2]))
+                   
+
+                if a[1] >= 3.75 and a[1] <= 5.75: 
+                   
+                    week3_lst.append(int(a[2]))
+                
+
+                if a[1] >= 5.75 and a[1] <= 7.75: 
+                   
+                    week4_lst.append(int(a[2]))
+                
+        week1=sum(week1_lst)       
+        print("week1",week1)  
+        week2=sum(week2_lst)  
+        print("week2",week2)    
+        week3=sum(week3_lst) 
+        print("week3",week3)   
+        week4=sum(week4_lst)  
+        print("week4",week4)
         
         for i in range(2000,2075):
              lst.append(str(i))
 
-        return render(request,"paid/paid.html",{"obj":paid_dict,"lst":lst,"month":month,"year":year,"paid":paid_dict1}) 
+
+
+        return render(request,"paid/paid.html",{"obj":paid_dict,"lst":lst,"month":month,"year":year,"week1":week1,"week2":week2,"week3":week3,"week4":week4}) 
     today = datetime.date.today()
 
     year = today.year

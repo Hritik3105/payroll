@@ -5,7 +5,68 @@
  
  
  {% block content %}
- 
+ <style>
+  label.days_dias {
+    padding-left: 12px;
+    padding-bottom: 6px;
+    font-size: 17px;
+  }
+  button.filter_clickr {
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 5px 30px;
+    background-color: #5a8dee;
+  }
+
+  .css-prp
+{
+  color: #17CBF2;
+  font-family: arial;
+}
+
+
+.con1 {
+  display: block;
+  position: relative;
+
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 15px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.con1 input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 18px;
+  width: 18px;
+  background-color: lightgrey;
+  border-radius: 10%;
+}
+
+/* When the radio button is checked, add a blue background */
+.con1 input:checked ~ .checkmark {
+  background-color: #17CBF2;
+}
+
+.contentcheck {
+  padding-left: 25px;
+}
+ </style>
  
  
  <section class="mainload">
@@ -16,27 +77,88 @@
    
      <div class="container-xxl flex-grow-1 container-p-y">
        
-       
+      <div class="row m-0 justify-content-center">
+        <div class="col-md-12 text-center mt-3 mb-5">
  <h4 class="py-3 breadcrumb-wrapper mb-4">
- <span class="text-muted fw-light">DataTables /</span> Advanced
- 
+ <span class="text-muted fw-light text-dark"><span style="padding-right: 115px;font-weight: 400; color: #000;">Invoice Due for Paid</span>
  </h4>
+</div>
+</div>
+ <form method = "POST">
+  {%csrf_token%}
+<div class="row m-0 justify-content-center">
+  <div class="col-md-3 text-left text-dark">
+    <label class="con1"><span class="contentcheck">1 a 30 Dias</span>
+      <input type="radio" value="2"  name="fav_language"  {%if  month == "2"%} checked {%else%} {%endif%} > 
+      <span class="checkmark"></span><br>
+
+     
+
+<label class="con1"><span class="contentcheck">31 a 60 Dias</span>
+  <input type="radio" value="30"  name="fav_language"  {%if  month == "30"%} checked {%else%} {%endif%} > 
+  <span class="checkmark"></span><br>
+
+
+
+<label class="con1"><span class="contentcheck">61 a 90 Dias</span>
+  <input type="radio" value="60"  name="fav_language"  {%if  month == "60"%} checked {%else%} {%endif%} > 
+  <span class="checkmark"></span><br>
+
+
+  </div>
+
+  <div class="col-md-3 text-left text-dark">
+    <label class="con1"><span class="contentcheck">91 a 120 Dias</span>
+      <input type="radio" value="90"  name="fav_language"  {%if  month == "90"%} checked {%else%} {%endif%} > 
+      <span class="checkmark"></span><br>
+  
+
+
+
+<label class="con1"><span class="contentcheck">121 a 150 Dias</span>
+  <input type="radio" value="120"  name="fav_language"  {%if  month == "120"%} checked {%else%} {%endif%} > 
+  <span class="checkmark"></span><br>
+
+
+<label class="con1"><span class="contentcheck">151 Dias</span>
+  <input type="radio" value="150"  name="fav_language"  {%if  month == "150"%} checked {%else%} {%endif%} > 
+  <span class="checkmark"></span><br>
+
+
+  </div>
+</div>
+<div class="row m-0 justify-content-center">
+  <div class="col-md-5 text-center mt-3 mb-5"style="padding-right: 122px;">
+    <button type="submit" class="filter_clickr">Search  </button>
+  </div>
+</div>
+
+
+
+</form>
+
  <div class="row-fluid d-flex">
   
  </div>
  <!-- Ajax Sourced Server-side -->
+ 
  <div class="card">
   <h5 class="card-header">Invoice Due For Paid</h5>
  <div class="preload">
  </div>
  <div class="content">
+ 
    <div class="card-datatable text-nowrap">
+    {%if month == None %}
      <table class="datatables-ajax table table-bordered" id="datatables" >
-     <thead>
+     
+      <thead>
+      
        <tr>
         <th>Business Name</th>
         <th>Invoice</th>
         <th>Expiration Date</th>
+        
         <th>1) -1 a -30 Dias</th>
         <th>2) -31 a -60 Dias</th>
         <th>3) -61 a -90 Dias</th>
@@ -85,26 +207,152 @@
         <td>{{i.amount_paid}}</td>
         {%else%}
         <td></td>
-        {%endif%}
-        
-
-        
-
-        
-        {% comment %} {%elif i.days_overdue > 60  and i.days_overdue <= 90  %}
-        <td>{{balance_payable}}</td>
-        {%elif  i.days_overdue > 90 and i.days_overdue <= 120  %}
-        <td>{{balance_payable}}</td>
-        {%elif  i.days_overdue > 121  and i.days_overdue <= 150  %}
-        <td>{{balance_payable}}</td>
-        {%elif  i.days_overdue > 151 %}
-        <td>{{balance_payable}}</td> {% endcomment %}
-       
-           
+        {%endif%}     
          {%endfor%}
        </tr>
+      
      </tbody>
      </table>
+     {%else%}
+     <table class="datatables-ajax table table-bordered" id="datatables" >
+     
+      <thead>
+      
+       <tr>
+        {%if month == "2"%}
+        <th>Business Names</th>
+        <th>Invoice</th>
+        <th>Expiration Date</th>
+        <th>1) -1 a -30 Dias</th>
+        
+        {%elif month == "30"%}
+        <th>Business Name1</th>
+        <th>Invoice</th>
+        <th>Expiration Date</th>
+        <th>2) -31 a -60 Dias</th>
+
+        {%elif month == "60"%}
+        <th>Business Name2</th>
+        <th>Invoice</th>
+        <th>Expiration Date</th>
+        <th>3) -61 a -90 Dias</th>
+
+        {%elif month == "90"%}
+        <th>Business Name3</th>
+        <th>Invoice</th>
+        <th>Expiration Date</th>
+        <th>4) -91 a -120 Dias</th>
+
+        {%elif month == "120"%}
+        <th>Business Name4</th>
+        <th>Invoice</th>
+        <th>Expiration Date</th>
+        <th>5) -121 a -150 Dias date</th>
+
+        {%elif month == "150"%}
+        <th>Business Name5</th>
+        <th>Invoice</th>
+        <th>Expiration Date</th>
+        <th>6) -151 Dias date</th> 
+        {%endif%}
+       </tr>
+   
+     </thead>
+     <tbody>
+      {%if month  == "2"  %} 
+       {%for i in week1_obj%}    
+       <tr>
+        <td>{{i.business_name}}</td>
+        <td>{{i.invoice}}</td>
+        <td>{{i.expiration_date}}</td>
+        <td>{{i.amount_paid}}</td>
+      </tr>
+      {%endfor%}
+      {%endif%}
+
+
+        {%if month  == "30"  %} 
+        {%for i in week2_obj%}    
+   
+        <tr>
+         
+         <td>{{i.business_name}}</td>
+         <td>{{i.invoice}}</td>
+         <td>{{i.expiration_date}}</td>
+         <td>{{i.amount_paid}}</td>
+        
+       </tr>
+      
+       {%endfor%} 
+       {%endif%}
+
+       {%if month  == "60"  %} 
+       {%for i in week3_obj%}    
+  
+       <tr>
+        
+        <td>{{i.business_name}}</td>
+        <td>{{i.invoice}}</td>
+        <td>{{i.expiration_date}}</td>
+        <td>{{i.amount_paid}}</td>
+       
+      </tr>
+     
+      {%endfor%} 
+      {%endif%}
+
+      {%if month  == "90"  %} 
+      {%for i in week4_obj%}    
+ 
+      <tr>
+       
+       <td>{{i.business_name}}</td>
+       <td>{{i.invoice}}</td>
+       <td>{{i.expiration_date}}</td>
+       <td>{{i.amount_paid}}</td>
+      
+     </tr>
+    
+     {%endfor%} 
+     {%endif%}
+
+
+     {%if month  == "120"  %} 
+     {%for i in week5_obj%}    
+
+     <tr>
+      
+      <td>{{i.business_name}}</td>
+      <td>{{i.invoice}}</td>
+      <td>{{i.expiration_date}}</td>
+      <td>{{i.amount_paid}}</td>
+     
+    </tr>
+   
+    {%endfor%} 
+    {%endif%}
+
+
+    {%if month  == "150"  %} 
+    {%for i in week6_obj%}    
+
+    <tr>
+     
+     <td>{{i.business_name}}</td>
+     <td>{{i.invoice}}</td>
+     <td>{{i.expiration_date}}</td>
+     <td>{{i.amount_paid}}</td>
+    
+   </tr>
+  
+   {%endfor%} 
+   {%endif%}
+
+
+       
+     </tbody>
+     </table>
+     {%endif%}
    </div>
  </div>
  </div>
@@ -128,6 +376,34 @@
            
             
          });
+
      });
+
+     
     </script>
+
+    {% comment %} <script>
+      $('#myForm input').on('change', function() {
+        var radio = $('input[name=fav_language]:checked', '#myForm').val();
+        alert(radio)
+
+
+        $.ajax({
+          type:"GET",
+          url: 'invoice',
+          data: {
+            'id': radio
+          },
+          dataType: 'json',
+          success: function (response ) {
+          
+            
+          }
+       
+        });
+  
+      });
+    
+    </script> {% endcomment %}
+
 {%endblock javascripts%}

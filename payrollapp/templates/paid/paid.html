@@ -109,30 +109,14 @@
     <tr class="parent">
        
         <td><a href="#"> + {{i}}</a></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
 
-        <td>{{j.0.0}}</td>
-        {%if j.0.1 >= 0 and j.0.1 <= 1.75 %}
-        <td>{{j.0.2}}</td>
-        {%else%}
-        <td></td>
-        {%endif%}
-        {%if j.0.1 > 1.75 and j.0.1 <= 3.75 %}
-        <td>{{j.0.2}}</td>
-        {%else%}
-        <td></td>
-        {%endif%}
-        {%if j.0.1 > 3.75 and j.0.1 <= 5.75 %}
-        <td>{{j.0.2}}</td>
-        {%else%}
-        <td></td>
-        {%endif%}
-        {%if j.0.1 > 5.75 and j.0.1 <= 7.75 %}
-        <td>{{j.0.2}}</td>
-        {%else%}
-        <td></td>
-        {%endif%}
+
     </tr>
-    {%for z in j|slice:"1:"%}
+    {%for z in j%}
     
     <tr>
         
@@ -164,6 +148,11 @@
      {%endfor%}{%endif%}
     </tbody>
 </table>
+<div class="d-flex mb-4" style="display: flex !important;
+justify-content: space-between;border-bottom: 1px solid;padding-right: 10px;">
+<h3 class="m-0">Sum total</h3><div class="pt-2"style="color: #000;"><span style="padding-right:50px;">{{week1}} </span><span style="padding-right:53px;"> {{week2}} </span> <span style="padding-right:31px;">{{week3}} </span> {{week4}}
+</div></div>
+<hr>
 </div>
 <script>
 
