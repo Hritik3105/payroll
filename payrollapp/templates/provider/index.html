@@ -278,6 +278,8 @@ $(".cars").change(function(){
     var currentRow=$(a).closest("tr");
   
     var bank_id = currentRow.find("td:eq(0)").html();
+    var company = currentRow.find("td:eq(1)").html();
+    alert(company)
     var bank_account = currentRow.find("td:eq(3)").html(); 
     var email = currentRow.find("td:eq(7)").find('input').val(); 
     
@@ -307,7 +309,8 @@ $(".cars").change(function(){
             'bank_no':asd01,
             'payment':payment_term,
             'dayss':days,
-            'email':email
+            'email':email,
+            'company':company
           },
           dataType: 'json',
           success: function (data) {

@@ -70,6 +70,20 @@
 .contentcheck {
   padding-left: 25px;
 }
+span.amount {
+  padding: 0px 22px;
+  border: 3px red !important;
+  color: red;
+  box-shadow: 0 0 0px 1px red;
+  margin: 9px 0;
+}
+.amount.d-flex {
+  justify-content: space-between;
+}
+.paytab {
+  padding-right: 93px;
+  padding-left: 12px;
+}
  </style>
  
  
@@ -91,49 +105,92 @@
  <form method = "POST">
   {%csrf_token%}
 <div class="row m-0 justify-content-center">
-  <div class="col-md-3 text-left text-dark">
+  <div class="col-md-4 text-left text-dark paytab">
+    <div class="amount d-flex">
+      <div>
     <label class="con1"><span class="contentcheck">1 a 30 Dias</span>
       <input type="radio" value="2"  name="fav_language"  {%if  month == "2"%} checked {%else%} {%endif%} > 
-      <span class="checkmark"></span><br>
+      <span class="checkmark"></span>
+    </div>
+    <div class="text-start">
+      <span class="amount">{{week1}}</span>
+    </div>
+    </div>
+      <br>
 
      
-
-<label class="con1"><span class="contentcheck">31 a 60 Dias</span>
+      <div class="amount d-flex">
+        <div>
+<label class="con1"><span class="contentcheck">31 a 60 Dias</span> 
   <input type="radio" value="30"  name="fav_language"  {%if  month == "30"%} checked {%else%} {%endif%} > 
-  <span class="checkmark"></span><br>
-
-
-
-<label class="con1"><span class="contentcheck">61 a 90 Dias</span>
+  <span class="checkmark"></span>
+</div>
+<div class="text-start">
+  <span class="amount">{{week2}}</span>
+</div>
+</div>
+  <br>
+   
+  <div class="amount d-flex">
+    <div>
+<label class="con1"><span class="contentcheck">61 a 90 Dias</span> 
   <input type="radio" value="60"  name="fav_language"  {%if  month == "60"%} checked {%else%} {%endif%} > 
-  <span class="checkmark"></span><br>
+  <span class="checkmark"></span>
+</div>
+<div class="text-start">
+  <span class="amount">{{week3}}</span>
+</div>
+</div>
+  <br>
 
 
   </div>
 
-  <div class="col-md-3 text-left text-dark">
-    <label class="con1"><span class="contentcheck">91 a 120 Dias</span>
+  <div class="col-md-4 pl-3 text-left text-dark paytab">
+    <div class="amount d-flex">
+      <div>
+    <label class="con1"><span class="contentcheck">91 a 120 Dias</span> 
       <input type="radio" value="90"  name="fav_language"  {%if  month == "90"%} checked {%else%} {%endif%} > 
-      <span class="checkmark"></span><br>
+      <span class="checkmark"></span>
+    </div>
+    <div class="text-start">
+      <span class="amount">{{week4}}</span>
+    </div>
+  </div>
+      <br>
   
 
 
-
-<label class="con1"><span class="contentcheck">121 a 150 Dias</span>
+      <div class="amount d-flex">
+        <div>
+<label class="con1"><span class="contentcheck">121 a 150 Dias</span> 
   <input type="radio" value="120"  name="fav_language"  {%if  month == "120"%} checked {%else%} {%endif%} > 
-  <span class="checkmark"></span><br>
+  <span class="checkmark"></span>
+</div>
+<div class="text-start">
+  <span class="amount">{{week5}}</span>
+</div>
+</div>
+  <br>
 
-
-<label class="con1"><span class="contentcheck">151 Dias</span>
+  <div class="amount d-flex">
+    <div>
+<label class="con1"><span class="contentcheck">151 Dias</span>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
   <input type="radio" value="150"  name="fav_language"  {%if  month == "150"%} checked {%else%} {%endif%} > 
-  <span class="checkmark"></span><br>
+  <span class="checkmark"></span>
+</div>
+<div class="text-start">
+  <span class="amount">{{week6}}</span> 
+</div>
+</div>
+  <br>
 
 
   </div>
 </div>
 <div class="row m-0 justify-content-center">
   <div class="col-md-5 text-center mt-3 mb-5"style="padding-right: 122px;">
-    <button type="submit" class="filter_clickr">Search  </button>
+    <button type="submit" class="filter_clickr">Search</button>
   </div>
 </div>
 

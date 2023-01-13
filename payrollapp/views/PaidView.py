@@ -3,12 +3,15 @@ from django.contrib.auth.decorators import login_required
 from payrollapp.models import *
 from django.db.models import Q
 import datetime
+from django.db.models import Sum
 
 #Date of paid invoice
 @login_required 
 def paid(request):
     lst=[]
     paid_dict={}
+  
+   
    
     if request.method == "POST":
         month=request.POST.get("month")
@@ -17,7 +20,12 @@ def paid(request):
         edit_pro=Providers.objects.filter(Q(month_of_payment=month) & Q(year_of_payment=year) & Q(user_id=request.user.id)).values_list("business_name",flat=True).distinct()
         for i in edit_pro:
             paid_dict[i] = Providers.objects.filter(Q(business_name=i),Q(month_of_payment=month) & Q(year_of_payment=year) & Q(user_id=request.user.id)).values_list("invoice","week","amount_paid").order_by("amount_paid")
-        print("------------------",paid_dict)
+        # print("------------------",paid_dict)
+        
+        #     paid_dict1[i] = Providers.objects.filter(Q(business_name=i),Q(month_of_payment=month) & Q(year_of_payment=year) & Q(user_id=request.user.id)).aggregate(Sum('amount_paid'))
+
+        
+        # print("++++++++++++++++++",paid_dict1)
         
         week1_lst=[]
         week2_lst=[]
@@ -26,19 +34,15 @@ def paid(request):
         for k,j in paid_dict.items():
             for a in j:
                 if a[1] >= 0 and a[1] <= 1.75: 
-                   
                     week1_lst.append(int(a[2]))
                   
                 if a[1] > 1.75 and a[1] <= 3.75: 
-                 
                     week2_lst.append(int(a[2]))
                    
                 if a[1] >= 3.75 and a[1] <= 5.75: 
-                   
                     week3_lst.append(int(a[2]))
                 
                 if a[1] >= 5.75 and a[1] <= 7.75: 
-                   
                     week4_lst.append(int(a[2]))
                 
         week1=sum(week1_lst)           
