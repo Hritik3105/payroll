@@ -57,6 +57,11 @@ class Providers(models.Model):
   email=models.EmailField(null=True,blank=True)
   manual_data=models.FileField(null=True,blank=True)
   week=models.FloatField(blank=True,null=True)
+  add1=models.IntegerField(null=True,blank=True)
+  add2=models.IntegerField(null=True,blank=True)
+  add3=models.IntegerField(null=True,blank=True)
+  add4=models.IntegerField(null=True,blank=True)
+  add5=models.IntegerField(null=True,blank=True)
 
 class Bank(models.Model):
   bank_name=models.CharField(max_length=250,null=True,blank=True)

@@ -46,7 +46,7 @@ def vall(request):
 @login_required 
 def save_val(request):
     bank_c = request.GET.get("id")
-    print("-----------------------",bank_c)
+   
     bank_n = request.GET.get("bank_name")
 
     vat_id = request.GET.get("bank_code")
@@ -55,7 +55,7 @@ def save_val(request):
     days = request.GET.get("dayss")
     email = request.GET.get("email")
     company = request.GET.get("company")
-    print("-----------------------",company)
+    
 
     if days == None :
         days=payment_term
@@ -75,7 +75,6 @@ def save_val(request):
       
         date=pd.to_datetime(i.issue_date).date()
         exp=date+pd.Timedelta(days=int(days))
-        print("exp-----------------------",exp,"issue---------------------------",date)
         months=pd.to_datetime(exp).month_name()
         years=exp.strftime('%Y')
 
@@ -85,11 +84,11 @@ def save_val(request):
         date1 = datetime.datetime.strptime(str(date), date_format1)
         exp2 = datetime.datetime.strptime(str(exp), date_format1)
         week2=exp2 - date1
+      
         weeks=week2.days/4
-       
+
 
         exp_week=exp.day/4
-        
         
         date_format = "%Y-%m-%d"
         a = datetime.datetime.strptime(str(datetime.datetime.now().date()), date_format)

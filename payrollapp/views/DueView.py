@@ -42,6 +42,13 @@ def due_table(request):
             date=pd.to_datetime(Begindate).date()
             exp=date+pd.Timedelta(days=30)
             
+            date_format1 = "%Y-%m-%d"
+            
+            date1 = datetime.datetime.strptime(str(date), date_format1)
+            exp2 = datetime.datetime.strptime(str(exp), date_format1)
+            week2=exp2 - date1
+            weeks=week2.days/4
+
             week=exp.day/4
             months=pd.to_datetime(exp).month_name()
             years=exp.strftime('%Y')
@@ -66,7 +73,7 @@ def due_table(request):
                 pro_obj.total_amount_paid=0
             else:   
                 pro_obj.total_amount_paid=int(i.MontoTotal)
-            pro_obj.week=week
+            pro_obj.week=weeks
             pro_obj.year=years
             pro_obj.month=months
             pro_obj.balance_payable=0
@@ -110,13 +117,17 @@ def due_table(request):
                 a = datetime.datetime.strptime(str(datetime.datetime.now().date()), date_format)
                 b = datetime.datetime.strptime(str(valll), date_format)
                 today= a-b      
-            
+               
                 total = i.FechaDocto
                 date=pd.to_datetime(total).date()
                 exp=date+pd.Timedelta(days=30)
                 mon=pd.to_datetime(exp).month_name()
                 yea=exp.strftime('%Y')
-            
+                date_format1 = "%Y-%m-%d"  
+                date1 = datetime.datetime.strptime(str(date), date_format1)
+                exp2 = datetime.datetime.strptime(str(exp), date_format1)
+                week2=exp2 - date1
+                weeks=week2.days/4
                 week=exp.day/4
                 pro_obj=Providers()
 
@@ -131,7 +142,7 @@ def due_table(request):
                 pro_obj.month_of_payment=mon
                 pro_obj.days_overdue=today.days
                 pro_obj.payment_week=4
-                pro_obj.week=week
+                pro_obj.week=weeks
                 
                 if numpy.isnan(i.MontoTotal):
                     pro_obj.amount_paid=0
