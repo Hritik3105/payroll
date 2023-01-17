@@ -85,7 +85,7 @@
     <tbody>
     
     {% for i,j in obj.items %}
-    
+
     <tr class="parent">
        
         <td><a href="#"> + {{i}}</a></td>
@@ -113,15 +113,17 @@
         <td>{{j.0.5}}</td>
         {%endif%}
 
-        {%if j.0.6 == None %}
-        <td></td>
-        {%else%}
+
+        
+        {%if j.0.6 %}
         <td>{{j.0.6}}<td>
+        {%elif j.0.6 == None and j.0.7 == None %}
+        <td><td>
+        {%else%}
+        <td>{{j.0.7}}</td>
         {%endif%}
      
-       
         
-
 
     </tr>
     {%for z in j%}
