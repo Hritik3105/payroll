@@ -48,7 +48,7 @@ def due_table(request):
             exp2 = datetime.datetime.strptime(str(exp), date_format1)
             print("22222222sddsd2",type(exp2.day/4))
             week2=exp2 - date1
-            weeks=week2.days/4
+            weeks=exp2.day/4
 
             week=exp.day/4
             months=pd.to_datetime(exp).month_name()
@@ -136,7 +136,7 @@ def due_table(request):
                 exp2 = datetime.datetime.strptime(str(exp), date_format1)
                 print("22222222sddsd2",exp2.day/4)
                 week2=exp2 - date1
-                weeks=week2.days/4
+                weeks=exp2.day/4
                 week=exp.day/4
 
 

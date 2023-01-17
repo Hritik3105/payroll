@@ -96,7 +96,7 @@ def save_val(request):
         exp2 = datetime.datetime.strptime(str(exp), date_format1)
       
         week2=exp2 - date1
-        weeks=week2.days/4
+        weeks=exp.day/4
         exp_week=exp.day/4
 
         print(exp,exp_week)
