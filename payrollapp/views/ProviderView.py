@@ -16,7 +16,7 @@ def index(request):
     lst=[]
     for i in pro_obj:
             
-        get=Providers.objects.filter(provider_name=i["provider_name"]).first()
+        get=Providers.objects.filter(provider_name=i["provider_name"],user_id=request.user.id).first()
         lst.append(get)     
     print(lst)
        
