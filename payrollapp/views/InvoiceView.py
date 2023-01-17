@@ -55,7 +55,7 @@ def invoice(request):
 
 
         week5_total=Providers.objects.filter(Q(user_id=request.user.id) & Q(days_overdue__gt=120,days_overdue__lte=150)).values_list("amount_paid",flat=True)
-        print(week5_total)
+
         week5_amount=0
         if week5_total:
             for i in week5_total:
@@ -65,7 +65,6 @@ def invoice(request):
 
 
         week6_total=Providers.objects.filter(Q(user_id=request.user.id) & Q(days_overdue__gte=151)).values_list("amount_paid",flat=True)
-        print("-=-=-=-=",week6_total)
         week6_amount=0
         if week6_total:
             for i in week6_total:
@@ -83,7 +82,7 @@ def invoice(request):
             print("-----------",type(i))
             
             week1_amount+=i
-    print("week1",week1_amount)
+
 
 
     week2_total=Providers.objects.filter(Q(user_id=request.user.id) & Q(days_overdue__gt=30,days_overdue__lte=60)).values_list("amount_paid",flat=True)
@@ -127,7 +126,7 @@ def invoice(request):
         for i in week6_total:
             
             week6_amount +=i
-    print("week6",week6_amount)
+    print("week6",week6_amount) 
 
     obj_pro=Providers.objects.filter(user_id=request.user.id)
     return render(request,"Invoice/invoice.html",{'obj':obj_pro,"week1":week1_amount,"week2":week2_amount,"week3":week3_amount,"week4":week4_amount,"week5":week5_amount,"week6":week6_amount})

@@ -43,6 +43,10 @@ def vall(request):
     return JsonResponse(data)
 
 
+
+    
+
+
 @login_required 
 def save_val(request):
     bank_c = request.GET.get("id")
@@ -52,14 +56,20 @@ def save_val(request):
     vat_id = request.GET.get("bank_code")
     account_no = request.GET.get("bank_no")
     payment_term = request.GET.get("payment")
+    print("------------------",payment_term)
     days = request.GET.get("dayss")
     email = request.GET.get("email")
     company = request.GET.get("company")
     
 
-    if days == None :
-        days=payment_term
 
+    if days == None and payment_term == "Select":
+        print("Enterrrr")
+        days =0 
+
+    if days == None :
+      
+        days=payment_term
 
     # res = sm(
     #     subject = 'Payroll',
@@ -75,6 +85,7 @@ def save_val(request):
       
         date=pd.to_datetime(i.issue_date).date()
         exp=date+pd.Timedelta(days=int(days))
+        print("----------+++",exp)
         months=pd.to_datetime(exp).month_name()
         years=exp.strftime('%Y')
 
@@ -83,26 +94,39 @@ def save_val(request):
         
         date1 = datetime.datetime.strptime(str(date), date_format1)
         exp2 = datetime.datetime.strptime(str(exp), date_format1)
-        week2=exp2 - date1
       
+        week2=exp2 - date1
         weeks=week2.days/4
-
-
         exp_week=exp.day/4
+
+        print(exp,exp_week)
         
         date_format = "%Y-%m-%d"
         a = datetime.datetime.strptime(str(datetime.datetime.now().date()), date_format)
         # k = datetime.datetime.strptime(str(date, date_format))
         b = datetime.datetime.strptime(str(exp), date_format)
         today= a-b
-        print("today",today.days)
+        # print("today",today.days)
 
-        if days:
-         
-            pro = Providers.objects.filter(business_name = company,id=i.id).update(bank_name=bank_n,account=account_no,payment_term=days,email=email,expiration_date=exp, days_overdue=today.days,week=weeks,month_of_payment=months,year_of_payment=years,bank_code=vat_id) 
-            print("pro",pro)
+        if days and exp2.day/4 >=0 and exp2.day/4 <=1.75:
+            
+            pro = Providers.objects.filter(business_name = company,id=i.id).update(bank_name=bank_n,account=account_no,payment_term=days,email=email,expiration_date=exp, days_overdue=today.days,week=weeks,month_of_payment=months,year_of_payment=years,bank_code=vat_id,payment_week=1) 
+
+        if days and exp2.day/4 > 1.75 and exp2.day/4 <= 3.75:
+            
+            pro = Providers.objects.filter(business_name = company,id=i.id).update(bank_name=bank_n,account=account_no,payment_term=days,email=email,expiration_date=exp, days_overdue=today.days,week=weeks,month_of_payment=months,year_of_payment=years,bank_code=vat_id,payment_week=2) 
+
+        if days and exp2.day/4 > 3.75 and exp2.day/4 <=5.75:
+            
+            pro = Providers.objects.filter(business_name = company,id=i.id).update(bank_name=bank_n,account=account_no,payment_term=days,email=email,expiration_date=exp, days_overdue=today.days,week=weeks,month_of_payment=months,year_of_payment=years,bank_code=vat_id,payment_week=3) 
+
+        if days and exp2.day/4 >5.75 and exp2.day/4 <=7.75:
+            
+            pro = Providers.objects.filter(business_name = company,id=i.id).update(bank_name=bank_n,account=account_no,payment_term=days,email=email,expiration_date=exp, days_overdue=today.days,week=weeks,month_of_payment=months,year_of_payment=years,bank_code=vat_id,payment_week=4) 
+                    
+
         else:
-            pro = Providers.objects.filter(business_name = company,id=i.id).update(bank_name=bank_n,bank_code=vat_id,account=account_no,payment_term=payment_term,email=email,days_overdue=today.days,expiration_date=date,week=weeks,month_of_payment=months,year_of_payment=years) 
+            pro = Providers.objects.filter(business_name = company,id=i.id).update(bank_name=bank_n,bank_code=vat_id,account=account_no,payment_term=payment_term,email=email,days_overdue=today.days,expiration_date=exp,week=weeks,month_of_payment=months,year_of_payment=years) 
     data = {
         "status":"OK",
 

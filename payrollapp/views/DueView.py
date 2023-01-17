@@ -46,6 +46,7 @@ def due_table(request):
             
             date1 = datetime.datetime.strptime(str(date), date_format1)
             exp2 = datetime.datetime.strptime(str(exp), date_format1)
+            print("22222222sddsd2",type(exp2.day/4))
             week2=exp2 - date1
             weeks=week2.days/4
 
@@ -64,7 +65,14 @@ def due_table(request):
             pro_obj.provider_name=i.RUTProveedor
             pro_obj.invoice=i.Folio
             pro_obj.expiration_date=exp
-            pro_obj.payment_week=4
+            if exp2.day/4 >=0 and exp2.day/4 <=1.75:
+                pro_obj.payment_week=1
+            elif exp2.day/4 >1.75 and exp2.day/4 <= 3.75:
+                pro_obj.payment_week=2
+            elif exp2.day/4 > 3.75 and exp2.day/4 <=5.75:
+                pro_obj.payment_week=3
+            elif exp2.day/4 >5.75 and exp2.day/4 <=7.75:
+                pro_obj.payment_week=4
             pro_obj.month_of_payment=months
             pro_obj.year_of_payment=years
             pro_obj.days_overdue=today.days
@@ -126,9 +134,12 @@ def due_table(request):
                 date_format1 = "%Y-%m-%d"  
                 date1 = datetime.datetime.strptime(str(date), date_format1)
                 exp2 = datetime.datetime.strptime(str(exp), date_format1)
+                print("22222222sddsd2",exp2.day/4)
                 week2=exp2 - date1
                 weeks=week2.days/4
                 week=exp.day/4
+
+
                 pro_obj=Providers()
 
                 pro_obj.user_id=request.user.id
@@ -141,7 +152,14 @@ def due_table(request):
                 pro_obj.expiration_date=exp
                 pro_obj.month_of_payment=mon
                 pro_obj.days_overdue=today.days
-                pro_obj.payment_week=4
+                if exp2.day/4 >=0 and exp2.day/4 <=1.75:
+                    pro_obj.payment_week=1
+                elif exp2.day/4 >1.75 and exp2.day/4 <= 3.75:
+                    pro_obj.payment_week=2
+                elif exp2.day/4 > 3.75 and exp2.day/4 <=5.75:
+                    pro_obj.payment_week=3
+                elif exp2.day/4 >5.75 and exp2.day/4 <=7.75:
+                    pro_obj.payment_week=4
                 pro_obj.week=weeks
                 
                 if numpy.isnan(i.MontoTotal):
@@ -155,6 +173,7 @@ def due_table(request):
                 if i.Folio in lst:
                     print("--------------------",i.Folio)
                 else:  
+                    
                     pro_obj.save()
             return redirect("due")
         return redirect("due")
