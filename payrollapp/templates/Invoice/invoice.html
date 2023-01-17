@@ -259,12 +259,12 @@ span.amount {
         {%else%}
         <td></td>
         {%endif%}
-        {%if  i.days_overdue > 120  and  i.days_overdue < 151  %}
+        {%if  i.days_overdue > 120  and  i.days_overdue <= 150  %}
         <td>{{i.amount_paid}}</td>
         {%else%}
         <td></td>
         {%endif%}
-        {%if i.days_overdue > 151 and i.days_overdue <= 1000 %}
+        {%if i.days_overdue > 150 and i.days_overdue <= 1000 %}
         <td>{{i.amount_paid}}</td>
         {%else%}
         <td></td>

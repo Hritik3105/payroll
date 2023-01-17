@@ -14,8 +14,8 @@ def invoice(request):
         week2_pro=Providers.objects.filter(Q(user_id=request.user.id) & Q(days_overdue__gt=30,days_overdue__lte=60))
         week3_pro=Providers.objects.filter(Q(user_id=request.user.id) & Q(days_overdue__gt=60,days_overdue__lte=90))
         week4_pro=Providers.objects.filter(Q(user_id=request.user.id) & Q(days_overdue__gt=90,days_overdue__lte=120))
-        week5_pro=Providers.objects.filter(Q(user_id=request.user.id) & Q(days_overdue__gt=120,days_overdue__lte=151))
-        week6_pro=Providers.objects.filter(Q(user_id=request.user.id) & Q(days_overdue__gt=151))
+        week5_pro=Providers.objects.filter(Q(user_id=request.user.id) & Q(days_overdue__gt=120,days_overdue__lte=150))
+        week6_pro=Providers.objects.filter(Q(user_id=request.user.id) & Q(days_overdue__gte=151))
 
         week1_total=Providers.objects.filter(Q(user_id=request.user.id) & Q(days_overdue__lte=30)).values_list("amount_paid",flat=True)
         week1_amount=0
@@ -55,6 +55,7 @@ def invoice(request):
 
 
         week5_total=Providers.objects.filter(Q(user_id=request.user.id) & Q(days_overdue__gt=120,days_overdue__lte=150)).values_list("amount_paid",flat=True)
+        print(week5_total)
         week5_amount=0
         if week5_total:
             for i in week5_total:
@@ -63,7 +64,8 @@ def invoice(request):
         print("week5",week5_amount)
 
 
-        week6_total=Providers.objects.filter(Q(user_id=request.user.id) & Q(days_overdue__gt=120,days_overdue__lte=150)).values_list("amount_paid",flat=True)
+        week6_total=Providers.objects.filter(Q(user_id=request.user.id) & Q(days_overdue__gte=151)).values_list("amount_paid",flat=True)
+        print("-=-=-=-=",week6_total)
         week6_amount=0
         if week6_total:
             for i in week6_total:
@@ -119,7 +121,7 @@ def invoice(request):
     print("week5",week5_amount)
 
 
-    week6_total=Providers.objects.filter(Q(user_id=request.user.id) & Q(days_overdue__gt=120,days_overdue__lte=150)).values_list("amount_paid",flat=True)
+    week6_total=Providers.objects.filter(Q(user_id=request.user.id) & Q(days_overdue__gte=151)).values_list("amount_paid",flat=True)
     week6_amount=0
     if week6_total:
         for i in week6_total:
