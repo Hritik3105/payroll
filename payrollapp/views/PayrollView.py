@@ -60,7 +60,7 @@ def payroll(request):
         font_style = xlwt.XFStyle()
 
         if download == "1":
-            week1=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gte=0,week__lte=1.75)).values_list('provider_name', 'business_name', 'account', 'balance_payable','bank_code','email','invoice')
+            week1=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gte=0,week__lte=1.75)).values_list('provider_name', 'business_name', 'account', 'amount_paid','bank_code','email','invoice')
             for row in week1:
                 row_num += 1
                 for col_num in range(len(row)):
@@ -69,7 +69,7 @@ def payroll(request):
 
             return response
         elif download == "2":
-            week2=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=1.75,week__lte=3.75)).values_list('provider_name', 'business_name', 'account', 'balance_payable','bank_code','email','invoice')
+            week2=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=1.75,week__lte=3.75)).values_list('provider_name', 'business_name', 'account', 'amount_paid','bank_code','email','invoice')
             for row in week2:
                 row_num += 1
                 for col_num in range(len(row)):
