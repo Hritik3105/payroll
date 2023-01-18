@@ -10,10 +10,8 @@ from django.db.models import Sum
 def paid(request):
     lst=[]
     paid_dict={}
-   
-
     lst=[]
-    lst2=[]
+  
     if request.method == "POST":
         month=request.POST.get("month")
         year=request.POST.get("year")

@@ -29,7 +29,6 @@ def vall(request):
     app=request.GET.get("id")
     print(app)
 
-    
     match= Bank.objects.filter(id=app).values_list("bank_code",flat=True)
     if match:
         apps=match[0]

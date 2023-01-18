@@ -1,21 +1,72 @@
 {% extends 'layout/admin.html' %}
 
 {% block content %}
-
+<style>
+    .input-group:focus-within {
+        box-shadow: unset !important;
+    }
+</style>
 <div class="main">
     <div class="week-st1">
         <h5>Payroll</h5>
-        <form class="row">
-            
-            <div class="col-5">
+       
+      
+            <form method ="POST">
+                <div class="d-flex">
+                {%csrf_token%}
+            <div class="col-6 mx-auto d-flex">
+   
             <div class="input-group date" id="datepicker">
-            <label>Date: </label>
-             <input type ="Date">
-            {% comment %} <span class="input-group-append">
-            </span> {% endcomment %}
+                <label style="color: black;
+                font-weight: 500;">Select Month: <select name="month" id="sort-item"style="margin-top:8px;"></label>
+                <option value="Ja"> Month</option>
+            
+                <option value="January"  {% if month == "January" %} selected {%else %} {%endif%}  >January</option>
+                
+                <option value="February" {% if month == "February" %} selected {%else %} {%endif%} >February</option>
+                
+                <option value="March" {% if month == "March" %} selected {%else %} {%endif%}>March</option>
+            
+                <option value="April" {% if month == "April" %} selected {%else %} {%endif%}>April</option>
+            
+                <option value="May" {% if month == "May" %} selected {%else %} {%endif%}>May</option>
+            
+                <option value="June" {% if month == "June" %} selected {%else %} {%endif%}>June</option>
+                
+                <option value="July" {% if month == "July" %} selected {%else %} {%endif%}>July</option>
+            
+                <option value="August" {% if month == "August" %} selected {%else %} {%endif%}>August</option>
+                
+                <option value="September"{% if month == "September" %} selected {%else %} {%endif%}>September</option>
+                
+                <option value="October"{% if month == "October" %} selected {%else %} {%endif%}>October</option>
+            
+                <option value="November" {% if month == "November" %} selected {%else %} {%endif%}>November</option>
+                
+                <option value="December" {% if month == "December" %} selected {%else %} {%endif%}>December</option>
+            </select><br><br>
             </div>
+            <label style="color: black;
+            font-weight: 500;width:50%;">Select Year: <select name="year" id="sort-items"style="margin-top:8px;"></label>
+                <option value="">Year</option>
+                
+                {% for i in lst %}      
+                
+                <option value="{{i}}" {% if year == i %} selected {%else %} {%endif%}  >{{i}}</option>
+                {%endfor%}
+            
+            </select> 
+
+     
             </div>
-        </form><br>
+           
+          
+        </div>
+
+        <div class="w-40% text-center">
+            
+            </div>
+                    <br>
     </div>
     <div class="week-st1">   
         <h5>Week1</h5>
@@ -25,16 +76,18 @@
                 
             </li>
             <li>
-                <button type="submit" class="btn btn-primary">View</button>
+                <button type ="submit" class="btn btn-primary">View</a>
             </li>
             <li>
-                <button type="submit" class="btn btn-primary">Download</button>
+               
+              <button type="submit" class="btn btn-primary" name="download" value="1">Download</button> 
             </li>
             <li>
-                <button type="submit" class="btn btn-primary">Total Amount Payroll</button>
+                <button type="submit" class="btn btn-primary">Total Amount of the Payroll</button>
             </li>
         </ul>
     </div>
+
     <div class="week-st1">
         <h5>Week2</h5>
         <ul class="clickerfour">
@@ -46,10 +99,10 @@
                 <button type="submit" class="btn btn-primary">View</button>
             </li>
             <li>
-                <button type="submit" class="btn btn-primary">Download</button>
+                <button type="submit" class="btn btn-primary" name="download" value="2">Download</button>
             </li>
             <li>
-                <button type="submit" class="btn btn-primary">Total Amount Payroll</button>
+                <button type="submit" class="btn btn-primary">Total Amount of the Payroll</button>
             </li>
         </ul>
     </div>
@@ -64,10 +117,10 @@
                 <button type="submit" class="btn btn-primary">View</button>
             </li>
             <li>
-                <button type="submit" class="btn btn-primary">Download</button>
+                <button type="submit" class="btn btn-primary" name="download" value="3">Download</button>
             </li>
             <li>
-                <button type="submit" class="btn btn-primary">Total Amount Payroll</button>
+                <button type="submit" class="btn btn-primary">Total Amount of the Payroll</button>
             </li>
         </ul>
     </div>
@@ -82,15 +135,15 @@
                 <button type="submit" class="btn btn-primary">View</button>
             </li>
             <li>
-                <button type="submit" class="btn btn-primary">Download</button>
+                <button type="submit" class="btn btn-primary" name="download" value="4">Download</button>
             </li>
             <li>
-                <button type="submit" class="btn btn-primary">Total Amount Payroll</button>
+                <button type="submit" class="btn btn-primary">Total Amount of the Payroll</button>
             </li>
         </ul>
     </div>
 </div>
-
+</form>
 
 <style>
     ul.clickerfour li {
