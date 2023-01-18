@@ -40,7 +40,7 @@ def payroll(request):
             week4=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=5.75,week__lte=7.75))
         
         response = HttpResponse(content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="users.xls"'
+        response['Content-Disposition'] = 'attachment; filename="payroll.xls"'
 
         wb = xlwt.Workbook(encoding='utf-8')
         ws = wb.add_sheet('Users Data') # this will make a sheet named Users Data
