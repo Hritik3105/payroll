@@ -47,7 +47,7 @@ def paid(request):
                     week3_lst.append(int(p[2]))
                 
                 if p[1] >= 5.75 and p[1] <= 7.75  or p[1] > 7.75: 
-                   week4_lst.append(int(p[2])p
+                   week4_lst.append(int(p[2]))
                 
                 # if a[1] > 7.75 : 
                 #     week4_lst.append(int(a[2]))
