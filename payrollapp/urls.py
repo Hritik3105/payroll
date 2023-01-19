@@ -50,4 +50,8 @@ urlpatterns = [
     path('cred',CredView.credential, name ="cred"),
 
 
+    #Update view 
+    path('update/<int:id>',PayrollView.update_date, name ="date_updt"),
+    
+
 ]

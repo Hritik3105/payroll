@@ -1,0 +1,80 @@
+{% extends 'layout/admin.html' %}
+
+{%block content%}
+
+<html>
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 92%;
+  margin: auto;
+  margin-top: 0px;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+td {
+  color: #020201;
+  border: 1px solid #00000026;
+}
+th {
+  color: #000000;
+  font-weight: 550;
+  letter-spacing: 1px;
+}
+input[type="text"] {
+  border: 1px solid #bdbdbd;
+  font-weight: 600;
+  color: #000000de;
+  letter-spacing: 1px;
+}
+a.myclass {
+  color:#fff;
+  background-color: #5a8dee;
+  border-color: #5a8dee;
+  padding:9px 15px;
+  box-shadow: 0 0.125rem 0.25rem rgb(147 158 170 / 40%);
+}
+    
+</style>
+</head>
+<body>
+
+
+
+<table>
+  <tr>
+    <th>Parameter of paid</th>
+    <th>Name of provider</th>
+    <th>Amount to pay or due </th>
+    <th>Invoice</th>
+    <th>Reschedule</th>
+    
+  </tr>
+ 
+  {% for i in week %}
+  <tr>
+    <td>{{i.provider_name}}</td>
+    <td>{{i.business_name}}</td>
+    <td><input type='text' class="val" value={{i.amount_paid}}></td>
+    <td>{{i.invoice}}</td>
+    <td> <a href ="{% url 'date_updt'  i.id %}"  class='myclass'>Reschedule</a></td>
+    
+  </tr>
+  {%endfor%}
+</table>
+
+</body>
+</html>
+
+
+{% endblock content %}

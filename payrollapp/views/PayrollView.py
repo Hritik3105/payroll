@@ -6,6 +6,7 @@ from django.db.models import Q
 import xlwt
 from django.http import HttpResponse
 from django.contrib.auth.models import User
+from django.db.models import Sum
 
 def calculate():
     lst=[]
@@ -21,11 +22,19 @@ def calculate():
 
 @login_required 
 def payroll(request):
+    ajax_data=request.GET.get("id")
+    ajax_data1=request.GET.get("year")
+    print("----------------",ajax_data1)
     if request.method =="POST":
         month=request.POST.get("month")
         year=request.POST.get("year")
         download=request.POST.get("download")
+        view=request.POST.get("view")
+        amount=request.POST.get("amount")
        
+        total1=""
+        if year == "":
+            year=0
         week1=""
         week2=""
         week3=""
@@ -40,7 +49,7 @@ def payroll(request):
             week4=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=5.75,week__lte=7.75))
         
         response = HttpResponse(content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="payroll.xls"'
+        response['Content-Disposition'] = 'attachment; filename="paid by month and week.xls"'
 
         wb = xlwt.Workbook(encoding='utf-8')
         ws = wb.add_sheet('Users Data') # this will make a sheet named Users Data
@@ -90,6 +99,7 @@ def payroll(request):
 
         elif download == "4":
             
+
             
             week4=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=5.75,week__lte=7.75)).values_list('provider_name', 'business_name', 'account', 'balance_payable','bank_code','email','invoice')
             for row in week4:
@@ -100,6 +110,31 @@ def payroll(request):
 
             return response
 
+
+        if view == "view1":
+            week1=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gte=0,week__lte=1.75))
+           
+            return render(request,"Payroll/view.html",{"week":week1})
+
+        if view == "view2":
+            week2=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=1.75,week__lte=3.75))
+           
+            return render(request,"Payroll/view.html",{"week":week2})
+
+        if view == "view3":
+            week3=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=3.75,week__lte=5.75))
+           
+            return render(request,"Payroll/view.html",{"week":week3})
+
+        if view == "view4":
+            week4=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=5.75,week__lte=7.75) | Q(week__gt=7.75))
+            print(week4)
+            return render(request,"Payroll/view.html",{"week":week4})
+
+
+        if amount == 'total1':
+            total1=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gte=0,week__lte=1.75)).aggregate(Sum('amount_paid'))
+
         print("week1",week1)
         print("week2",week2)
         print("week3",week3)
@@ -108,7 +143,7 @@ def payroll(request):
         cal=calculate()
 
 
-        return render(request,"Payroll/payroll.html",{"month":month,"year":int(year),"lst":cal})
+        return render(request,"Payroll/payroll.html",{"month":month,"year":int(year),"lst":cal,"total1":total1})
     cal=calculate()
     print(cal)
     
@@ -116,4 +151,16 @@ def payroll(request):
 
 
 
+def update_date(request,id):
 
+    if request.method == "POST":
+        month=request.POST.get("month")
+        year=request.POST.get("year")
+        print(month,year)
+        print("----------------------",id)
+        up_date=Providers.objects.filter(id =id)
+        print(up_date)
+        cal=calculate()
+        return render(request,'Payroll/update.html',{"lst":cal,"month":month,"year":int(year)})
+    cal=calculate()
+    return render(request,'Payroll/update.html',{"lst":cal})

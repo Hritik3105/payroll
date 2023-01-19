@@ -21,9 +21,9 @@ def paid(request):
             paid_dict[i] = Providers.objects.filter(Q(business_name=i),Q(month_of_payment=month) & Q(year_of_payment=year) & Q(user_id=request.user.id)).values_list("invoice","week","amount_paid","add1","add2","add3","add4","add5").order_by("amount_paid")
           
             val1= Providers.objects.filter(Q(business_name=i) & Q(week__gte=0,week__lte=1.75)  & Q(year_of_payment=year) & Q(user_id=request.user.id ) & Q(month_of_payment=month)).aggregate(Sum('amount_paid'))
-            val2= Providers.objects.filter(Q(business_name=i) & Q(week__gte=1.75,week__lte=3.75) & Q(year_of_payment=year) & Q(user_id=request.user.id)& Q(month_of_payment=month)).aggregate(Sum('amount_paid'))
-            add3 = Providers.objects.filter(Q(business_name=i) & Q(week__gte=3.75,week__lte=5.75) & Q(year_of_payment=year) & Q(user_id=request.user.id)& Q(month_of_payment=month)).aggregate(Sum('amount_paid'))
-            add4 = Providers.objects.filter(Q(business_name=i) & Q(week__gte=5.75,week__lte=7.75) & Q(year_of_payment=year) & Q(user_id=request.user.id)& Q(month_of_payment=month)).aggregate(Sum('amount_paid'))
+            val2= Providers.objects.filter(Q(business_name=i) & Q(week__gt=1.75,week__lte=3.75) & Q(year_of_payment=year) & Q(user_id=request.user.id)& Q(month_of_payment=month)).aggregate(Sum('amount_paid'))
+            add3 = Providers.objects.filter(Q(business_name=i) & Q(week__gt=3.75,week__lte=5.75) & Q(year_of_payment=year) & Q(user_id=request.user.id)& Q(month_of_payment=month)).aggregate(Sum('amount_paid'))
+            add4 = Providers.objects.filter(Q(business_name=i) & Q(week__gt=5.75,week__lte=7.75) & Q(year_of_payment=year) & Q(user_id=request.user.id)& Q(month_of_payment=month)).aggregate(Sum('amount_paid'))
            
             add5 = Providers.objects.filter(Q(business_name=i) & Q(week__gte=7.75) & Q(year_of_payment=year) & Q(user_id=request.user.id)& Q(month_of_payment=month)).aggregate(Sum('amount_paid'))
 

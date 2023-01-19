@@ -5,7 +5,32 @@
     .input-group:focus-within {
         box-shadow: unset !important;
     }
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+      
+      td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+      
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+      ul.clickerfour li {
+        display: inline-block;
+        margin: 15px
+    }
+
+    .main{
+        padding: 15px;
+    }
 </style>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <div class="main">
     <div class="week-st1">
         <h5>Payroll</h5>
@@ -18,7 +43,7 @@
    
             <div class="input-group date" id="datepicker">
                 <label style="color: black;
-                font-weight: 500;">Select Month: <select name="month" id="sort-item"style="margin-top:8px;"></label>
+                font-weight: 500;">Select Month: <select name="month" id="bonus" style="margin-top:8px;"></label>
                 <option value="Ja"> Month</option>
             
                 <option value="January"  {% if month == "January" %} selected {%else %} {%endif%}  >January</option>
@@ -47,12 +72,12 @@
             </select><br><br>
             </div>
             <label style="color: black;
-            font-weight: 500;width:50%;">Select Year: <select name="year" id="sort-items"style="margin-top:8px;"></label>
+            font-weight: 500;width:50%;">Select Year: <select name="year" id="item"style="margin-top:8px;"></label>
                 <option value="">Year</option>
                 
                 {% for i in lst %}      
                 
-                <option value="{{i}}" {% if year == i %} selected {%else %} {%endif%}  >{{i}}</option>
+                <option value="{{i}}" {% if year == i %} selected {%else %} {%endif%}>{{i}}</option>
                 {%endfor%}
             
             </select> 
@@ -75,16 +100,68 @@
                 Payroll B 
                 
             </li>
+
+                
+    
+                
+         
+{% comment %}               
+              <!-- The Modal -->
+              <div class="modal" id="myModal">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+              
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                      <h4 class="modal-title"></h4>
+                      <button type="Submit" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+              
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                     
+<table>
+    <tr>
+      <th>Parameter of paid </th>
+      <th>Name of provider </th>
+      <th>Amount to pay or due</th>
+      <th>Invoice</th>
+      <th>Reschedule</th>
+    </tr>
+    <tr>
+      <td> </td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+
+ 
+  
+  </table>
+  
+  
+                    </div>
+              
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    </div>
+              
+                  </div>
+                </div>
+              </div> {% endcomment %}
             <li>
-                <button type ="submit" class="btn btn-primary">View</a>
+              
+                <button type ="submit" class="btn btn-primary" name="view" value="view1">View</a>
             </li>
             <li>
                
               <button type="submit" class="btn btn-primary" name="download" value="1">Download</button> 
             </li>
             <li>
-                <button type="submit" class="btn btn-primary">Total Amount of the Payroll</button>
-            </li>
+                <button type="submit" class="btn btn-primary" name="amount" value="total1">Total Amount of the Payroll</button>
+            </li>{{total1.amount_paid__sum}}
         </ul>
     </div>
 
@@ -96,7 +173,7 @@
                 
             </li>
             <li>
-                <button type="submit" class="btn btn-primary">View</button>
+                <button type="submit" class="btn btn-primary"  name="view" value="view2">View</button>
             </li>
             <li>
                 <button type="submit" class="btn btn-primary" name="download" value="2">Download</button>
@@ -114,7 +191,7 @@
                 
             </li>
             <li>
-                <button type="submit" class="btn btn-primary">View</button>
+                <button type="submit" class="btn btn-primary"  name="view" value="view3">View</button>
             </li>
             <li>
                 <button type="submit" class="btn btn-primary" name="download" value="3">Download</button>
@@ -132,7 +209,7 @@
                 
             </li>
             <li>
-                <button type="submit" class="btn btn-primary">View</button>
+                <button type="submit" class="btn btn-primary"  name="view" value="view4">View</button>
             </li>
             <li>
                 <button type="submit" class="btn btn-primary" name="download" value="4">Download</button>
@@ -145,16 +222,49 @@
 </div>
 </form>
 
-<style>
-    ul.clickerfour li {
-        display: inline-block;
-        margin: 15px
-    }
-
-    .main{
-        padding: 15px;
-    }
-</style>
-
-
 {% endblock content%}
+
+{% block javascripts %}
+{{ block.super }}
+<script>
+    $(document).ready(function(){
+        $('#bonus').change(function() {
+        var val=$("#bonus option:selected").val()
+
+    $.ajax({
+        type:"GET",
+        url: '/payroll',
+        data: {
+          'id': val
+        },
+        dataType: 'json',
+        success: function (data) {
+         
+        }
+     
+    });  
+      });
+
+      $('#item').change(function() {
+        
+        var use=$("#item option:selected").val()
+   
+    $.ajax({
+        type:"GET",
+        url: '/payroll',
+        data: {
+          'year': use
+        },
+        dataType: 'json',
+        success: function (data) {
+         
+        }
+     
+    });  
+      });
+
+    });
+
+ </script> 
+
+ {% endblock javascripts %}

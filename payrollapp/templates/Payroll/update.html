@@ -1,0 +1,81 @@
+{% extends 'layout/admin.html' %}
+
+
+
+
+
+{%block content%}
+<style>
+    .mainpage {
+        height: 68vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .inner-page {
+        box-shadow: 0 0 4px;
+        padding: 18px;
+    }
+</style>
+<div class="row w-100">
+    <div class="col-md-12 mainpage">
+        <div class="inner-page">
+            <h1>Update Month and Year</h1>
+            <form method ="POST" class="">
+                {%csrf_token%}
+            <div class="inner-clicker d-flex"style="justify-content: space-around;">
+                <div>
+            <label style="display: grid;color: black;
+            font-weight: 500;">Select Month: <select name="month" id="sort-item"style="margin-top:8px;"></label>
+                
+                <option value="Ja"> Month</option>
+            
+                <option value="January"  {% if month == "January" %} selected {%else %} {%endif%}  >January</option>
+                
+                <option value="February" {% if month == "February" %} selected {%else %} {%endif%} >February</option>
+                
+                <option value="March" {% if month == "March" %} selected {%else %} {%endif%}>March</option>
+            
+                <option value="April" {% if month == "April" %} selected {%else %} {%endif%}>April</option>
+            
+                <option value="May" {% if month == "May" %} selected {%else %} {%endif%}>May</option>
+            
+                <option value="June" {% if month == "June" %} selected {%else %} {%endif%}>June</option>
+                
+                <option value="July" {% if month == "July" %} selected {%else %} {%endif%}>July</option>
+            
+                <option value="August" {% if month == "August" %} selected {%else %} {%endif%}>August</option>
+                
+                <option value="September"{% if month == "September" %} selected {%else %} {%endif%}>September</option>
+                
+                <option value="October"{% if month == "October" %} selected {%else %} {%endif%}>October</option>
+            
+                <option value="November" {% if month == "November" %} selected {%else %} {%endif%}>November</option>
+                
+                <option value="December" {% if month == "December" %} selected {%else %} {%endif%}>December</option>
+            </select><br><br>
+            </div>
+            <div>
+            <label style="display: grid;color: black;
+            font-weight: 500;">Select Year: <select name="year" id="sort-items"style="margin-top:8px;"></label>
+             
+                <option value="">Year</option>
+                
+                {% for i in lst %}
+                
+                <option value="{{i}}" {% if year == i %} selected {%else %} {%endif%}  >{{i}}</option>
+                {%endfor%}
+            
+            </select>
+        </div>
+    </div>
+    <div class="w-100 text-center">
+    <button type="submit" class="btn btn-primary">Update</button>
+    </div>    
+            </form>
+
+  {%endblock%}
+        </div>
+    </div>
+</div>
+
