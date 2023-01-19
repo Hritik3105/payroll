@@ -35,18 +35,19 @@ def paid(request):
         week3_lst=[]
         week4_lst=[]
         for k,j in paid_dict.items():
-            for a in j:
-                if a[1] >= 0 and a[1] <= 1.75: 
-                    week1_lst.append(int(a[2]))
+            print("----",j)
+            for p in j:
+                if p[1] >= 0 and p[1] <= 1.75: 
+                    week1_lst.append(int(p[2]))
                   
-                if a[1] > 1.75 and a[1] <= 3.75: 
-                    week2_lst.append(int(a[2]))
+                if p[1] > 1.75 and p[1] <= 3.75: 
+                    week2_lst.append(int(p[2]))
                    
-                if a[1] >= 3.75 and a[1] <= 5.75: 
-                    week3_lst.append(int(a[2]))
+                if p[1] >= 3.75 and p[1] <= 5.75: 
+                    week3_lst.append(int(p[2]))
                 
-                if a[1] >= 5.75 and a[1] <= 7.75  or a[1] > 7.75: 
-                    week4_lst.append(int(a[2]))
+                if p[1] >= 5.75 and p[1] <= 7.75  or p[1] > 7.75: 
+                   week4_lst.append(int(p[2])p
                 
                 # if a[1] > 7.75 : 
                 #     week4_lst.append(int(a[2]))
