@@ -24,7 +24,8 @@ def calculate():
 def payroll(request):
     ajax_data=request.GET.get("id")
     ajax_data1=request.GET.get("year")
-    print("----------------",ajax_data1)
+    print("----------------",ajax_data1,ajax_data)
+
     if request.method =="POST":
         month=request.POST.get("month")
         year=request.POST.get("year")
@@ -132,9 +133,7 @@ def payroll(request):
             return render(request,"Payroll/view.html",{"week":week4})
 
 
-        if amount == 'total1':
-            total1=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gte=0,week__lte=1.75)).aggregate(Sum('amount_paid'))
-
+     
         print("week1",week1)
         print("week2",week2)
         print("week3",week3)
@@ -143,11 +142,17 @@ def payroll(request):
         cal=calculate()
 
 
-        return render(request,"Payroll/payroll.html",{"month":month,"year":int(year),"lst":cal,"total1":total1})
+        return render(request,"Payroll/payroll.html",{"month":month,"year":int(year),"lst":cal})
     cal=calculate()
     print(cal)
     
-    return render(request,"Payroll/payroll.html",{'lst':cal})
+    total1=0
+    total1=Providers.objects.filter(Q(user_id=request.user.id) & Q(week__gte=0,week__lte=1.75)).aggregate(Sum('amount_paid'))
+    total2=Providers.objects.filter(Q(user_id=request.user.id) & Q(week__gt=1.75,week__lte=3.75)).aggregate(Sum('amount_paid'))
+    total3=Providers.objects.filter(Q(user_id=request.user.id) & Q(week__gt=3.75,week__lte=5.75)).aggregate(Sum('amount_paid'))
+    total4=Providers.objects.filter(Q(user_id=request.user.id) & Q(week__gt=5.75,week__lte=7.75 )|Q(week__gt=7.75)).aggregate(Sum('amount_paid'))
+    print("----------------------===============",total1)
+    return render(request,"Payroll/payroll.html",{'lst':cal,'month':ajax_data,"year":ajax_data1,"total1":total1,"total2":total2,"total3":total3,"total4":total4})
 
 
 
@@ -161,6 +166,11 @@ def update_date(request,id):
         up_date=Providers.objects.filter(id =id)
         print(up_date)
         cal=calculate()
-        return render(request,'Payroll/update.html',{"lst":cal,"month":month,"year":int(year)})
+        return redirect("payroll")
     cal=calculate()
     return render(request,'Payroll/update.html',{"lst":cal})
+
+
+
+
+
