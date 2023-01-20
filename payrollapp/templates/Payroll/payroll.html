@@ -44,7 +44,7 @@
             <div class="input-group date" id="datepicker">
                 <label style="color: black;
                 font-weight: 500;">Select Month: <select name="month" id="bonus" style="margin-top:8px;"></label>
-                <option value="Ja"> Month</option>
+                <option value=""> Month</option>
             
                 <option value="January"  {% if month == "January" %} selected {%else %} {%endif%}  >January</option>
                 
@@ -72,7 +72,7 @@
             </select><br><br>
             </div>
             <label style="color: black;
-            font-weight: 500;width:50%;">Select Year: <select name="year" id="item"style="margin-top:8px;"></label>
+            font-weight: 500;width:50%;">Select Year: <select name="year" id="bonus1"style="margin-top:8px;"></label>
                 <option value="">Year</option>
                 
                 {% for i in lst %}      
@@ -101,58 +101,9 @@
                 
             </li>
 
-                
-    
-                
-         
-{% comment %}               
-              <!-- The Modal -->
-              <div class="modal" id="myModal">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-              
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                      <h4 class="modal-title"></h4>
-                      <button type="Submit" class="btn-close" data-bs-dismiss="modal"></button>
-                    </div>
-              
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                     
-<table>
-    <tr>
-      <th>Parameter of paid </th>
-      <th>Name of provider </th>
-      <th>Amount to pay or due</th>
-      <th>Invoice</th>
-      <th>Reschedule</th>
-    </tr>
-    <tr>
-      <td> </td>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-
- 
-  
-  </table>
-  
-  
-                    </div>
-              
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                    </div>
-              
-                  </div>
-                </div>
-              </div> {% endcomment %}
+            
             <li>
-              
+                <input type="hidden" name="next" value="/view">
                 <button type ="submit" class="btn btn-primary" name="view" value="view1"> View / Edit</a>
             </li>
             <li>
@@ -173,6 +124,7 @@
                 
             </li>
             <li>
+                <input type="hidden" name="next" value="/view">
                 <button type="submit" class="btn btn-primary"  name="view" value="view2"> View / Edit</button>
             </li>
             <li>
@@ -190,6 +142,7 @@
                 
             </li>
             <li>
+                <input type="hidden" name="next" value="/view">
                 <button type="submit" class="btn btn-primary"  name="view" value="view3"> View / Edit</button>
             </li>
             <li>
@@ -207,7 +160,8 @@
                 Payroll B 
                 
             </li>
-            <li>
+            <li>  
+                <input type="hidden" name="next" value="/view">
                 <button type="submit" class="btn btn-primary"  name="view" value="view4"> View / Edit</button>
             </li>
             <li>
@@ -262,7 +216,64 @@
     });  
       });
 
+    window.onload = function() {
+        var selItem = sessionStorage.getItem("SelItem");  
+        $('#bonus1').val(selItem);
+        var year = sessionStorage.getItem("year");  
+        $('#bonus1').val(year);
+    
+
+        
+        $('#bonus1').change(function() { 
+            var selVal = $(this).val();
+            console.log(selVal)
+            sessionStorage.setItem("SelItem", selVal);
+        
+          });
+  
+        
+     
+        $('#bonus1').change(function() { 
+            var selVals = $(this).val();
+            console.log(selVals)
+            sessionStorage.setItem("year", selVals);
+
+            
+
+        
+        
+        });
+
+
+        var selItem1 = sessionStorage.getItem("SelItem1");  
+        $('#bonus').val(selItem1);
+        var month = sessionStorage.getItem("month");  
+        $('#bonus').val(month);
+
+        $('#bonus').change(function() { 
+            var selVal1 = $(this).val();
+            console.log(selVal1)
+            sessionStorage.setItem("SelItem1", selVal1);
+        
+          });
+  
+        
+     
+        $('#bonus').change(function() { 
+            var selVals1 = $(this).val();
+            console.log(selVals1)
+            sessionStorage.setItem("month", selVals1);
+
+            
+
+        
+        
+        });
+  
+    }
     });
+
+
 
  </script> 
 

@@ -52,6 +52,9 @@ urlpatterns = [
 
     #Update view 
     path('update/<int:id>',PayrollView.update_date, name ="date_updt"),
-    
 
+
+    path('view',PayrollView.func2, name ="view"),
+    
+    
 ]

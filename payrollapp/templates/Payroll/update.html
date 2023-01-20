@@ -57,6 +57,20 @@
             </div>
             <div>
             <label style="display: grid;color: black;
+            font-weight: 500;">Week <select name="week" id="sort-items"style="margin-top:8px;"></label>
+             
+                <option value="">Week</option>
+                
+                {% for i in lst1 %}
+                
+                <option value="{{i}}" {% if year == i %} selected {%else %} {%endif%}  >{{i}}</option>
+                {%endfor%}
+            
+            </select>
+         
+            </div>
+            <div>
+            <label style="display: grid;color: black;
             font-weight: 500;">Select Year: <select name="year" id="sort-items"style="margin-top:8px;"></label>
              
                 <option value="">Year</option>
@@ -70,10 +84,11 @@
         </div>
     </div>
     <div class="w-100 text-center">
-    <button type="submit" class="btn btn-primary">Update</button>
-    </div>    
+        <input type="hidden" name="next" value="/view">
+        <input type="submit" class="btn btn-primary" value ="submit">
+    </div>   
             </form>
-
+           
   {%endblock%}
         </div>
     </div>

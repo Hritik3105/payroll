@@ -11,6 +11,7 @@ table {
   width: 92%;
   margin: auto;
   margin-top: 0px;
+  margin-bottom:29;
 }
 
 td, th {
@@ -50,9 +51,11 @@ a.myclass {
 <body>
 
 
-
+  <form method = "POST">
+    {%csrf_token%}
 <table>
   <tr>
+    <th hidden>id</th>
     <th>Parameter of paid</th>
     <th>Name of provider</th>
     <th>Amount to pay or due </th>
@@ -60,21 +63,34 @@ a.myclass {
     <th>Reschedule</th>
     
   </tr>
- 
+  
   {% for i in week %}
   <tr>
+    <td hidden><input type='text' class="val" id="dSugsgest" name="id_{{forloop.counter}}" value={{i.id}}></td>
     <td>{{i.provider_name}}</td>
     <td>{{i.business_name}}</td>
-    <td><input type='text' class="val" value={{i.amount_paid}}></td>
+    <td><input type='text' class="val" id="dSuggest" name="{{forloop.counter}}" value={{i.amount_paid}}></td>
     <td>{{i.invoice}}</td>
     <td> <a href ="{% url 'date_updt'  i.id %}"  class='myclass'>Reschedule</a></td>
     
   </tr>
   {%endfor%}
-</table>
+</table> 
+<div class="mb-5 mt-3 text-center">
+<button type ="submit" class="btn btn-primary">Save/Return</button>
 
+
+</form>
+</div>
 </body>
 </html>
 
 
+
 {% endblock content %}
+
+
+{%block javascripts%}
+{{block.super}}
+
+{%endblock javascripts%}
