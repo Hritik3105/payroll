@@ -136,6 +136,7 @@ def save_val(request):
 @login_required 
 def pay(request):
     bank_c = request.GET.get("id")
+    
     print("dgdfh",bank_c) 
     data = {
         "status":"OK",

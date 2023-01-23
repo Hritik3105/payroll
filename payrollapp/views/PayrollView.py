@@ -8,6 +8,7 @@ from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.db.models import Sum
 from django.http import HttpResponseRedirect
+from django.http import JsonResponse
 
 
 def calculate():
@@ -174,6 +175,7 @@ def payroll(request):
     else:
         year = request.session['year']
 
+
     
     return render(request,"Payroll/payroll.html",{'lst':cal[0],'month':ajax_data,"year":ajax_data1,"total1":total1,"total2":total2,"total3":total3,"total4":total4,'lst1':cal[1],"month":month,"year":int(year)})
 
@@ -207,93 +209,61 @@ def update_date(request,id):
 
 
 def func2(request):
- 
+    arrr=[]
     month = request.session['month']
     view= request.session["view"]
     year = request.session['year']
     print("vall",month,view,year)
 
-    
+    ajax_data1=request.GET.get("val")
     if view == "view1":
-     
+       
         week1=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gte=0,week__lte=1.75))
-
-        if request.method == "POST":
-            
-            for i in  range(len(week1)):
-                print("value of i",i+1)
-                account_id=request.POST.get('id_'+str(i+1))
-                account=request.POST.get(str(i+1))
-                print("value account",account_id,account)
-                amt_cal=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=account_id)).values_list("amount_paid",flat=True)[0]
-                final_amt=int(amt_cal)-int(account)
-                if int(account) == int(amt_cal):
-                    print("oooooooooooooooooooo",final_amt)
-                    upd=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=account_id)).update(amount_paid=account)
-                else:
-                    upd=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=account_id)).update(amount_paid=final_amt)  
-      
-            return redirect("payroll")
+    
         return render(request,"Payroll/view.html",{"week":week1})
     
         
      
 
     if view == "view2":
+       
         week2=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=1.75,week__lte=3.75))
-        if request.method == "POST":
-            for i in  range(len(week2)):
-                print("value of i",i+1)
-                account_id=request.POST.get('id_'+str(i+1))
-                account=request.POST.get(str(i+1))
-                print("value account",account_id,account)
-                amt_cal=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=account_id)).values_list("amount_paid",flat=True)[0]
-                final_amt=int(amt_cal)-int(account)
-                if int(account) == int(amt_cal):
-                    print("oooooooooooooooooooo",final_amt)
-                    upd=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=account_id)).update(amount_paid=account)
-                else:
-                    upd=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=account_id)).update(amount_paid=final_amt)  
-            
-            return redirect("payroll")
+        
         return render(request,"Payroll/view.html",{"week":week2})
 
+
     if view == "view3":
+    
         week3=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=3.75,week__lte=5.75))
-        if request.method == "POST":
-            for i in  range(len(week3)):
-                print("value of i",i+1)
-                account_id=request.POST.get('id_'+str(i+1))
-                account=request.POST.get(str(i+1))
-                print("value account",account_id,account)
-                amt_cal=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=account_id)).values_list("amount_paid",flat=True)[0]
-                final_amt=int(amt_cal)-int(account)
-                if int(account) == int(amt_cal):
-                   
-                    upd=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=account_id)).update(amount_paid=account)
-                else:
-                    upd=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=account_id)).update(amount_paid=final_amt)  
-                
-            return redirect("payroll")
+      
         return render(request,"Payroll/view.html",{"week":week3})
 
     if view == "view4":
+        ajax_data=request.GET.get("id")
+        ajax_data1=request.GET.get("val")
         week4=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=5.75,week__lte=7.75) | Q(week__gt=7.75))
-        if request.method == "POST":
-            for i in  range(len(week4)):
-               
-                account_id=request.POST.get('id_'+str(i+1))
-                account=request.POST.get(str(i+1))
-                amt_cal=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=account_id)).values_list("amount_paid",flat=True)[0]
-                final_amt=int(amt_cal)-int(account)
-                if int(account) == int(amt_cal):
-                    print("oooooooooooooooooooo",final_amt)
-                    upd=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=account_id)).update(amount_paid=account)
-                else:
-                    upd=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=account_id)).update(amount_paid=final_amt)                                                                   
-        
+      
 
-            return redirect("payroll")
         return render(request,'Payroll/view.html',{"week":week4})
 
     return redirect("payroll")
+
+
+
+
+def get_value(request):
+
+    provider_id=request.GET.get("id")
+    provider_account=request.GET.get("balance")
+    print(provider_id)
+    print(provider_account)
+    amt_cal=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=provider_id)).values_list("amount_paid",flat=True)
+    if amt_cal:
+        final_amt=int(amt_cal[0])-int(provider_account)
+        upd=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=provider_id)).update(amount_paid=final_amt)
+    else:
+        amt_cal=0
+    data={
+        "pro":provider_account
+    }
+    return JsonResponse(data)

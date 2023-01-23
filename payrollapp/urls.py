@@ -55,6 +55,8 @@ urlpatterns = [
 
 
     path('view',PayrollView.func2, name ="view"),
+
+    path("amount",PayrollView.get_value, name ="payroll-amount"),
     
     
 ]

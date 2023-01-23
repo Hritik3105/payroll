@@ -86,6 +86,7 @@ def due_table(request):
             pro_obj.month=months
             pro_obj.balance_payable=0
             pro_obj.payment_policy=30
+            pro_obj.payment_term=30
             if numpy.isnan(i.MontoTotal):
                 pro_obj.amount_paid=0
             else:   
