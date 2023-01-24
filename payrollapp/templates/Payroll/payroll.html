@@ -32,6 +32,8 @@
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
 <div class="main">
     <div class="week-st1">
         <h5>Payroll</h5>
@@ -44,7 +46,7 @@
    
             <div class="input-group date" id="datepicker">
                 <label style="color: black;
-                font-weight: 500;">Select Month: <select name="month" id="bonus" class="select_drop_1" style="margin-top:8px;"></label>
+                font-weight: 500;">Select Month: <select name="month" id="bonus" class="select_drop_1" style="margin-top:8px;" required></label>
                 <option value=""> Month</option>
             
                 <option value="January"  {% if month == "January" %} selected {%else %} {%endif%}  >January</option>
@@ -73,7 +75,7 @@
             </select><br><br>
             </div>
             <label style="color: black;
-            font-weight: 500;width:50%;">Select Year: <select name="year" id="bonus1" class="select_drop_1" style="margin-top:8px;"></label>
+            font-weight: 500;width:50%;">Select Year: <select name="year" id="bonus1" class="select_drop_1" style="margin-top:8px;" required ></label>
                 <option value="">Year</option>
                 
                 {% for i in lst %}      
@@ -180,6 +182,7 @@
 {% endblock content%}
 
 {% block javascripts %}
+
 {{ block.super }}
 <script>
     $(document).ready(function(){
@@ -241,65 +244,9 @@
     });  
       });
 
+      
     
-    window.onload = function() {
-        var selItem = sessionStorage.getItem("SelItem");  
-        $('#bonus1').val(selItem);
-        var year = sessionStorage.getItem("year");  
-        $('#bonus1').val(year);
-    
-
-        
-        $('#bonus1').change(function() { 
-            var selVal = $(this).val();
-         
-            sessionStorage.setItem("SelItem", selVal);
-        
-          });
-  
-        
-     
-        $('#bonus1').change(function() { 
-            var selVals = $(this).val();
-           
-            sessionStorage.setItem("year", selVals);
-
-            
-
-        
-        
-        });
-
-
-        var selItem1 = sessionStorage.getItem("SelItem1");  
-        $('#bonus').val(selItem1);
-        var month = sessionStorage.getItem("month");  
-        $('#bonus').val(month);
-
-        $('#bonus').change(function() { 
-            var selVal1 = $(this).val();
-     
-            sessionStorage.setItem("SelItem1", selVal1);
-        
-          });
-  
-        
-     
-        $('#bonus').change(function() { 
-            var selVals1 = $(this).val();
-           
-            sessionStorage.setItem("month", selVals1);
-
-            
-
-        
-        
-        });
-  
-    }
     });
-
-
 
  </script> 
 

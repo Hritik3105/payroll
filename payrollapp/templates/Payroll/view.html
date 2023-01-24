@@ -74,7 +74,7 @@ a.myclass {
     <td><input type='text' id="dSuggest" class="count" value={{i.amount_paid}}></td>
     <td>{{i.invoice}}</td>
     <td> <a href ="{% url 'date_updt'  i.id %}"  class='myclass'>Reschedule</a></td>
-    <td> <input type='button'  value='save'  onclick='myTest(this)' class="btn btn-primary"/></td>
+    <td> <input type='button'  value='Save/Return'  onclick='myTest(this)' class="btn btn-primary"/></td>
     
   </tr>
   {%endfor%}
@@ -82,7 +82,7 @@ a.myclass {
 
 
 <div class="mb-5 mt-3 text-center">
-<a href="{%url 'payroll' %}"  class="btn btn-primary">Return</a>
+
 {% comment %} <button type ="submit" class="btn btn-primary">Save/Return</button> {% endcomment %}
 
 
@@ -120,8 +120,7 @@ a.myclass {
           },
           dataType: 'json',
           success: function (data) {
-
-         
+            window.location.href = "/payroll";
             
           }
        
