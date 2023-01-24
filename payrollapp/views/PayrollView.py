@@ -19,9 +19,11 @@ def calculate():
     val1=year-2
     val4=year+2
     for i in range(int(val1),int(val4)+1):
-        lst.append(i)
+        lst.append(str(i))
     for i in range(1,5):
         lst2.append(i)
+    print("-=-=-==",lst2)
+    print("-=-=-ghj==",lst)
     return lst,lst2
 
 
@@ -93,7 +95,7 @@ def payroll(request):
         font_style = xlwt.XFStyle()
 
         if download == "1":
-            week1=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gte=0,week__lte=1.75)).values_list('provider_name', 'business_name', 'account', 'amount_paid','bank_code','email','invoice')
+            week1=Amountpaid.objects.filter(user_id=request.user.id).select_related("provider").filter(provider__week__gte=0,provider__week__lte=1.75).values_list("provider__provider_name","provider__business_name","provider__account","amount_paid","provider__bank_code","provider__email","provider__invoice")
             for row in week1:
                 row_num += 1
                 for col_num in range(len(row)):
@@ -102,7 +104,7 @@ def payroll(request):
 
             return response
         elif download == "2":
-            week2=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=1.75,week__lte=3.75)).values_list('provider_name', 'business_name', 'account', 'amount_paid','bank_code','email','invoice')
+            week2=Amountpaid.objects.filter(user_id=request.user.id).select_related("provider").filter(provider__week__gt=1.75,provider__week__lte=3.75).values_list("provider__provider_name","provider__business_name","provider__account","amount_paid","provider__bank_code","provider__email","provider__invoice")
             for row in week2:
                 row_num += 1
                 for col_num in range(len(row)):
@@ -111,8 +113,7 @@ def payroll(request):
 
             return response
         elif download == "3":
-    
-            week3=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=3.75,week__lte=5.75)).values_list('provider_name', 'business_name', 'account', 'balance_payable','bank_code','email','invoice')
+            week3=Amountpaid.objects.filter(user_id=request.user.id).select_related("provider").filter(provider__week__gt=3.75,provider__week__lte=5.75).values_list("provider__provider_name","provider__business_name","provider__account","amount_paid","provider__bank_code","provider__email","provider__invoice")
             for row in week3:
                 row_num += 1
                 for col_num in range(len(row)):
@@ -122,10 +123,7 @@ def payroll(request):
             return response
 
         elif download == "4":
-            
-
-            
-            week4=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=5.75,week__lte=7.75)).values_list('provider_name', 'business_name', 'account', 'balance_payable','bank_code','email','invoice')
+            week4=Amountpaid.objects.filter(user_id=request.user.id).select_related("provider").filter(provider__week__gt=5.75,provider__week__lte=7.75).values_list("provider__provider_name","provider__business_name","provider__account","amount_paid","provider__bank_code","provider__email","provider__invoice")
             for row in week4:
                 row_num += 1
                 for col_num in range(len(row)):
@@ -254,9 +252,15 @@ def func2(request):
 def get_value(request):
 
     provider_id=request.GET.get("id")
+   
     provider_account=request.GET.get("balance")
     print(provider_id)
     print(provider_account)
+    pro_obj=Amountpaid()
+    pro_obj.user_id=request.user.id
+    pro_obj.provider_id=provider_id
+    pro_obj.amount_paid=int(provider_account)
+    pro_obj.save()
     amt_cal=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=provider_id)).values_list("amount_paid",flat=True)
     if amt_cal:
         final_amt=int(amt_cal[0])-int(provider_account)
@@ -266,4 +270,23 @@ def get_value(request):
     data={
         "pro":provider_account
     }
+    return JsonResponse(data)
+
+
+
+def option_value(request):
+
+    provider_id=request.GET.get("ids")
+   
+    print("0-0-0-",provider_id)
+   
+    bal_id= request.session["month"]
+    bal_year= request.session["year"]
+    
+    calu_value=Providers.objects.filter(Q(user_id=request.user.id) & Q(week__gte=0,week__lte=1.75) & Q(month_of_payment=provider_id) & Q(year_of_payment=provider_id))
+    
+    data={
+        "month":bal_id,
+    }
+
     return JsonResponse(data)

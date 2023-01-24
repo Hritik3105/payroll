@@ -1,6 +1,7 @@
 {% extends 'layout/admin.html' %}
 
 {% block content %}
+
 <style>
     .input-group:focus-within {
         box-shadow: unset !important;
@@ -43,7 +44,7 @@
    
             <div class="input-group date" id="datepicker">
                 <label style="color: black;
-                font-weight: 500;">Select Month: <select name="month" id="bonus" style="margin-top:8px;"></label>
+                font-weight: 500;">Select Month: <select name="month" id="bonus" class="select_drop_1" style="margin-top:8px;"></label>
                 <option value=""> Month</option>
             
                 <option value="January"  {% if month == "January" %} selected {%else %} {%endif%}  >January</option>
@@ -72,7 +73,7 @@
             </select><br><br>
             </div>
             <label style="color: black;
-            font-weight: 500;width:50%;">Select Year: <select name="year" id="bonus1"style="margin-top:8px;"></label>
+            font-weight: 500;width:50%;">Select Year: <select name="year" id="bonus1" class="select_drop_1" style="margin-top:8px;"></label>
                 <option value="">Year</option>
                 
                 {% for i in lst %}      
@@ -111,6 +112,7 @@
               <button type="submit" class="btn btn-primary" name="download" value="1">Download</button> 
             </li>
             <li>
+                
                 <strong> {{total1.amount_paid__sum}}</strong>
             </li>
         </ul>
@@ -198,9 +200,10 @@
     });  
       });
 
-      $('#item').change(function() {
+      $('#bonus1').change(function() {
         
-        var use=$("#item option:selected").val()
+        var use=$("#bonus1 option:selected").val()
+        console.log("vvvvv",use)
    
     $.ajax({
         type:"GET",
@@ -216,6 +219,29 @@
     });  
       });
 
+
+      arry=[];
+      $('.select_drop_1').change(function() {
+       
+        var tab = $(this).children("option:selected").val();
+        arry.push(tab)
+       
+
+    $.ajax({
+        type:"GET",
+        url: 'drop',
+        data: {
+          'ids': JSON.stringify(arry)
+        },
+        dataType: 'json',
+        success: function (data) {
+         
+        }
+     
+    });  
+      });
+
+    
     window.onload = function() {
         var selItem = sessionStorage.getItem("SelItem");  
         $('#bonus1').val(selItem);
@@ -226,7 +252,7 @@
         
         $('#bonus1').change(function() { 
             var selVal = $(this).val();
-            console.log(selVal)
+         
             sessionStorage.setItem("SelItem", selVal);
         
           });
@@ -235,7 +261,7 @@
      
         $('#bonus1').change(function() { 
             var selVals = $(this).val();
-            console.log(selVals)
+           
             sessionStorage.setItem("year", selVals);
 
             
@@ -252,7 +278,7 @@
 
         $('#bonus').change(function() { 
             var selVal1 = $(this).val();
-            console.log(selVal1)
+     
             sessionStorage.setItem("SelItem1", selVal1);
         
           });
@@ -261,7 +287,7 @@
      
         $('#bonus').change(function() { 
             var selVals1 = $(this).val();
-            console.log(selVals1)
+           
             sessionStorage.setItem("month", selVals1);
 
             

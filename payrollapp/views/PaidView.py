@@ -69,7 +69,7 @@ def paid(request):
     val3=year+1
     val4=year+2
     for i in range(int(val1),int(val4)+1):
-        lst.append(i)
+        lst.append(str(i))
  
         
     return render(request,"paid/filter.html",{"lst":lst})

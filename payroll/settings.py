@@ -88,6 +88,7 @@ AUTH_USER_MODEL = 'payrollapp.user'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 
+USE_THOUSAND_SEPARATOR = True
 
 
 # DATABASES = {

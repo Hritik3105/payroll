@@ -66,3 +66,9 @@ class Providers(models.Model):
 class Bank(models.Model):
   bank_name=models.CharField(max_length=250,null=True,blank=True)
   bank_code=models.CharField(max_length=250,null=True,blank=True)
+
+
+class Amountpaid(models.Model):
+  user=models.ForeignKey(User, on_delete=models.CASCADE)
+  provider=models.ForeignKey(Providers, on_delete=models.CASCADE)
+  amount_paid=models.IntegerField(null=True,blank=True)
