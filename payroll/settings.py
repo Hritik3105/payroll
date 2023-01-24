@@ -28,9 +28,9 @@ SECRET_KEY = 'django-insecure-is@ig0!b_95wgv1$fw_x(eo^rb5#nnox_z8))*(t8t-^cg(4rf
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS =[]
+ALLOWED_HOSTS =[]
 
-ALLOWED_HOSTS =['52.90.37.50']
+# ALLOWED_HOSTS =['52.90.37.50']
 
 
 # Application definition
@@ -88,22 +88,8 @@ AUTH_USER_MODEL = 'payrollapp.user'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 
-USE_THOUSAND_SEPARATOR = True
+# USE_THOUSAND_SEPARATOR = True
 
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'payroll',
-#         'USER':'root',
-#         "HOST":"localhost",
-#         'PASSWORD':"",
-#         "PORT":"3306"
-#     }
-# }
-
-
-# git
 
 DATABASES = {
     'default': {
@@ -111,10 +97,24 @@ DATABASES = {
         'NAME': 'payroll',
         'USER':'root',
         "HOST":"localhost",
-        'PASSWORD':"AdMiN@1234",
+        'PASSWORD':"",
         "PORT":"3306"
     }
 }
+
+
+# git
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'payroll',
+#         'USER':'root',
+#         "HOST":"localhost",
+#         'PASSWORD':"AdMiN@1234",
+#         "PORT":"3306"
+#     }
+# }
 
 
 
