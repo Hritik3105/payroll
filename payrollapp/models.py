@@ -70,5 +70,6 @@ class Bank(models.Model):
 
 class Amountpaid(models.Model):
   user=models.ForeignKey(User, on_delete=models.CASCADE)
-  provider=models.ForeignKey(Providers, on_delete=models.CASCADE)
+  provider=models.ForeignKey(Providers, on_delete=models.CASCADE,null=True)
   amount_paid=models.IntegerField(null=True,blank=True)
+  status=models.BooleanField(default=False)

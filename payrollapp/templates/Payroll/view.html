@@ -45,7 +45,18 @@ a.myclass {
   padding:9px 15px;
   box-shadow: 0 0.125rem 0.25rem rgb(147 158 170 / 40%);
 }
-    
+<style>
+  .mainpage {
+      height: 68vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+  }
+  .inner-page {
+      box-shadow: 0 0 4px;
+      padding: 18px;
+  }
+</style>
 </style>
 </head>
 <body>
@@ -61,11 +72,13 @@ a.myclass {
     <th>Amount to pay or due </th>
     <th>Invoice</th>
     <th>Reschedule</th>
-    <th>Save</th>
+   
+    <th>Download</th>
     
   </tr>
   
   {% for i in week %}
+
   <tr>
     <td hidden><input type='text' class="val" id="dSugsgest" name="id_{{forloop.counter}}" value={{i.id}}></td>
     
@@ -73,16 +86,123 @@ a.myclass {
     <td>{{i.business_name}}</td>
     <td><input type='text' id="dSuggest" class="count" value={{i.amount_paid}}></td>
     <td>{{i.invoice}}</td>
-    <td> <a href ="{% url 'date_updt'  i.id %}"  class='myclass'>Reschedule</a></td>
-    <td> <input type='button'  value='Save/Return'  onclick='myTest(this)' class="btn btn-primary"/></td>
+
+   <td>
+
+  
+     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" onclick='myTest(this)' name="drop" {%for k in data%} {% if k.provider_id == i.id  and k.status == True %} disabled {%else%} {%endif%} {%endfor%} >
+      Reschedule
+    </button></td>
+
     
+    <td><form method = "POST" >
+      {%csrf_token%}
+   
+      <input type="text"   value="" name="upd" hidden/>
+      <button type="submit" class="btn btn-primary" name="download" onclick='myTest1(this)' {%for k in data%} {% if k.provider_id == i.id and  k.status == True %} disabled {%else%} {%endif%} {%endfor%}>Download</button></form> </td>
+      
+      
+   
   </tr>
   {%endfor%}
 </table> 
 
 
-<div class="mb-5 mt-3 text-center">
 
+
+<!-- The Modal -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="inner-page">
+          <h1>Update Month and Year</h1>
+          <form method ="POST" class="">
+              {%csrf_token%}
+          <div class="inner-clicker d-flex"style="justify-content: space-around;">
+              <div>
+          <label style="display: grid;color: black;
+          font-weight: 500;">Select Month: <select name="month" id="sort-item"style="margin-top:8px;"></label>
+              
+              <option value="Ja"> Month</option>
+          
+              <option value="January"  {% if month == "January" %} selected {%else %} {%endif%}  >January</option>
+              
+              <option value="February" {% if month == "February" %} selected {%else %} {%endif%} >February</option>
+              
+              <option value="March" {% if month == "March" %} selected {%else %} {%endif%}>March</option>
+          
+              <option value="April" {% if month == "April" %} selected {%else %} {%endif%}>April</option>
+          
+              <option value="May" {% if month == "May" %} selected {%else %} {%endif%}>May</option>
+          
+              <option value="June" {% if month == "June" %} selected {%else %} {%endif%}>June</option>
+              
+              <option value="July" {% if month == "July" %} selected {%else %} {%endif%}>July</option>
+          
+              <option value="August" {% if month == "August" %} selected {%else %} {%endif%}>August</option>
+              
+              <option value="September"{% if month == "September" %} selected {%else %} {%endif%}>September</option>
+              
+              <option value="October"{% if month == "October" %} selected {%else %} {%endif%}>October</option>
+          
+              <option value="November" {% if month == "November" %} selected {%else %} {%endif%}>November</option>
+              
+              <option value="December" {% if month == "December" %} selected {%else %} {%endif%}>December</option>
+          </select><br><br>
+          </div>
+          <div>
+          <label style="display: grid;color: black;
+          font-weight: 500;">Week <select name="week" id="sort-items"style="margin-top:8px;"></label>
+           
+              <option value="">Week</option>
+              
+              {% for i in lst1 %}
+              
+              <option value="{{i}}" {% if year == i %} selected {%else %} {%endif%}  >{{i}}</option>
+              {%endfor%}
+          
+          </select>
+       
+          </div>
+          <div>
+          <label style="display: grid;color: black;
+          font-weight: 500;">Select Year: <select name="year" id="sort-items"style="margin-top:8px;"></label>
+           
+              <option value="">Year</option>
+              
+              {% for i in lst %}
+              
+              <option value="{{i}}" {% if year == i %} selected {%else %} {%endif%}  >{{i}}</option>
+              {%endfor%}
+          
+          </select>
+      </div>
+      <input type="text"   value="" name="id" hidden/>
+      <input type="text"   value="" name="amt" hidden/>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer justify-content-center">
+        <input type='submit'  value='Save/Return'  name="updt" class="btn btn-primary"/ >
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+  <div id="popup" style="display:none">
+    <asp:Literal Text="Are you sure you want to delete the blog?"  runat="server"/>
+    <asp:Button Text="Yes" runat="server" />
+</div>
 {% comment %} <button type ="submit" class="btn btn-primary">Save/Return</button> {% endcomment %}
 
 
@@ -106,13 +226,18 @@ a.myclass {
     var currentRow=$(a).closest("tr");
   
     var bank_id = currentRow.find("td:eq(0) input").val();
+    console.log(bank_id)
     var test1 = currentRow.find("td:eq(3) input").val();
+    console.log("test",test1)
   
-  
+    $('input[name=id]').val(bank_id);
+    $('input[name=amt]').val(test1);
+    $('input[name=upd]').val(bank_id);
+    
     
     $.ajax({
           type:"GET",
-          url: 'amount',
+          url: 'view',
           data: {
             'id': bank_id,
             'balance':test1,
@@ -120,13 +245,52 @@ a.myclass {
           },
           dataType: 'json',
           success: function (data) {
-            window.location.href = "/payroll";
+            
             
           }
        
         });
+
+      
+  
   
       };
+
+      function myTest1(a)
+      {
+        var currentRow=$(a).closest("tr");
+      
+        var bank_id = currentRow.find("td:eq(0) input").val();
+        console.log(bank_id)
+        var test1 = currentRow.find("td:eq(3) input").val();
+        console.log("testsssssssssssssssss",test1)
+       
+        $('input[name=id]').val(bank_id);
+        $('input[name=amt]').val(test1);
+        $('input[name=upd]').val(bank_id);
+        
+        $.ajax({
+              type:"GET",
+              url: 'view',
+              data: {
+                'id': bank_id,
+                'balance':test1,
+                
+              },
+              dataType: 'json',
+              success: function (data) {
+              $('Button[name=download]').prop("disabled",true); 
+             
+                
+              
+              }
+           
+            });
+    
+          
+      
+      
+          };
  
 
 </script>

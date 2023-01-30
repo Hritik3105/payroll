@@ -111,9 +111,8 @@
             </li>
             <li>
                
-              <button type="submit" class="btn btn-primary" name="download" value="1">Download</button> 
-            </li>
-            <li>
+             
+            
                 
                 <strong> {{total1.amount_paid__sum}}</strong>
             </li>
@@ -131,9 +130,9 @@
                 <input type="hidden" name="next" value="/view">
                 <button type="submit" class="btn btn-primary"  name="view" value="view2"> View / Edit</button>
             </li>
-            <li>
+            {% comment %} <li>
                 <button type="submit" class="btn btn-primary" name="download" value="2">Download</button>
-            </li>
+            </li> {% endcomment %}
             <li> <strong> {{total2.amount_paid__sum}}</strong>
             </li>
         </ul>
@@ -149,9 +148,9 @@
                 <input type="hidden" name="next" value="/view">
                 <button type="submit" class="btn btn-primary"  name="view" value="view3"> View / Edit</button>
             </li>
-            <li>
+            {% comment %} <li>
                 <button type="submit" class="btn btn-primary" name="download" value="3">Download</button>
-            </li>
+            </li> {% endcomment %}
             <li>
                 <strong> {{total3.amount_paid__sum}}</strong>
             </li>
@@ -168,9 +167,9 @@
                 <input type="hidden" name="next" value="/view">
                 <button type="submit" class="btn btn-primary"  name="view" value="view4"> View / Edit</button>
             </li>
-            <li>
+            {% comment %} <li>
                 <button type="submit" class="btn btn-primary" name="download" value="4">Download</button>
-            </li>
+            </li> {% endcomment %}
             <li>
                 <strong> {{total4.amount_paid__sum}}</strong>
             </li>
