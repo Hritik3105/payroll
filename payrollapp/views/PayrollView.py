@@ -253,7 +253,7 @@ def func2(request):
 
             # Sheet header, first row
             row_num = 0
-
+            
             font_style = xlwt.XFStyle()
             font_style.font.bold = True
 
@@ -276,7 +276,8 @@ def func2(request):
             return response
 
         week1=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gte=0,week__lte=1.75))
-        
+        week1_total=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gte=0,week__lte=1.75)).aggregate(Sum("amount_paid"))
+        week_tl=week1_total["amount_paid__sum"]
         status_upd=Amountpaid.objects.filter(user_id=request.user.id).values_list("status",flat=True)
         status_id=Amountpaid.objects.filter(user_id=request.user.id).values_list("provider",flat=True)
         data=Amountpaid.objects.filter(user_id=request.user.id)
@@ -289,7 +290,9 @@ def func2(request):
         else:
             status_value=0
             status_ids=0
-        return render(request,"Payroll/view.html",{"week":week1,"lst":cal[0],'lst1':cal[1],"status":status_value,"status_ids":status_ids,"data":data})
+        year = request.session['year']
+        month = request.session['month']
+        return render(request,"Payroll/view.html",{"week":week1,"lst":cal[0],'lst1':cal[1],"status":status_value,"status_ids":status_ids,"data":data,"year":year,"month":month,"weeks":1,"week_total":week_tl})
 
         
      
@@ -353,7 +356,8 @@ def func2(request):
             return response
 
         week1=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=1.75,week__lte=3.75))
-        
+        week1_total=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=1.75,week__lte=3.75)).aggregate(Sum("amount_paid"))
+        week_tl=week1_total["amount_paid__sum"]
         status_upd=Amountpaid.objects.filter(user_id=request.user.id).values_list("status",flat=True)
         status_id=Amountpaid.objects.filter(user_id=request.user.id).values_list("provider",flat=True)
         data=Amountpaid.objects.filter(user_id=request.user.id)
@@ -366,7 +370,9 @@ def func2(request):
         else:
             status_value=0
             status_ids=0
-        return render(request,"Payroll/view.html",{"week":week1,"lst":cal[0],'lst1':cal[1],"status":status_value,"status_ids":status_ids,"data":data})
+        year = request.session['year']
+        month = request.session['month']
+        return render(request,"Payroll/view.html",{"week":week1,"lst":cal[0],'lst1':cal[1],"status":status_value,"status_ids":status_ids,"data":data,"year":year,"month":month,"weeks":2,"week_total":week_tl})
 
 
 
@@ -429,7 +435,8 @@ def func2(request):
             return response
 
         week1=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=3.75,week__lte=5.75))
-        
+        week1_total=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=3.75,week__lte=5.75)).aggregate(Sum("amount_paid"))
+        week_tl=week1_total["amount_paid__sum"]
         status_upd=Amountpaid.objects.filter(user_id=request.user.id).values_list("status",flat=True)
         status_id=Amountpaid.objects.filter(user_id=request.user.id).values_list("provider",flat=True)
         data=Amountpaid.objects.filter(user_id=request.user.id)
@@ -442,7 +449,9 @@ def func2(request):
         else:
             status_value=0
             status_ids=0
-        return render(request,"Payroll/view.html",{"week":week1,"lst":cal[0],'lst1':cal[1],"status":status_value,"status_ids":status_ids,"data":data})
+        year = request.session['year']
+        month = request.session['month']
+        return render(request,"Payroll/view.html",{"week":week1,"lst":cal[0],'lst1':cal[1],"status":status_value,"status_ids":status_ids,"data":data,"year":year,"month":month,"weeks":3,"week_total":week_tl})
 
 
     if view == "view4":
@@ -503,7 +512,8 @@ def func2(request):
             return response
 
         week1=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=5.75,week__lte=7.75))
-        
+        week1_total=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=5.75,week__lte=7.75)).aggregate(Sum("amount_paid"))
+        week_tl=week1_total["amount_paid__sum"]
         status_upd=Amountpaid.objects.filter(user_id=request.user.id).values_list("status",flat=True)
         status_id=Amountpaid.objects.filter(user_id=request.user.id).values_list("provider",flat=True)
         data=Amountpaid.objects.filter(user_id=request.user.id)
@@ -516,7 +526,9 @@ def func2(request):
         else:
             status_value=0
             status_ids=0
-        return render(request,"Payroll/view.html",{"week":week1,"lst":cal[0],'lst1':cal[1],"status":status_value,"status_ids":status_ids,"data":data})
+        year = request.session['year']
+        month = request.session['month']
+        return render(request,"Payroll/view.html",{"week":week1,"status":status_value,"status_ids":status_ids,"data":data,"year":year,"month":month,"weeks":4,"week_total":week_tl})
 
 
     return redirect("payroll")
@@ -572,3 +584,20 @@ def option_value(request):
     return JsonResponse(data)
 
 
+
+def rem_amt(request):
+    pay_id=request.GET.get("id").replace(",","")
+    pay_amt=request.GET.get("amt").replace(",","")
+    print(pay_id)
+    print(pay_amt)
+    amt_diff=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=pay_id)).values_list("amount_paid",flat=True)
+    chng= amt_diff[0]
+    print(type(chng))
+    final_amt = chng - int(pay_amt)
+    print(final_amt)
+
+    data={
+        "amount":final_amt
+    }
+
+    return JsonResponse(data)

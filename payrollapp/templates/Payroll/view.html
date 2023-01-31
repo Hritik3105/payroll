@@ -56,12 +56,144 @@ a.myclass {
       box-shadow: 0 0 4px;
       padding: 18px;
   }
+
+  button#modalClose {
+    position: absolute;
+    top: 12px;
+    background: red;
+    border: none;
+    font-size: 20px;
+    right: 14px;
+    color: #fff;
+    height: 35px;
+}
+.modal-header {
+  position: relative;
+  display: unset !important;
+}
+h1.mainhead_month {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+h1.mainhead_date {
+  padding-right: 15px;
+}
+a.btn_back {
+    color: #fff;
+    background-color: #5a8dee;
+    border-color: #5a8dee;
+    box-shadow: 0 0.125rem 0.25rem rgb(147 158 170 / 40%);
+    padding:8px 16px;
+    height: 36px;
+  }
+  button.btn_downlod {
+    color: #fff;
+    background-color: #5a8dee;
+    border-color: #5a8dee;
+    box-shadow: 0 0.125rem 0.25rem rgb(147 158 170 / 40%);
+    padding:8px 16px;
+    border: none;
+    height: 36px;
+  }
+
+
 </style>
-</style>
+
 </head>
 <body>
+  <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header text-center">
+            <h3 class="modal-title" id="exampleModalLabel">Are you not </h3><h3>paying<h3><h2 class="app"></h2><h3>of this payroll? When do you want to reschedule it?</h3>   
+            <button  class="close" id="modalClose" aria-label="close">&times;</button>
+            
+          
+        </div>
+        <div class="modal-body">
+          <form method ="POST" class="">
+            {%csrf_token%}
+        <div class="inner-clicker d-flex"style="justify-content: space-around;">
+            <div>
+        <label style="display: grid;color: black;
+        font-weight: 500;">Select Month: <select name="month" id="sort-item"style="margin-top:8px;"></label>
+            
+            <option value="Ja"> Month</option>
+        
+            <option value="January"  {% if month == "January" %} selected {%else %} {%endif%}  >January</option>
+            
+            <option value="February" {% if month == "February" %} selected {%else %} {%endif%} >February</option>
+            
+            <option value="March" {% if month == "March" %} selected {%else %} {%endif%}>March</option>
+        
+            <option value="April" {% if month == "April" %} selected {%else %} {%endif%}>April</option>
+        
+            <option value="May" {% if month == "May" %} selected {%else %} {%endif%}>May</option>
+        
+            <option value="June" {% if month == "June" %} selected {%else %} {%endif%}>June</option>
+            
+            <option value="July" {% if month == "July" %} selected {%else %} {%endif%}>July</option>
+        
+            <option value="August" {% if month == "August" %} selected {%else %} {%endif%}>August</option>
+            
+            <option value="September"{% if month == "September" %} selected {%else %} {%endif%}>September</option>
+            
+            <option value="October"{% if month == "October" %} selected {%else %} {%endif%}>October</option>
+        
+            <option value="November" {% if month == "November" %} selected {%else %} {%endif%}>November</option>
+            
+            <option value="December" {% if month == "December" %} selected {%else %} {%endif%}>December</option>
+        </select><br><br>
+        </div>
+        <div>
+        <label style="display: grid;color: black;
+        font-weight: 500;">Week <select name="week" id="sort-items"style="margin-top:8px;"></label>
+         
+            <option value="">Week</option>
+            
+            {% for i in lst1 %}
+            
+            <option value="{{i}}" {% if year == i %} selected {%else %} {%endif%}  >{{i}}</option>
+            {%endfor%}
+        
+        </select>
+     
+        </div>
+        <div>
+        <label style="display: grid;color: black;
+        font-weight: 500;">Select Year: <select name="year" id="sort-items"style="margin-top:8px;"></label>
+         
+            <option value="">Year</option>
+            
+            {% for i in lst %}
+            
+            <option value="{{i}}" {% if year == i %} selected {%else %} {%endif%}  >{{i}}</option>
+            {%endfor%}
+        
+        </select>
+    </div>
+    <input type="text"   value="" name="id" hidden/>
+    <input type="text"   value="" name="amt" hidden/>
+    </div>
 
-
+    <!-- Modal footer -->
+    <div class="modal-footer justify-content-center">
+      <input type='submit'  value='Save/Return'  name="updt" class="btn btn-primary"/ >
+    </div>
+  </form>
+        </div>
+      
+        </div>
+    </div>
+    </div>
+<div class="col-md-7  d-flex"style="justify-content: space-evenly;">
+  <div class="d-flex">
+<h1 class="mainhead_month">{{month}}</h1>  <h1 class="mainhead_date">{{weeks}}</h1>  <h1 class="mainhead_year">{{year}}</h1>
+</div>
+<a href="javascript:history.go(-1)" class="btn_back">Back</a>
+<button type="submit" class="btn_downlod" name="download" onclick='myTest1(this)' {%for k in data%} {% if k.provider_id == i.id and  k.status == True %} disabled {%else%} {%endif%} {%endfor%}>Download</button>
+<h1>{{week_total}}</h1>
+</div>
   <form method = "POST">
     {%csrf_token%}
 <table>
@@ -111,7 +243,7 @@ a.myclass {
 
 
 <!-- The Modal -->
-<div class="modal" id="myModal">
+{% comment %} <div class="modal" id="myModal">
   <div class="modal-dialog">
     <div class="modal-content">
 
@@ -196,7 +328,7 @@ a.myclass {
     </form>
     </div>
   </div>
-</div>
+</div> {% endcomment %}
 
 
   <div id="popup" style="display:none">
@@ -245,7 +377,7 @@ a.myclass {
           },
           dataType: 'json',
           success: function (data) {
-            
+           
             
           }
        
@@ -293,7 +425,61 @@ a.myclass {
           };
  
 
+
+          $(".count").change('input',function () {
+            var vin = $(this).val()
+            console.log(vin);
+            var currentRow=$(this).closest("tr");
+      
+            var bank_id = currentRow.find("td:eq(0) input").val();
+            console.log(bank_id)
+            var test1 = currentRow.find("td:eq(3) input").val();
+            console.log("testsssssssssssssssss",test1)
+            
+          
+            $('input[name=id]').val(bank_id);
+            $('input[name=amt]').val(test1);
+            $('input[name=upd]').val(bank_id);
+          
+            $('#exampleModal').modal('show');
+            
+  
+
+              $.ajax({
+              type:"GET",
+              url: 'get_value',
+              data: {
+                'id': bank_id,
+                'amt':test1,
+
+              },
+              dataType: 'json',
+              success: function (data) {
+                console.log("dfsdfdsf",data.amount) 
+                $('.app').html(data.amount);
+
+               
+              }
+        
+            }); 
+
+
+            $('#modalClose').on('click', function () {
+              console.log("hello")
+              
+              $('#exampleModal').modal('hide')
+          });
+      
+          });
+      
+        
+          
+
+
 </script>
+
+
+
 
 {%endblock javascripts%}
 

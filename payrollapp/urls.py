@@ -62,5 +62,10 @@ urlpatterns = [
     
     #update amount
     path("drop",PayrollView.option_value, name ="payroll-drop"),
+
+
+        
+    #update payroll amount
+    path("get_value",PayrollView.rem_amt, name ="get_value"),
     
 ]
