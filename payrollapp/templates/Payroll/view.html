@@ -191,7 +191,10 @@ a.btn_back {
 <h1 class="mainhead_month">{{month}}</h1>  <h1 class="mainhead_date">{{weeks}}</h1>  <h1 class="mainhead_year">{{year}}</h1>
 </div>
 <a href="javascript:history.go(-1)" class="btn_back">Back</a>
-<button type="submit" class="btn_downlod" name="download" onclick='myTest1(this)' {%for k in data%} {% if k.provider_id == i.id and  k.status == True %} disabled {%else%} {%endif%} {%endfor%}>Download</button>
+<form method = "POST" id="form-id">
+  {%csrf_token%}
+<button type="submit" class="btn_downlod" id="your-id" name="download"  onclick='myTest4(this)'>Download</button>
+</form>
 <h1>{{week_total}}</h1>
 </div>
   <form method = "POST">
@@ -502,9 +505,18 @@ a.btn_back {
               
               
                   };
-    
+          
+          
+                  function myTest4(a)
+                  {
+                  var form = document.getElementById("form-id");
+                  
+                  
+                  $(".count").prop('disabled', true);
+                  
+                };
 
-          $(".count").change('input',function () {
+          $(".count").focusout('input',function () {
             var vin = $(this).val()
             console.log(vin);
             var currentRow=$(this).closest("tr");
@@ -547,7 +559,8 @@ a.btn_back {
               
               $('#exampleModal').modal('hide')
           });
-      
+
+
           });
       
         

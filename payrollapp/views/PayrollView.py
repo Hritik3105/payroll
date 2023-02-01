@@ -242,10 +242,8 @@ def func2(request):
 
         if request.method == "POST" and "download" in request.POST:
             
-            print("enrtryrty")
-            provider_id=request.POST.get("upd")
-            print("ddsfsd",provider_id)
-            upd_proid=provider_id.replace(",","")
+        
+            
             response = HttpResponse(content_type='application/ms-excel')
             response['Content-Disposition'] = 'attachment; filename="paid by month and week.xls"'
 
@@ -265,10 +263,10 @@ def func2(request):
 
             # Sheet body, remaining rows
             font_style = xlwt.XFStyle()
-            upd_status=Amountpaid.objects.filter(user_id=request.user.id,provider_id=upd_proid).update(status=True)
             
             week2=Amountpaid.objects.filter(user_id=request.user.id).select_related("provider").filter(provider__week__gt=0,provider__week__lte=1.75).values_list("provider__provider_name","provider__business_name","provider__account","amount_paid","provider__bank_code","provider__email","provider__invoice")
-            for row in week2:
+            week12=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=0,week__lte=1.75)).values_list("provider_name","business_name","account","amount_paid","bank_code","email","invoice")
+            for row in week12:
                 row_num += 1
                 for col_num in range(len(row)):
                     ws.write(row_num, col_num, row[col_num], font_style)
@@ -283,7 +281,7 @@ def func2(request):
         status_id=Amountpaid.objects.filter(user_id=request.user.id).values_list("provider",flat=True)
         data=Amountpaid.objects.filter(user_id=request.user.id)
         request.session['upt_month']= ""
-        request.session['upt_year'] =""
+        request.session['upt_year'] ="" 
 
    
         if status_upd and status_id:
@@ -329,9 +327,7 @@ def func2(request):
 
         if request.method == "POST" and "download" in request.POST:
             
-            print("enrtryrty")
-            provider_id=request.POST.get("upd")
-            upd_proid=provider_id.replace(",","")
+            
             response = HttpResponse(content_type='application/ms-excel' )
             response['Content-Disposition'] = 'attachment; filename="paid by month and week.xls"'
 
@@ -351,10 +347,11 @@ def func2(request):
 
             # Sheet body, remaining rows
             font_style = xlwt.XFStyle()
-            upd_status=Amountpaid.objects.filter(user_id=request.user.id,provider_id=upd_proid).update(status=True)
+           
             
             week2=Amountpaid.objects.filter(user_id=request.user.id).select_related("provider").filter(provider__week__gt=1.75,provider__week__lte=3.75).values_list("provider__provider_name","provider__business_name","provider__account","amount_paid","provider__bank_code","provider__email","provider__invoice")
-            for row in week2:
+            week122=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=1.75,week__lte=3.75)).values_list("provider_name","business_name","account","amount_paid","bank_code","email","invoice")
+            for row in week122:
                 row_num += 1
                 for col_num in range(len(row)):
                     ws.write(row_num, col_num, row[col_num], font_style)
@@ -408,9 +405,7 @@ def func2(request):
 
         if request.method == "POST" and "download" in request.POST:
             
-            print("enrtryrty")
-            provider_id=request.POST.get("upd")
-            upd_proid=provider_id.replace(",","")
+         
             response = HttpResponse(content_type='application/ms-excel' )
             response['Content-Disposition'] = 'attachment; filename="paid by month and week.xls"'
 
@@ -430,10 +425,10 @@ def func2(request):
 
             # Sheet body, remaining rows
             font_style = xlwt.XFStyle()
-            upd_status=Amountpaid.objects.filter(user_id=request.user.id,provider_id=upd_proid).update(status=True)
-            
+          
+            week123=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=3.75,week__lte=5.75)).values_list("provider_name","business_name","account","amount_paid","bank_code","email","invoice")
             week2=Amountpaid.objects.filter(user_id=request.user.id).select_related("provider").filter(provider__week__gt=3.75,provider__week__lte=5.75).values_list("provider__provider_name","provider__business_name","provider__account","amount_paid","provider__bank_code","provider__email","provider__invoice")
-            for row in week2:
+            for row in week123:
                 row_num += 1
                 for col_num in range(len(row)):
                     ws.write(row_num, col_num, row[col_num], font_style)
@@ -486,9 +481,7 @@ def func2(request):
 
         if request.method == "POST" and "download" in request.POST:
             
-            print("enrtryrty")
-            provider_id=request.POST.get("upd")
-            upd_proid=provider_id.replace(",","")
+           
             response = HttpResponse(content_type='application/ms-excel' )
             response['Content-Disposition'] = 'attachment; filename="paid by month and week.xls"'
 
@@ -508,10 +501,10 @@ def func2(request):
 
             # Sheet body, remaining rows
             font_style = xlwt.XFStyle()
-            upd_status=Amountpaid.objects.filter(user_id=request.user.id,provider_id=upd_proid).update(status=True)
-            
+           
+            week124=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=5.75,week__lte=7.75)).values_list("provider_name","business_name","account","amount_paid","bank_code","email","invoice")
             week2=Amountpaid.objects.filter(user_id=request.user.id).select_related("provider").filter(provider__week__gt=5.75,provider__week__lte=7.75).values_list("provider__provider_name","provider__business_name","provider__account","amount_paid","provider__bank_code","provider__email","provider__invoice")
-            for row in week2:
+            for row in week124:
                 row_num += 1
                 for col_num in range(len(row)):
                     ws.write(row_num, col_num, row[col_num], font_style)
