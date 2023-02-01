@@ -461,6 +461,7 @@ def func2(request):
 
 
     if view == "view4":
+        cal=calculate()
         if request.method == "POST"  and "updt" in request.POST:
             pro_obj=Amountpaid()
          
@@ -534,7 +535,7 @@ def func2(request):
             status_ids=0
         year = request.session['year']
         month = request.session['month']
-        return render(request,"Payroll/view.html",{"week":week1,"status":status_value,"status_ids":status_ids,"data":data,"year":year,"month":month,"weeks":4,"week_total":week_tl})
+        return render(request,"Payroll/view.html",{"week":week1,"lst":cal[0],'lst1':cal[1],"status":status_value,"status_ids":status_ids,"data":data,"year":year,"month":month,"weeks":4,"week_total":week_tl})
 
 
     return redirect("payroll")
