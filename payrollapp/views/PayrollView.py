@@ -237,6 +237,7 @@ def func2(request):
                 final_amt=int(amt_cal[0])-int(upd_product)
                 upd=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=upd_proid)).update(amount_paid=final_amt)
             print(chn_month,chn_year,week,upd_proid,upd_product)
+            print("entert1")
             return redirect("payroll")
 
         if request.method == "POST" and "download" in request.POST:
@@ -281,6 +282,8 @@ def func2(request):
         status_upd=Amountpaid.objects.filter(user_id=request.user.id).values_list("status",flat=True)
         status_id=Amountpaid.objects.filter(user_id=request.user.id).values_list("provider",flat=True)
         data=Amountpaid.objects.filter(user_id=request.user.id)
+        request.session['upt_month']= ""
+        request.session['upt_year'] =""
 
    
         if status_upd and status_id:
@@ -292,6 +295,9 @@ def func2(request):
             status_ids=0
         year = request.session['year']
         month = request.session['month']
+        year2 = request.session['upt_month']
+        month2 = request.session['upt_year']
+        print("popopop",year2,month2)
         return render(request,"Payroll/view.html",{"week":week1,"lst":cal[0],'lst1':cal[1],"status":status_value,"status_ids":status_ids,"data":data,"year":year,"month":month,"weeks":1,"week_total":week_tl})
 
         
@@ -538,6 +544,7 @@ def func2(request):
 
 def get_value(request):
     if request.method == "POST":
+        print("rrrrr")
         provider_id=request.POST.get("month")
         return redirect("payroll")
 
@@ -598,6 +605,61 @@ def rem_amt(request):
 
     data={
         "amount":final_amt
+    }
+
+    return JsonResponse(data)
+
+
+
+
+
+def save_data(request):
+    year=request.GET.get("year")
+    month=request.GET.get("month")
+    week=request.GET.get("week")
+    id=request.GET.get("id").replace(",","")
+    pay_amt=request.GET.get("amt").replace(",","")
+
+    print("values",year,month,week,id)
+    request.session["upt_month"]=month  
+    request.session["upt_year"]=year
+    request.session["upt_week"]=week
+    amt_diff=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=id)).values_list("amount_paid",flat=True)
+    chng= amt_diff[0]
+    print(type(chng))
+    final_amt = chng - int(pay_amt)
+    print(final_amt)
+    sav_data=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=id)).update(amount_paid=final_amt)
+
+    data={
+        "status":"success",
+        "record":final_amt
+    }
+
+    return JsonResponse(data)
+
+
+
+
+def data_reschedule(request):
+    year=request.GET.get("year")
+    month=request.GET.get("month")
+    week=request.GET.get("week")
+    id=request.GET.get("id").replace(",","")
+    print("dsfffffffffffff",month,year,week,id)
+    if week == "1":
+        week=1
+    elif week == "2":
+        week=2
+    elif week == "3":
+        week= 3.90
+    elif week == "4":
+        week =7
+    res_data=Providers.objects.filter(id=int(id)).update(month_of_payment=month,year_of_payment=year,week=week)
+
+
+    data={
+        "message":"hello"
     }
 
     return JsonResponse(data)

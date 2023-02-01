@@ -68,4 +68,12 @@ urlpatterns = [
     #update payroll amount
     path("get_value",PayrollView.rem_amt, name ="get_value"),
     
+
+    #save payroll amount
+    path("save_value",PayrollView.save_data, name ="save_value"),
+
+
+
+    #reschedule payroll amount
+    path("res_value",PayrollView.data_reschedule, name ="res_value"),
 ]

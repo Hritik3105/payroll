@@ -111,12 +111,12 @@ a.btn_back {
           
         </div>
         <div class="modal-body">
-          <form method ="POST" class="">
+          {% comment %} <form method ="POST" class=""> {% endcomment %}
             {%csrf_token%}
         <div class="inner-clicker d-flex"style="justify-content: space-around;">
             <div>
         <label style="display: grid;color: black;
-        font-weight: 500;">Select Month: <select name="month" id="sort-item"style="margin-top:8px;"></label>
+        font-weight: 500;">Select Month: <select name="month" id="sort-item" style="margin-top:8px;"></label>
             
             <option value="Ja"> Month</option>
         
@@ -147,7 +147,7 @@ a.btn_back {
         </div>
         <div>
         <label style="display: grid;color: black;
-        font-weight: 500;">Week <select name="week" id="sort-items"style="margin-top:8px;"></label>
+        font-weight: 500;">Week <select name="week" id="sort-items2"style="margin-top:8px;"></label>
          
             <option value="">Week</option>
             
@@ -161,7 +161,7 @@ a.btn_back {
         </div>
         <div>
         <label style="display: grid;color: black;
-        font-weight: 500;">Select Year: <select name="year" id="sort-items"style="margin-top:8px;"></label>
+        font-weight: 500;">Select Year: <select name="year" id="sort-items1"style="margin-top:8px;"></label>
          
             <option value="">Year</option>
             
@@ -172,15 +172,15 @@ a.btn_back {
         
         </select>
     </div>
-    <input type="text"   value="" name="id" hidden/>
-    <input type="text"   value="" name="amt" hidden/>
+    <input type="text"   value="" name="id" id="txt" hidden/>
+    <input type="text"   value="" name="amt"  id="txt1" hidden/>
     </div>
 
     <!-- Modal footer -->
     <div class="modal-footer justify-content-center">
-      <input type='submit'  value='Save/Return'  name="updt" class="btn btn-primary"/ >
+      <input type='submit'  value='Save/Return'  name="updt" onclick='myTest2(this)' class="btn btn-primary"/ >
     </div>
-  </form>
+  {% comment %} </form> {% endcomment %}
         </div>
       
         </div>
@@ -204,8 +204,6 @@ a.btn_back {
     <th>Amount to pay or due </th>
     <th>Invoice</th>
     <th>Reschedule</th>
-   
-    <th>Download</th>
     
   </tr>
   
@@ -221,19 +219,19 @@ a.btn_back {
 
    <td>
 
-  
-     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" onclick='myTest(this)' name="drop" {%for k in data%} {% if k.provider_id == i.id  and k.status == True %} disabled {%else%} {%endif%} {%endfor%} >
+     
+     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" onclick='myTest3(this)' name="drop"  >
       Reschedule
     </button></td>
 
     
-    <td><form method = "POST" >
+    {% comment %} <td><form method = "POST" >
       {%csrf_token%}
    
       <input type="text"   value="" name="upd" hidden/>
       <button type="submit" class="btn btn-primary" name="download" onclick='myTest1(this)' {%for k in data%} {% if k.provider_id == i.id and  k.status == True %} disabled {%else%} {%endif%} {%endfor%}>Download</button></form> </td>
       
-      
+       {% endcomment %}
    
   </tr>
   {%endfor%}
@@ -424,7 +422,87 @@ a.btn_back {
       
           };
  
+          function myTest2(a)
+          {
+            month=$('#sort-item option:selected').text();
+            year= $('#sort-items1 option:selected').text();
+            week=$('#sort-items2 option:selected').text();
+            value = $("#txt").val(); 
+            localStorage.setItem('month', month);
+            localStorage.setItem('year', year);
+            localStorage.setItem('week', week);
+            localStorage.setItem('id', value);
+            value1 = $("#txt1").val();
 
+            console.log(month,year,week,value)
+            $.ajax({
+                  type:"GET",
+                  url: 'save_value',
+                  data: {
+                    'id': value,
+                    'month':month,
+                    'year':year,
+                    'week':week,
+                    'amt':value1
+                    
+                  },
+                  dataType: 'json',
+                  success: function (data) {
+                  console.log(data.record)
+    
+                  window.location.href = "view";
+
+                    
+                    
+                  
+                  }
+               
+                }); 
+        
+              
+          
+          
+              };
+
+
+
+              function myTest3(a)
+              {
+                month= localStorage.getItem('month');
+                year= localStorage.getItem('year'); 
+                week=localStorage.getItem('week');
+                pro_id=localStorage.getItem('id');
+                
+  
+    
+                console.log(month,year,week)
+                 $.ajax({
+                      type:"GET",
+                      url: 'res_value',
+                      data: {
+                        'id':pro_id,
+                        'month':month,
+                        'year':year,
+                        'week':week,
+        
+                        
+                      },
+                      dataType: 'json',
+                      success: function (data) {
+                      window.location.href = "view";
+                   
+                        
+                        
+                      
+                      }
+                   
+                    }); 
+            
+                  
+              
+              
+                  };
+    
 
           $(".count").change('input',function () {
             var vin = $(this).val()
