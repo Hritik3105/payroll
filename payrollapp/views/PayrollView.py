@@ -271,7 +271,7 @@ def func2(request):
                 for col_num in range(len(row)):
                     ws.write(row_num, col_num, row[col_num], font_style)
             wb.save(response)
-          
+            data1=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gte=0,week__lte=1.75)).update(status=True)
             return response
 
         week1=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gte=0,week__lte=1.75))
@@ -280,6 +280,7 @@ def func2(request):
         status_upd=Amountpaid.objects.filter(user_id=request.user.id).values_list("status",flat=True)
         status_id=Amountpaid.objects.filter(user_id=request.user.id).values_list("provider",flat=True)
         data=Amountpaid.objects.filter(user_id=request.user.id)
+      
         request.session['upt_month']= ""
         request.session['upt_year'] ="" 
 
@@ -356,6 +357,7 @@ def func2(request):
                 for col_num in range(len(row)):
                     ws.write(row_num, col_num, row[col_num], font_style)
             wb.save(response)
+            Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=1.75,week__lte=3.75)).update(status=True)
             return response
 
         week1=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=1.75,week__lte=3.75))
@@ -364,7 +366,7 @@ def func2(request):
         status_upd=Amountpaid.objects.filter(user_id=request.user.id).values_list("status",flat=True)
         status_id=Amountpaid.objects.filter(user_id=request.user.id).values_list("provider",flat=True)
         data=Amountpaid.objects.filter(user_id=request.user.id)
-
+       
    
         if status_upd and status_id:
             status_value=status_upd[0]
@@ -433,6 +435,7 @@ def func2(request):
                 for col_num in range(len(row)):
                     ws.write(row_num, col_num, row[col_num], font_style)
             wb.save(response)
+            data1=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=3.75,week__lte=5.75)).update(status=True)
             return response
 
         week1=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=3.75,week__lte=5.75))
@@ -441,6 +444,7 @@ def func2(request):
         status_upd=Amountpaid.objects.filter(user_id=request.user.id).values_list("status",flat=True)
         status_id=Amountpaid.objects.filter(user_id=request.user.id).values_list("provider",flat=True)
         data=Amountpaid.objects.filter(user_id=request.user.id)
+        
 
    
         if status_upd and status_id:
@@ -508,7 +512,9 @@ def func2(request):
                 row_num += 1
                 for col_num in range(len(row)):
                     ws.write(row_num, col_num, row[col_num], font_style)
+            
             wb.save(response)
+            data1=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=5.75,week__lte=7.75)).update(status=True)
             return response
 
         week1=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=5.75,week__lte=7.75))
@@ -517,7 +523,6 @@ def func2(request):
         status_upd=Amountpaid.objects.filter(user_id=request.user.id).values_list("status",flat=True)
         status_id=Amountpaid.objects.filter(user_id=request.user.id).values_list("provider",flat=True)
         data=Amountpaid.objects.filter(user_id=request.user.id)
-
    
         if status_upd and status_id:
             status_value=status_upd[0]
@@ -613,7 +618,7 @@ def save_data(request):
     week=request.GET.get("week")
     id=request.GET.get("id").replace(",","")
     pay_amt=request.GET.get("amt").replace(",","")
-
+    user_id=request.user.id
     print("values",year,month,week,id)
     request.session["upt_month"]=month  
     request.session["upt_year"]=year
@@ -623,11 +628,13 @@ def save_data(request):
     print(type(chng))
     final_amt = chng - int(pay_amt)
     print(final_amt)
-    sav_data=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=id)).update(amount_paid=final_amt)
+    sav_data=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=id)).update(amount_paid=pay_amt)
+    
 
     data={
         "status":"success",
-        "record":final_amt
+        "record":final_amt,
+        "user":user_id
     }
 
     return JsonResponse(data)
@@ -639,8 +646,17 @@ def data_reschedule(request):
     year=request.GET.get("year")
     month=request.GET.get("month")
     week=request.GET.get("week")
+    print("---------------",type(week))
+    if week == "":
+    
+        week=0
+    print("99999",week)
     id=request.GET.get("id").replace(",","")
-    print("dsfffffffffffff",month,year,week,id)
+    print("00",type(id))
+    if id == "" :
+        id =0
+    id_amt=request.GET.get("amt")
+    print("dsfffffffffffff",month,year,week,id,id_amt)
     if week == "1":
         week=1
     elif week == "2":
@@ -649,7 +665,12 @@ def data_reschedule(request):
         week= 3.90
     elif week == "4":
         week =7
-    res_data=Providers.objects.filter(id=int(id)).update(month_of_payment=month,year_of_payment=year,week=week)
+    res_data=Providers.objects.filter(id=int(id)).values("business_name","invoice","payment_term")
+    print(res_data)
+    if res_data:
+    # print("fsdfsdfsdfsdfsdsdfd",type(res_data["provider_name"]),type(res_data["invoice"]))
+        print("fsdfsdfsdfsdfsdsdfd",res_data[0]["business_name"],res_data[0]["invoice"],res_data[0]["payment_term"])
+        inst_data=Providers.objects.filter(user_id=request.user.id).create(month_of_payment=month,year_of_payment=year,week=week,business_name=res_data[0]["business_name"],invoice=res_data[0]["invoice"],amount_paid=id_amt,user_id=request.user.id,payment_term=res_data[0]["payment_term"])
 
 
     data={

@@ -62,6 +62,8 @@ class Providers(models.Model):
   add3=models.IntegerField(null=True,blank=True)
   add4=models.IntegerField(null=True,blank=True)
   add5=models.IntegerField(null=True,blank=True)
+  status=models.BooleanField(default=False)
+
 
 class Bank(models.Model):
   bank_name=models.CharField(max_length=250,null=True,blank=True)

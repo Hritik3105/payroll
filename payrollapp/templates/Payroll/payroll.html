@@ -107,12 +107,9 @@
             
             <li>
                 <input type="hidden" name="next" value="/view">
-                <button type ="submit" class="btn btn-primary" name="view" value="view1"> View / Edit</a>
+                <button type ="submit" class="btn btn-primary" name="view" id="edi1" value="view1"> View / Edit</a>
             </li>
             <li>
-               
-             
-            
                 
                 <strong> {{total1.amount_paid__sum}}</strong>
             </li>
@@ -128,11 +125,8 @@
             </li>
             <li>
                 <input type="hidden" name="next" value="/view">
-                <button type="submit" class="btn btn-primary"  name="view" value="view2"> View / Edit</button>
+                <button type="submit" class="btn btn-primary"  name="view" value="view2" id="edi2" > View / Edit</button>
             </li>
-            {% comment %} <li>
-                <button type="submit" class="btn btn-primary" name="download" value="2">Download</button>
-            </li> {% endcomment %}
             <li> <strong> {{total2.amount_paid__sum}}</strong>
             </li>
         </ul>
@@ -146,7 +140,7 @@
             </li>
             <li>
                 <input type="hidden" name="next" value="/view">
-                <button type="submit" class="btn btn-primary"  name="view" value="view3"> View / Edit</button>
+                <button type="submit" class="btn btn-primary"  id="edi3" name="view" value="view3" > View / Edit</button>
             </li>
             {% comment %} <li>
                 <button type="submit" class="btn btn-primary" name="download" value="3">Download</button>
@@ -165,7 +159,7 @@
             </li>
             <li>  
                 <input type="hidden" name="next" value="/view">
-                <button type="submit" class="btn btn-primary"  name="view" value="view4"> View / Edit</button>
+                <button type="submit" class="btn btn-primary"   id="edi4" name="view" value="view4" > View / Edit</button>
             </li>
             {% comment %} <li>
                 <button type="submit" class="btn btn-primary" name="download" value="4">Download</button>
@@ -247,6 +241,14 @@
     
     });
 
- </script> 
+    $(function(){
+        $(".btn").click(function() {
+            var fired_button = $(this).val();
+            localStorage.setItem('test', fired_button);
+           
+        });
+    });
+
+    </script> 
 
  {% endblock javascripts %}
