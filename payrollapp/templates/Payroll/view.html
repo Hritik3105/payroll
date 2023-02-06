@@ -100,11 +100,14 @@
       font-size: 28px;
       text-align: center;
       padding-bottom: 34px;
+      color: red;
   }
   div#success{
     font-size: 28px;
     text-align: center;
     padding-bottom: 34px;
+    color: red;
+    
   }
   
 </style>
@@ -112,7 +115,7 @@
 <body>
   <div id="success"> </div>
   {% if True in week_status %}
-  <div id="successMessage">Payroll is closed </div>
+  <div id="successMessage"><b>Payroll is closed</b> </div>
   {%else%}
   <div id="successMessage"> </div>
   {%endif%}
@@ -345,7 +348,7 @@ $(document).ready(function() {
       localStorage.setItem("inputDisabled3", true);
   
       }
-      $("#success").html("Payroll is closed");
+      $("#success").html("<b>Payroll is closed</b>");
   }); 
 });
   
