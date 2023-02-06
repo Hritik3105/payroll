@@ -406,11 +406,9 @@ def data_reschedule(request):
     week=request.GET.get("week")
     
     if week == "" or week == "Week":
-    
         week=0
    
     id=request.GET.get("id").replace(",","")
-   
     if id == "" :
         id =0
     id_amt=request.GET.get("amt")
@@ -427,7 +425,6 @@ def data_reschedule(request):
 
     if res_data:
         inst_data=Providers.objects.filter(user_id=request.user.id).create(month_of_payment=month,year_of_payment=year,week=week,business_name=res_data[0]["business_name"],invoice=res_data[0]["invoice"],amount_paid=id_amt,user_id=request.user.id,payment_term=res_data[0]["payment_term"])
-
 
     data={
         "message":"hello"
