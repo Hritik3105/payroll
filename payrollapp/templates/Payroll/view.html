@@ -111,7 +111,11 @@
 </head>
 <body>
   <div id="success"> </div>
+  {% if True in week_status %}
+  <div id="successMessage">Payroll is closed </div>
+  {%else%}
   <div id="successMessage"> </div>
+  {%endif%}
   <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -279,6 +283,7 @@ $(document).ready(function() {
     
       input.attr("disabled", true);
       $(".btn").attr("disabled", true);
+
   
     
     }
@@ -287,6 +292,7 @@ $(document).ready(function() {
       input.attr("disabled", true);
       $(".btn").attr("disabled", true);
   
+  
     
     }
     else if (localStorage.getItem("inputDisabled2") === "true" && val1 === "view3") {
@@ -294,6 +300,7 @@ $(document).ready(function() {
       input.attr("disabled", true);
       $(".btn").attr("disabled", true);
   
+   
     
     }
     else if (localStorage.getItem("inputDisabled3") === "true" && val1 === "view4") {
@@ -302,6 +309,7 @@ $(document).ready(function() {
       $(".btn").attr("disabled", true);
     
     } 
+
     localStorage.removeItem("inputDisabled")
     localStorage.removeItem("inputDisabled1")
     localStorage.removeItem("inputDisabled2")
@@ -337,10 +345,9 @@ $(document).ready(function() {
       localStorage.setItem("inputDisabled3", true);
   
       }
-      $("#success").html("Payroll is closed").delay(5000).fadeOut('slow'); 
-    });
+      $("#success").html("Payroll is closed");
   }); 
-  
+});
   
   function myTest(a)
   {

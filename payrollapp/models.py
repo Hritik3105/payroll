@@ -63,6 +63,12 @@ class Providers(models.Model):
   add4=models.IntegerField(null=True,blank=True)
   add5=models.IntegerField(null=True,blank=True)
   status=models.BooleanField(default=False)
+  week1=models.BooleanField(default=False)
+  week2=models.BooleanField(default=False)
+  week3=models.BooleanField(default=False)
+  week4=models.BooleanField(default=False)
+
+
 
 
 class Bank(models.Model):

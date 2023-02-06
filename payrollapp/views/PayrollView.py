@@ -23,6 +23,7 @@ def calculate():
     for i in range(int(val1),int(val4)+1):
         lst.append(str(i))
     for i in range(1,5):
+
         lst2.append(i)
  
     return lst,lst2
@@ -99,6 +100,32 @@ def func2(request):
     if view == "view1":
         
         cal=calculate()
+        stats1=Providers.objects.filter(user_id=request.user.id).values_list('week1',flat=True)
+        stats2=Providers.objects.filter(user_id=request.user.id).values_list('week2',flat=True)
+        stats3=Providers.objects.filter(user_id=request.user.id).values_list('week3',flat=True)
+        stats4=Providers.objects.filter(user_id=request.user.id).values_list('week4',flat=True)
+
+
+        if True in stats4:
+          
+            cal[1].remove(4)
+
+        if True in stats3:
+          
+            cal[1].remove(3)
+        
+        if True in stats2:
+           
+            cal[1].remove(2)
+        
+        if True in stats1:
+            
+            cal[1].remove(1)
+           
+       
+        else:
+            cal[1]
+           
         if request.method == "POST" and "download" in request.POST:
             
             response = HttpResponse(content_type='application/ms-excel')
@@ -127,7 +154,7 @@ def func2(request):
                 for col_num in range(len(row)):
                     ws.write(row_num, col_num, row[col_num], font_style)
             wb.save(response)
-            data1=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gte=0,week__lte=1.75)).update(status=True)
+            data1=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gte=0,week__lte=1.75)).update(status=True,week1=True)
             return response
 
         week1=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gte=0,week__lte=1.75))
@@ -152,13 +179,39 @@ def func2(request):
         month = request.session['month']
         year2 = request.session['upt_month']
         month2 = request.session['upt_year']
-        return render(request,"Payroll/view.html",{"week":week1,"lst":cal[0],'lst1':cal[1],"status":status_value,"status_ids":status_ids,"data":data,"year":year,"month":month,"weeks":1,"week_total":week_tl})
+        return render(request,"Payroll/view.html",{"week":week1,"lst":cal[0],'lst1':cal[1],"status":status_value,"status_ids":status_ids,"data":data,"year":year,"month":month,"weeks":1,"week_total":week_tl,'week_status':stats1})
 
         
      
 
     if view == "view2":
         cal=calculate()
+        stats1=Providers.objects.filter(user_id=request.user.id).values_list('week1',flat=True)
+        stats2=Providers.objects.filter(user_id=request.user.id).values_list('week2',flat=True)
+        stats3=Providers.objects.filter(user_id=request.user.id).values_list('week3',flat=True)
+        stats4=Providers.objects.filter(user_id=request.user.id).values_list('week4',flat=True)
+
+
+        if True in stats4:
+          
+            cal[1].remove(4)
+
+        if True in stats3:
+          
+            cal[1].remove(3)
+        
+        if True in stats2:
+           
+            cal[1].remove(2)
+        
+        if True in stats1:
+            
+            cal[1].remove(1)
+           
+       
+        else:
+            cal[1]
+           
 
         if request.method == "POST" and "download" in request.POST:
             
@@ -190,7 +243,7 @@ def func2(request):
                 for col_num in range(len(row)):
                     ws.write(row_num, col_num, row[col_num], font_style)
             wb.save(response)
-            Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=1.75,week__lte=3.75)).update(status=True)
+            Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=1.75,week__lte=3.75)).update(status=True,week2=True)
             return response
 
         week1=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=1.75,week__lte=3.75))
@@ -210,13 +263,40 @@ def func2(request):
             status_ids=0
         year = request.session['year']
         month = request.session['month']
-        return render(request,"Payroll/view.html",{"week":week1,"lst":cal[0],'lst1':cal[1],"status":status_value,"status_ids":status_ids,"data":data,"year":year,"month":month,"weeks":2,"week_total":week_tl})
+        return render(request,"Payroll/view.html",{"week":week1,"lst":cal[0],'lst1':cal[1],"status":status_value,"status_ids":status_ids,"data":data,"year":year,"month":month,"weeks":2,"week_total":week_tl,'week_status':stats2})
 
 
 
     if view == "view3":
         cal=calculate()
+        stats1=Providers.objects.filter(user_id=request.user.id).values_list('week1',flat=True)
+        stats2=Providers.objects.filter(user_id=request.user.id).values_list('week2',flat=True)
+        stats3=Providers.objects.filter(user_id=request.user.id).values_list('week3',flat=True)
+        stats4=Providers.objects.filter(user_id=request.user.id).values_list('week4',flat=True)
 
+
+        if True in stats4:
+          
+            cal[1].remove(4)
+
+        if True in stats3:
+          
+            cal[1].remove(3)
+        
+        if True in stats2:
+           
+            cal[1].remove(2)
+        
+        if True in stats1:
+            
+            cal[1].remove(1)
+           
+       
+        else:
+            cal[1]
+           
+        
+     
         if request.method == "POST" and "download" in request.POST:
             
          
@@ -246,7 +326,7 @@ def func2(request):
                 for col_num in range(len(row)):
                     ws.write(row_num, col_num, row[col_num], font_style)
             wb.save(response)
-            data1=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=3.75,week__lte=5.75)).update(status=True)
+            data1=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=3.75,week__lte=5.75)).update(status=True,week3=True)
             return response
 
         week1=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=3.75,week__lte=5.75))
@@ -261,17 +341,42 @@ def func2(request):
         if status_upd and status_id:
             status_value=status_upd[0]
             status_ids=status_id
-            print("sfgdhkdkjfhfjkhkjhkkjhkjh",status_ids)
+            
         else:
             status_value=0
             status_ids=0
         year = request.session['year']
         month = request.session['month']
-        return render(request,"Payroll/view.html",{"week":week1,"lst":cal[0],'lst1':cal[1],"status":status_value,"status_ids":status_ids,"data":data,"year":year,"month":month,"weeks":3,"week_total":week_tl})
+        return render(request,"Payroll/view.html",{"week":week1,"lst":cal[0],'lst1':cal[1],"status":status_value,"status_ids":status_ids,"data":data,"year":year,"month":month,"weeks":3,"week_total":week_tl,'week_status':stats3})
 
 
     if view == "view4":
         cal=calculate()
+        stats1=Providers.objects.filter(user_id=request.user.id).values_list('week1',flat=True)
+        stats2=Providers.objects.filter(user_id=request.user.id).values_list('week2',flat=True)
+        stats3=Providers.objects.filter(user_id=request.user.id).values_list('week3',flat=True)
+        stats4=Providers.objects.filter(user_id=request.user.id).values_list('week4',flat=True)
+
+
+        if True in stats4:
+          
+            cal[1].remove(4)
+
+        if True in stats3:
+          
+            cal[1].remove(3)
+        
+        if True in stats2:
+           
+            cal[1].remove(2)
+        
+        if True in stats1:
+            
+            cal[1].remove(1)
+
+        else:
+            cal[1]
+
         if request.method == "POST" and "download" in request.POST:
             
            
@@ -302,7 +407,7 @@ def func2(request):
                     ws.write(row_num, col_num, row[col_num], font_style)
             
             wb.save(response)
-            data1=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=5.75,week__lte=7.75)).update(status=True)
+            data1=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=5.75,week__lte=7.75)).update(status=True,week4=True)
             return response
 
         week1=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=5.75,week__lte=7.75))
@@ -321,7 +426,8 @@ def func2(request):
             status_ids=0
         year = request.session['year']
         month = request.session['month']
-        return render(request,"Payroll/view.html",{"week":week1,"lst":cal[0],'lst1':cal[1],"status":status_value,"status_ids":status_ids,"data":data,"year":year,"month":month,"weeks":4,"week_total":week_tl})
+        
+        return render(request,"Payroll/view.html",{"week":week1,"lst":cal[0],'lst1':cal[1],"status":status_value,"status_ids":status_ids,"data":data,"year":year,"month":month,"weeks":4,"week_total":week_tl,'week_status':stats4})
 
     return redirect("payroll")
 
