@@ -5,7 +5,9 @@ from django.db.models import Q
 import datetime
 from django.db.models import Sum
 
-#Date of paid invoice
+
+
+#function to show invoice according to  Date of paid invoice
 @login_required 
 def paid(request):
     lst=[]
@@ -35,7 +37,7 @@ def paid(request):
         week3_lst=[]
         week4_lst=[]
         for k,j in paid_dict.items():
-            print("----",j)
+         
             for p in j:
                 if p[1] >= 0 and p[1] <= 1.75: 
                     week1_lst.append(int(p[2]))
@@ -49,8 +51,7 @@ def paid(request):
                 if p[1] >= 5.75 and p[1] <= 7.75  or p[1] > 7.75: 
                    week4_lst.append(int(p[2]))
                 
-                # if a[1] > 7.75 : 
-                #     week4_lst.append(int(a[2]))
+            
 
         week1=sum(week1_lst)           
         week2=sum(week2_lst)  

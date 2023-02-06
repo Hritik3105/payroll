@@ -6,11 +6,14 @@ from payrollapp.forms.Signupform import *
 from django.contrib.auth.decorators import login_required
 
 
+#function to show home page
 @login_required 
 def home(request):
     return render(request,"home/index.html")
 
 
+
+#Fucntion for Signup user
 def user_signup(request):
     if request.method=="POST":
         form=AddCreateForm(request.POST)

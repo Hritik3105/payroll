@@ -8,6 +8,8 @@ import datetime
 from django.db.models import F
 
 
+
+#show provider list
 @login_required 
 def index(request):
    
@@ -24,6 +26,10 @@ def index(request):
     return render(request,"provider/index.html",{"bank":bank_obj,"pro":lst,"js":z})
 
 
+
+
+
+#Get the  bamk code
 @login_required 
 def vall(request):
     app=request.GET.get("id")
@@ -45,7 +51,7 @@ def vall(request):
 
     
 
-
+#function to save value
 @login_required 
 def save_val(request):
     bank_c = request.GET.get("id")
@@ -55,7 +61,7 @@ def save_val(request):
     vat_id = request.GET.get("bank_code")
     account_no = request.GET.get("bank_no")
     payment_term = request.GET.get("payment")
-    print("------------------",payment_term)
+
     days = request.GET.get("dayss")
     email = request.GET.get("email")
     company = request.GET.get("company")
@@ -63,7 +69,7 @@ def save_val(request):
 
 
     if days == None and payment_term == "Select":
-        print("Enterrrr")
+       
         days =0 
 
     if days == None :
@@ -84,7 +90,7 @@ def save_val(request):
       
         date=pd.to_datetime(i.issue_date).date()
         exp=date+pd.Timedelta(days=int(days))
-        print("----------+++",exp)
+        
         months=pd.to_datetime(exp).month_name()
         years=exp.strftime('%Y')
 
@@ -98,14 +104,14 @@ def save_val(request):
         weeks=exp.day/4
         exp_week=exp.day/4
 
-        print(exp,exp_week)
+      
         
         date_format = "%Y-%m-%d"
         a = datetime.datetime.strptime(str(datetime.datetime.now().date()), date_format)
-        # k = datetime.datetime.strptime(str(date, date_format))
+     
         b = datetime.datetime.strptime(str(exp), date_format)
         today= a-b
-        # print("today",today.days)
+    
 
         if days and exp2.day/4 >=0 and exp2.day/4 <=1.75:
             
@@ -133,11 +139,13 @@ def save_val(request):
     return JsonResponse(data)
 
 
+
+# get particular invoice id
 @login_required 
 def pay(request):
     bank_c = request.GET.get("id")
     
-    print("dgdfh",bank_c) 
+ 
     data = {
         "status":"OK",
 

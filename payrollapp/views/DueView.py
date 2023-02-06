@@ -14,7 +14,7 @@ import numpy
 
 
   
-#insert data
+# function to insert data
 @login_required 
 def due_table(request):
     print(datetime.date.today())
@@ -183,7 +183,7 @@ def due_table(request):
     return render(request,"home/table.html",{"obj":all_obj,"len":len_obj})
 
 
-#updade data
+#function to updade data
 vals=[]
 def update(request):
     filename=os.getcwd()+"/payrollapp/csv/RCV_COMPRA_REGISTRO_76750936-7_202211.csv"              

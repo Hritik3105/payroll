@@ -11,6 +11,8 @@ from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 
 
+
+# function help to get dropdown value
 def calculate():
     lst=[]
     lst2=[]
@@ -22,42 +24,24 @@ def calculate():
         lst.append(str(i))
     for i in range(1,5):
         lst2.append(i)
-    print("-=-=-==",lst2)
-    print("-=-=-ghj==",lst)
+ 
     return lst,lst2
 
 
 
-@login_required 
-def get_value(request):
-    ajax_data=request.GET.get("id")
-    ajax_data1=request.GET.get("year")
-    print("get_funtion",ajax_data1,ajax_data)
-    if request.method =="POST":
-        month=request.POST.get("month")
-        year=request.POST.get("year")
-        download=request.POST.get("download")
-        view=request.POST.get("view")
-
-        print("get_function",month)
-    return ajax_data
-
-
+# to view payroll amount and go inside the payroll
 @login_required 
 def payroll(request):
+   
     ajax_data=request.GET.get("id")
     ajax_data1=request.GET.get("year")
-    print("----------------",ajax_data1,ajax_data)
-   
     if request.method =="POST":
         month=request.POST.get("month")
         year=request.POST.get("year")
-        download=request.POST.get("download")
         view=request.POST.get("view")
         request.session['month'] = month
         request.session['year'] = year
         request.session['view'] = view
-
         total1=""
         if year == "":
             year=0
@@ -65,86 +49,11 @@ def payroll(request):
         week2=""
         week3=""
         week4=""
-        if download == "1":
-            week1=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gte=0,week__lte=1.75))
-        elif download == "2":
-            week2=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=1.75,week__lte=3.75))
-        elif download == "3":
-            week3=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=3.75,week__lte=5.75))
-        elif download == "4":
-            week4=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=5.75,week__lte=7.75))
-        
-        response = HttpResponse(content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="paid by month and week.xls"'
-
-        wb = xlwt.Workbook(encoding='utf-8')
-        ws = wb.add_sheet('Users Data') # this will make a sheet named Users Data
-
-        # Sheet header, first row
-        row_num = 0
-
-        font_style = xlwt.XFStyle()
-        font_style.font.bold = True
-
-        columns = ['VAT ID','Business name', 'Account number',"Amount to pay","Bank code",'Email',"invoice" ]
-
-        for col_num in range(len(columns)):
-            ws.write(row_num, col_num, columns[col_num], font_style) # at 0 row 0 column 
-
-        # Sheet body, remaining rows
-        font_style = xlwt.XFStyle()
-
-        if download == "1":
-            week1=Amountpaid.objects.filter(user_id=request.user.id).select_related("provider").filter(provider__week__gte=0,provider__week__lte=1.75).values_list("provider__provider_name","provider__business_name","provider__account","amount_paid","provider__bank_code","provider__email","provider__invoice")
-            for row in week1:
-                row_num += 1
-                for col_num in range(len(row)):
-                    ws.write(row_num, col_num, row[col_num], font_style)
-            wb.save(response)
-
-            return response
-        elif download == "2":
-            week2=Amountpaid.objects.filter(user_id=request.user.id).select_related("provider").filter(provider__week__gt=1.75,provider__week__lte=3.75).values_list("provider__provider_name","provider__business_name","provider__account","amount_paid","provider__bank_code","provider__email","provider__invoice")
-            for row in week2:
-                row_num += 1
-                for col_num in range(len(row)):
-                    ws.write(row_num, col_num, row[col_num], font_style)
-            wb.save(response)
-
-            return response
-        elif download == "3":
-            week3=Amountpaid.objects.filter(user_id=request.user.id).select_related("provider").filter(provider__week__gt=3.75,provider__week__lte=5.75).values_list("provider__provider_name","provider__business_name","provider__account","amount_paid","provider__bank_code","provider__email","provider__invoice")
-            for row in week3:
-                row_num += 1
-                for col_num in range(len(row)):
-                    ws.write(row_num, col_num, row[col_num], font_style)
-            wb.save(response)
-
-            return response
-
-        elif download == "4":
-            week4=Amountpaid.objects.filter(user_id=request.user.id).select_related("provider").filter(provider__week__gt=5.75,provider__week__lte=7.75).values_list("provider__provider_name","provider__business_name","provider__account","amount_paid","provider__bank_code","provider__email","provider__invoice")
-            for row in week4:
-                row_num += 1
-                for col_num in range(len(row)):
-                    ws.write(row_num, col_num, row[col_num], font_style)
-            wb.save(response)
-
-            return response
-
-
-     
+         
         if view:
-            print("enterrrrrr1")
+           
             week1=request.POST.get("next")
             return HttpResponseRedirect(week1)
-
-
-       
-        print("week1",week1)
-        print("week2",week2)
-        print("week3",week3)
-        print("week4",week4)
 
         cal=calculate() 
         
@@ -153,13 +62,12 @@ def payroll(request):
     cal=calculate()
     month=""
     year=0
- 
     total1=0
     total1=Providers.objects.filter(Q(user_id=request.user.id) & Q(week__gte=0,week__lte=1.75)).aggregate(Sum('amount_paid'))
     total2=Providers.objects.filter(Q(user_id=request.user.id) & Q(week__gt=1.75,week__lte=3.75)).aggregate(Sum('amount_paid'))
     total3=Providers.objects.filter(Q(user_id=request.user.id) & Q(week__gt=3.75,week__lte=5.75)).aggregate(Sum('amount_paid'))
     total4=Providers.objects.filter(Q(user_id=request.user.id)   & Q(week__gt=5.75,week__lte=7.75 )|Q(week__gt=7.75)).aggregate(Sum('amount_paid'))
-    print("----------------------===============",total1)
+    
     if month =="":
         
         month =""
@@ -172,77 +80,26 @@ def payroll(request):
         
     else:
         year = request.session['year']
-
-
-    
     return render(request,"Payroll/payroll.html",{'lst':cal[0],'month':ajax_data,"year":ajax_data1,"total1":total1,"total2":total2,"total3":total3,"total4":total4,'lst1':cal[1],"month":month,"year":int(year)})
 
 
 
-def update_date(request,id):
 
-    if request.method == "POST":
-        month=request.POST.get("month")
-        year=request.POST.get("year")
-        week=request.POST.get("week")
-        if week == "1":
-            week=1
-        elif week == "2":
-            week=2
-        elif week == "3":
-            week= 3.90
-
-        elif week == "4":
-            week =7
-
-        week1=request.POST.get("next")
-        print("----------------------",id)
-        up_date=Providers.objects.filter(id=id).update(month_of_payment=month,year_of_payment=year,week=week)
-        print(up_date)
-        cal=calculate()
-        return HttpResponseRedirect(week1)
-    cal=calculate()
-    return render(request,'Payroll/update.html',{"lst":cal[0],'lst1':cal[1]})
-
-
-
+#Download excel file for payroll
+@login_required 
 def func2(request):
+   
     arrr=[]
     month = request.session['month']
     view= request.session["view"]
     year = request.session['year']
-    print("vall",month,view,year)
+    
 
     ajax_data1=request.GET.get("val")
     if view == "view1":
-        cal=calculate()
-
-        if request.method == "POST"  and "updt" in request.POST:
-            pro_obj=Amountpaid()
-         
-            provider_id=request.POST.get("id")
-            provider_account=request.POST.get("amt")
-            chn_month = request.POST.get("month")
-            chn_year=request.POST.get("year")
-            week=request.POST.get("week")
-            upd_proid=provider_id.replace(",","")
-            upd_product=provider_account.replace(",","")
-            pro_obj.user_id=request.user.id
-            pro_obj.provider_id=upd_proid
-            pro_obj.amount_paid=int(upd_product)
-          
-            pro_obj.save()
-            amt_cal=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=upd_proid)).values_list("amount_paid",flat=True)
-            if amt_cal:
-                final_amt=int(amt_cal[0])-int(upd_product)
-                upd=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=upd_proid)).update(amount_paid=final_amt)
-            print(chn_month,chn_year,week,upd_proid,upd_product)
-            print("entert1")
-            return redirect("payroll")
-
-        if request.method == "POST" and "download" in request.POST:
-            
         
+        cal=calculate()
+        if request.method == "POST" and "download" in request.POST:
             
             response = HttpResponse(content_type='application/ms-excel')
             response['Content-Disposition'] = 'attachment; filename="paid by month and week.xls"'
@@ -264,7 +121,6 @@ def func2(request):
             # Sheet body, remaining rows
             font_style = xlwt.XFStyle()
             
-            week2=Amountpaid.objects.filter(user_id=request.user.id).select_related("provider").filter(provider__week__gt=0,provider__week__lte=1.75).values_list("provider__provider_name","provider__business_name","provider__account","amount_paid","provider__bank_code","provider__email","provider__invoice")
             week12=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=0,week__lte=1.75)).values_list("provider_name","business_name","account","amount_paid","bank_code","email","invoice")
             for row in week12:
                 row_num += 1
@@ -288,7 +144,7 @@ def func2(request):
         if status_upd and status_id:
             status_value=status_upd[0]
             status_ids=status_id
-            print("sfgdhkdkjfhfjkhkjhkkjhkjh",status_ids)
+           
         else:
             status_value=0
             status_ids=0
@@ -296,7 +152,6 @@ def func2(request):
         month = request.session['month']
         year2 = request.session['upt_month']
         month2 = request.session['upt_year']
-        print("popopop",year2,month2)
         return render(request,"Payroll/view.html",{"week":week1,"lst":cal[0],'lst1':cal[1],"status":status_value,"status_ids":status_ids,"data":data,"year":year,"month":month,"weeks":1,"week_total":week_tl})
 
         
@@ -304,27 +159,6 @@ def func2(request):
 
     if view == "view2":
         cal=calculate()
-        if request.method == "POST"  and "updt" in request.POST:
-            pro_obj=Amountpaid()
-         
-            provider_id=request.POST.get("id")
-            provider_account=request.POST.get("amt")
-            chn_month = request.POST.get("month")
-            chn_year=request.POST.get("year")
-            week=request.POST.get("week")
-            upd_proid=provider_id.replace(",","")
-            upd_product=provider_account.replace(",","")
-            pro_obj.user_id=request.user.id
-            pro_obj.provider_id=upd_proid
-            pro_obj.amount_paid=int(upd_product)
-          
-            pro_obj.save()
-            amt_cal=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=upd_proid)).values_list("amount_paid",flat=True)
-            if amt_cal:
-                final_amt=int(amt_cal[0])-int(upd_product)
-                upd=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=upd_proid)).update(amount_paid=final_amt)
-            print(chn_month,chn_year,week,upd_proid,upd_product)
-            return redirect("payroll")
 
         if request.method == "POST" and "download" in request.POST:
             
@@ -350,7 +184,6 @@ def func2(request):
             font_style = xlwt.XFStyle()
            
             
-            week2=Amountpaid.objects.filter(user_id=request.user.id).select_related("provider").filter(provider__week__gt=1.75,provider__week__lte=3.75).values_list("provider__provider_name","provider__business_name","provider__account","amount_paid","provider__bank_code","provider__email","provider__invoice")
             week122=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=1.75,week__lte=3.75)).values_list("provider_name","business_name","account","amount_paid","bank_code","email","invoice")
             for row in week122:
                 row_num += 1
@@ -383,27 +216,6 @@ def func2(request):
 
     if view == "view3":
         cal=calculate()
-        if request.method == "POST"  and "updt" in request.POST:
-            pro_obj=Amountpaid()
-         
-            provider_id=request.POST.get("id")
-            provider_account=request.POST.get("amt")
-            chn_month = request.POST.get("month")
-            chn_year=request.POST.get("year")
-            week=request.POST.get("week")
-            upd_proid=provider_id.replace(",","")
-            upd_product=provider_account.replace(",","")
-            pro_obj.user_id=request.user.id
-            pro_obj.provider_id=upd_proid
-            pro_obj.amount_paid=int(upd_product)
-          
-            pro_obj.save()
-            amt_cal=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=upd_proid)).values_list("amount_paid",flat=True)
-            if amt_cal:
-                final_amt=int(amt_cal[0])-int(upd_product)
-                upd=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=upd_proid)).update(amount_paid=final_amt)
-            print(chn_month,chn_year,week,upd_proid,upd_product)
-            return redirect("payroll")
 
         if request.method == "POST" and "download" in request.POST:
             
@@ -429,7 +241,6 @@ def func2(request):
             font_style = xlwt.XFStyle()
           
             week123=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=3.75,week__lte=5.75)).values_list("provider_name","business_name","account","amount_paid","bank_code","email","invoice")
-            week2=Amountpaid.objects.filter(user_id=request.user.id).select_related("provider").filter(provider__week__gt=3.75,provider__week__lte=5.75).values_list("provider__provider_name","provider__business_name","provider__account","amount_paid","provider__bank_code","provider__email","provider__invoice")
             for row in week123:
                 row_num += 1
                 for col_num in range(len(row)):
@@ -461,28 +272,6 @@ def func2(request):
 
     if view == "view4":
         cal=calculate()
-        if request.method == "POST"  and "updt" in request.POST:
-            pro_obj=Amountpaid()
-         
-            provider_id=request.POST.get("id")
-            provider_account=request.POST.get("amt")
-            chn_month = request.POST.get("month")
-            chn_year=request.POST.get("year")
-            week=request.POST.get("week")
-            upd_proid=provider_id.replace(",","")
-            upd_product=provider_account.replace(",","")
-            pro_obj.user_id=request.user.id
-            pro_obj.provider_id=upd_proid
-            pro_obj.amount_paid=int(upd_product)
-          
-            pro_obj.save()
-            amt_cal=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=upd_proid)).values_list("amount_paid",flat=True)
-            if amt_cal:
-                final_amt=int(amt_cal[0])-int(upd_product)
-                upd=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=upd_proid)).update(amount_paid=final_amt)
-            print(chn_month,chn_year,week,upd_proid,upd_product)
-            return redirect("payroll")
-
         if request.method == "POST" and "download" in request.POST:
             
            
@@ -507,7 +296,6 @@ def func2(request):
             font_style = xlwt.XFStyle()
            
             week124=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=5.75,week__lte=7.75)).values_list("provider_name","business_name","account","amount_paid","bank_code","email","invoice")
-            week2=Amountpaid.objects.filter(user_id=request.user.id).select_related("provider").filter(provider__week__gt=5.75,provider__week__lte=7.75).values_list("provider__provider_name","provider__business_name","provider__account","amount_paid","provider__bank_code","provider__email","provider__invoice")
             for row in week124:
                 row_num += 1
                 for col_num in range(len(row)):
@@ -527,7 +315,7 @@ def func2(request):
         if status_upd and status_id:
             status_value=status_upd[0]
             status_ids=status_id
-            print("sfgdhkdkjfhfjkhkjhkkjhkjh",status_ids)
+            
         else:
             status_value=0
             status_ids=0
@@ -535,48 +323,16 @@ def func2(request):
         month = request.session['month']
         return render(request,"Payroll/view.html",{"week":week1,"lst":cal[0],'lst1':cal[1],"status":status_value,"status_ids":status_ids,"data":data,"year":year,"month":month,"weeks":4,"week_total":week_tl})
 
-
     return redirect("payroll")
 
 
 
-
-def get_value(request):
-    if request.method == "POST":
-        print("rrrrr")
-        provider_id=request.POST.get("month")
-        return redirect("payroll")
-
-    return redirect("payroll")
-    # provider_id=request.GET.get("id")
-    # upd_proid=provider_id.replace(",","")
-    # provider_account=request.GET.get("balance")
-    # upd_product=provider_account.replace(",","")
-
-    # pro_obj=Amountpaid()
-    # pro_obj.user_id=request.user.id
-    # pro_obj.provider_id=upd_proid
-    # pro_obj.amount_paid=int(upd_product)
-    # pro_obj.save()
-    # amt_cal=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=upd_proid)).values_list("amount_paid",flat=True)
-    # if amt_cal:
-    #     final_amt=int(amt_cal[0])-int(upd_product)
-    #     upd=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=upd_proid)).update(amount_paid=final_amt)
-    # else:
-    #     amt_cal=0
-    # data={
-    #     "pro":provider_account
-    # }
-    # return JsonResponse(data)
-
-
-
+# Get the total amount of payroll
+@login_required 
 def option_value(request):
     provider_ids=request.GET.get("month")
-    print(provider_ids)
+
     provider_id=request.GET.get("ids")
-   
-    print("0-0-0-",provider_id)
    
     bal_id= request.session["month"]
     bal_year= request.session["year"]
@@ -591,16 +347,16 @@ def option_value(request):
 
 
 
+#Get the amount after calculation
+@login_required 
 def rem_amt(request):
     pay_id=request.GET.get("id").replace(",","")
     pay_amt=request.GET.get("amt").replace(",","")
-    print(pay_id)
-    print(pay_amt)
+
     amt_diff=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=pay_id)).values_list("amount_paid",flat=True)
     chng= amt_diff[0]
-    print(type(chng))
+    
     final_amt = chng - int(pay_amt)
-    print(final_amt)
 
     data={
         "amount":final_amt
@@ -611,23 +367,25 @@ def rem_amt(request):
 
 
 
-
+#Save the data into db after calculation
+@login_required 
 def save_data(request):
+   
     year=request.GET.get("year")
     month=request.GET.get("month")
     week=request.GET.get("week")
     id=request.GET.get("id").replace(",","")
     pay_amt=request.GET.get("amt").replace(",","")
     user_id=request.user.id
-    print("values",year,month,week,id)
+   
     request.session["upt_month"]=month  
     request.session["upt_year"]=year
     request.session["upt_week"]=week
     amt_diff=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=id)).values_list("amount_paid",flat=True)
     chng= amt_diff[0]
-    print(type(chng))
+   
     final_amt = chng - int(pay_amt)
-    print(final_amt)
+    
     sav_data=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=id)).update(amount_paid=pay_amt)
     
 
@@ -641,22 +399,22 @@ def save_data(request):
 
 
 
-
+#Reschedule payroll
 def data_reschedule(request):
     year=request.GET.get("year")
     month=request.GET.get("month")
     week=request.GET.get("week")
-    print("---------------",type(week))
-    if week == "":
+    
+    if week == "" or week == "Week":
     
         week=0
-    print("99999",week)
+   
     id=request.GET.get("id").replace(",","")
-    print("00",type(id))
+   
     if id == "" :
         id =0
     id_amt=request.GET.get("amt")
-    print("dsfffffffffffff",month,year,week,id,id_amt)
+    
     if week == "1":
         week=1
     elif week == "2":
@@ -666,10 +424,8 @@ def data_reschedule(request):
     elif week == "4":
         week =7
     res_data=Providers.objects.filter(id=int(id)).values("business_name","invoice","payment_term")
-    print(res_data)
+
     if res_data:
-    # print("fsdfsdfsdfsdfsdsdfd",type(res_data["provider_name"]),type(res_data["invoice"]))
-        print("fsdfsdfsdfsdfsdsdfd",res_data[0]["business_name"],res_data[0]["invoice"],res_data[0]["payment_term"])
         inst_data=Providers.objects.filter(user_id=request.user.id).create(month_of_payment=month,year_of_payment=year,week=week,business_name=res_data[0]["business_name"],invoice=res_data[0]["invoice"],amount_paid=id_amt,user_id=request.user.id,payment_term=res_data[0]["payment_term"])
 
 

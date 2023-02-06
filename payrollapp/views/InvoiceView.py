@@ -4,7 +4,7 @@ from payrollapp.models import *
 from django.db.models import Q
 
 
-
+# Show invoice and filter according to days
 @login_required 
 def invoice(request):
 

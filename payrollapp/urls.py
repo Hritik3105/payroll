@@ -50,15 +50,11 @@ urlpatterns = [
     path('cred',CredView.credential, name ="cred"),
 
 
-    #Update view 
-    path('update/<int:id>',PayrollView.update_date, name ="date_updt"),
-
     #func2 view
     path('view',PayrollView.func2, name ="view"),
 
 
-    #calculate amount
-    path("amount",PayrollView.get_value, name ="payroll-amount"),
+
     
     #update amount
     path("drop",PayrollView.option_value, name ="payroll-drop"),

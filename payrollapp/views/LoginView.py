@@ -6,7 +6,7 @@ from payrollapp.forms.Loginform import *
 from django.contrib import auth
 
 
-
+#function for login user
 def user_login(request):
   
   if request.method == "POST":
@@ -29,6 +29,8 @@ def user_login(request):
   return render(request, "user/login.html",{"form":form})    
 
 
+
+#function for logout user
 def user_logout(request):
   auth.logout(request)
   return redirect('login')

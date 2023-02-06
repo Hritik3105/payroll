@@ -5,107 +5,112 @@
 <html>
 <head>
 <style>
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 92%;
-  margin: auto;
-  margin-top: 0px;
-  margin-bottom:29;
-  margin-bottom: 44px;
-}
-
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
-
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
-td {
-  color: #020201;
-  border: 1px solid #00000026;
-}
-th {
-  color: #000000;
-  font-weight: 550;
-  letter-spacing: 1px;
-}
-input[type="text"] {
-  border: 1px solid #bdbdbd;
-  font-weight: 600;
-  color: #000000de;
-  letter-spacing: 1px;
-}
-a.myclass {
-  color:#fff;
-  background-color: #5a8dee;
-  border-color: #5a8dee;
-  padding:9px 15px;
-  box-shadow: 0 0.125rem 0.25rem rgb(147 158 170 / 40%);
-}
-<style>
-  .mainpage {
-      height: 68vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 92%;
+    margin: auto;
+    margin-top: 0px;
+    margin-bottom:29;
+    margin-bottom: 44px;
   }
-  .inner-page {
-      box-shadow: 0 0 4px;
-      padding: 18px;
+  
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
   }
-
-  button#modalClose {
-    position: absolute;
-    top: 12px;
-    background: red;
-    border: none;
-    font-size: 20px;
-    right: 14px;
-    color: #fff;
-    height: 35px;
-}
-.modal-header {
-  position: relative;
-  display: unset !important;
-}
-h1.mainhead_month {
-  padding-right: 15px;
-  padding-left: 15px;
-}
-h1.mainhead_date {
-  padding-right: 15px;
-}
-a.btn_back {
-    color: #fff;
+  
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+  td {
+    color: #020201;
+    border: 1px solid #00000026;
+  }
+  th {
+    color: #000000;
+    font-weight: 550;
+    letter-spacing: 1px;
+  }
+  input[type="text"] {
+    border: 1px solid #bdbdbd;
+    font-weight: 600;
+    color: #000000de;
+    letter-spacing: 1px;
+  }
+  a.myclass {
+    color:#fff;
     background-color: #5a8dee;
     border-color: #5a8dee;
+    padding:9px 15px;
     box-shadow: 0 0.125rem 0.25rem rgb(147 158 170 / 40%);
-    padding:8px 16px;
-    height: 36px;
   }
-  button.btn_downlod {
-    color: #fff;
-    background-color: #5a8dee;
-    border-color: #5a8dee;
-    box-shadow: 0 0.125rem 0.25rem rgb(147 158 170 / 40%);
-    padding:8px 16px;
-    border: none;
-    height: 36px;
+  
+    .mainpage {
+        height: 68vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .inner-page {
+        box-shadow: 0 0 4px;
+        padding: 18px;
+    }
+  
+    button#modalClose {
+      position: absolute;
+      top: 12px;
+      background: red;
+      border: none;
+      font-size: 20px;
+      right: 14px;
+      color: #fff;
+      height: 35px;
   }
-  div#successMessage {
+  .modal-header {
+    position: relative;
+    display: unset !important;
+  }
+  h1.mainhead_month {
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+  h1.mainhead_date {
+    padding-right: 15px;
+  }
+  a.btn_back {
+      color: #fff;
+      background-color: #5a8dee;
+      border-color: #5a8dee;
+      box-shadow: 0 0.125rem 0.25rem rgb(147 158 170 / 40%);
+      padding:8px 16px;
+      height: 36px;
+    }
+    button.btn_downlod {
+      color: #fff;
+      background-color: #5a8dee;
+      border-color: #5a8dee;
+      box-shadow: 0 0.125rem 0.25rem rgb(147 158 170 / 40%);
+      padding:8px 16px;
+      border: none;
+      height: 36px;
+    }
+    div#successMessage {
+      font-size: 28px;
+      text-align: center;
+      padding-bottom: 34px;
+  }
+  div#success{
     font-size: 28px;
     text-align: center;
     padding-bottom: 34px;
-}
-   
+  }
+  
 </style>
-
 </head>
 <body>
+  <div id="success"> </div>
   <div id="successMessage"> </div>
   <div class="modal" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -229,18 +234,12 @@ a.btn_back {
    <td>
 
      
-     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" onclick='myTest3(this)' name="drop"  >
+     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" onclick='myTest3(this)' name="drop"  {% if i.status == True  and i.user_id == request.user.id %} disabled {%else%}  {%endif%} >
       Reschedule
     </button></td>
 
     
-    {% comment %} <td><form method = "POST" >
-      {%csrf_token%}
-   
-      <input type="text"   value="" name="upd" hidden/>
-      <button type="submit" class="btn btn-primary" name="download" onclick='myTest1(this)' {%for k in data%} {% if k.provider_id == i.id and  k.status == True %} disabled {%else%} {%endif%} {%endfor%}>Download</button></form> </td>
-      
-       {% endcomment %}
+  
    
   </tr>
   {%endfor%}
@@ -271,6 +270,7 @@ a.btn_back {
 
 <script>
 $(document).ready(function() {
+   
     var input = $("input[type='text']");
     var val1 = localStorage.getItem("test");
     var ids= localStorage.getItem("user_id")
@@ -278,25 +278,28 @@ $(document).ready(function() {
    if (localStorage.getItem("inputDisabled") === "true" && val1 === "view1" && ids != "None") {
     
       input.attr("disabled", true);
+      $(".btn").attr("disabled", true);
   
     
     }
     else if (localStorage.getItem("inputDisabled1") === "true" && val1 === "view2") {
     
       input.attr("disabled", true);
+      $(".btn").attr("disabled", true);
   
     
     }
     else if (localStorage.getItem("inputDisabled2") === "true" && val1 === "view3") {
     
       input.attr("disabled", true);
+      $(".btn").attr("disabled", true);
   
     
     }
     else if (localStorage.getItem("inputDisabled3") === "true" && val1 === "view4") {
     
       input.attr("disabled", true);
-  
+      $(".btn").attr("disabled", true);
     
     } 
     localStorage.removeItem("inputDisabled")
@@ -305,27 +308,36 @@ $(document).ready(function() {
     localStorage.removeItem("inputDisabled3")
     $(".btn_downlod").click(function() {
 
-     
+    
       if (val1 === "view1"){
         input.attr("disabled", true);
+        $(".btn").attr("disabled", true);
       
       localStorage.setItem("inputDisabled", true);
+     
       }
       else if (val1 === "view2"){
         input.attr("disabled", true);
+        $(".btn").attr("disabled", true);
       
       localStorage.setItem("inputDisabled1", true);
+    
       }
       else if (val1 === "view3"){
         input.attr("disabled", true);
+        $(".btn").attr("disabled", true);
       
       localStorage.setItem("inputDisabled2", true);
+   
       }
       else if (val1 === "view4"){
         input.attr("disabled", true);
+        $(".btn").attr("disabled", true);
       
       localStorage.setItem("inputDisabled3", true);
+  
       }
+      $("#success").html("Payroll is closed").delay(5000).fadeOut('slow'); 
     });
   }); 
   
@@ -476,7 +488,7 @@ $(document).ready(function() {
                       localStorage.removeItem("month")
                       localStorage.removeItem("year")
                       localStorage.removeItem("week")
-                      $("#successMessage").html("Your Payrol is Reschedule to  month " +month + " year "  +  year + "  and " + " week " + week); 
+                      $("#successMessage").html("Your Payrol is Reschedule to  month " +month + " year "  +  year + "  and " + " week " + week).delay(5000).fadeOut('slow'); 
                      
 
                    
