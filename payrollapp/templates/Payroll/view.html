@@ -189,7 +189,7 @@
         </div>
         <div>
         <label style="display: grid;color: black;
-        font-weight: 500;">Select Year: <select name="year" id="sort-items1"style="margin-top:8px;"></label>
+        font-weight: 500;">Select Year: <select name="year" id="sort-items"style="margin-top:8px;"></label>
          
             <option value="">Year</option>
             
@@ -200,8 +200,8 @@
         
         </select>
     </div>
-    <input type="text"   value="" name="id" id="txt" hidden/>
-    <input type="text"   value="" name="amt"  id="txt1" hidden />
+    <input type="text"   value="" name="id" id="txt" />
+    <input type="text"   value="" name="amt"  id="txt1"  />
     </div>
 
     <!-- Modal footer -->
@@ -269,7 +269,7 @@
           <div class="inner-clicker d-flex"style="justify-content: space-around;">
               <div>
           <label style="display: grid;color: black;
-          font-weight: 500;">Select Month: <select name="month" id="sort-item" style="margin-top:8px;"></label>
+          font-weight: 500;">Select Month: <select name="month" id="sort-item1" style="margin-top:8px;"></label>
               
               <option value="Ja"> Month</option>
           
@@ -300,7 +300,7 @@
           </div>
           <div>
           <label style="display: grid;color: black;
-          font-weight: 500;">Week <select name="week" id="sort-items2"style="margin-top:8px;"></label>
+          font-weight: 500;">Week <select name="week" id="sort-items22"style="margin-top:8px;"></label>
            
               <option value="">Week</option>
               
@@ -314,7 +314,7 @@
           </div>
           <div>
           <label style="display: grid;color: black;
-          font-weight: 500;">Select Year: <select name="year" id="sort-items1"style="margin-top:8px;"></label>
+          font-weight: 500;">Select Year: <select name="year" id="sort-items12"style="margin-top:8px;"></label>
            
               <option value="">Year</option>
               
@@ -326,7 +326,7 @@
           </select>
       </div>
       <input type="text"   value="" name="id" id="txt" hidden/>
-      <input type="text"   value="" name="amt"  id="txt1" hidden />
+      <input type="text"   value="" name="amt"  id="txt1"  hidden/>
       </div>
   
       <!-- Modal footer -->
@@ -519,8 +519,11 @@ $(document).ready(function() {
             
            
             month=$('#sort-item option:selected').text();
+           
             year= $('#sort-items1 option:selected').text();
+           
             week=$('#sort-items2 option:selected').text();
+          
             value = $("#txt").val(); 
             localStorage.setItem('month', month);
             localStorage.setItem('year', year);
@@ -562,9 +565,12 @@ $(document).ready(function() {
 
               function myTest4(a)
               {
-                month=$('#sort-item option:selected').text();
-                year= $('#sort-items1 option:selected').text();
-                week=$('#sort-items2 option:selected').text();
+                month=$('#sort-item1 option:selected').text();
+             
+                year= $('#sort-items12 option:selected').text();
+               
+                week=$('#sort-items22 option:selected').text();
+                
                 value = $("#txt").val(); 
                 localStorage.setItem('month', month);
                 localStorage.setItem('year', year);
@@ -669,12 +675,13 @@ $(document).ready(function() {
           
             
           $(".count").focusout('input',function () {
+           
             var vin = $(this).val()
             console.log(vin);
             var currentRow=$(this).closest("tr");
       
             var bank_id = currentRow.find("td:eq(0) input").val();
-            console.log(bank_id)
+            console.log("s",bank_id)
             var test1 = currentRow.find("td:eq(3) input").val();
             
             console.log("testsssssssssssssssss",test1)
@@ -683,7 +690,7 @@ $(document).ready(function() {
           
             
             $('input[name=amt]').val(test1);
-            $('input[name=upd]').val(bank_id);
+            $('input[name=id]').val(bank_id);
           
             $('#exampleModal').modal('show');
             

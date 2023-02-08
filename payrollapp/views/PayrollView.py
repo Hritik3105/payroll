@@ -489,7 +489,9 @@ def save_data(request):
     month=request.GET.get("month")
     week=request.GET.get("week")
     weekgot=request.GET.get("week")
+    print("submit",weekgot)
     id=request.GET.get("id").replace(",","")
+    print("idis",id)
     pay_amt=request.GET.get("amt").replace(",","")
     user_id=request.user.id
     if week == "" or week == "Week":
@@ -497,6 +499,7 @@ def save_data(request):
     if id == "" :
         id =0
     id_amt=request.GET.get("amt").replace(",","")   
+
     
     if week == "1":
         week=1
@@ -511,7 +514,8 @@ def save_data(request):
     request.session["upt_year"]=year
     request.session["upt_week"]=week
     amt_diff=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=id)).values_list("amount_paid",flat=True)
-    
+    print("amt_diffff",amt_diff)
+
     chng= amt_diff[0]
    
     final_amt = chng - int(pay_amt)
@@ -538,7 +542,7 @@ def save_data2(request):
     month=request.GET.get("month")
     week=request.GET.get("week")
     weekgot=request.GET.get("week")
-    
+    print("weekgot3344",weekgot)
     id=request.GET.get("id").replace(",","")
     pay_amt=request.GET.get("amt").replace(",","")
     user_id=request.user.id
