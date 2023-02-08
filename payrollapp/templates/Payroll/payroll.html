@@ -111,7 +111,8 @@
             </li>
             <li>
                 
-                <strong> {{total1.amount_paid__sum}}</strong>
+                <strong class="app" > {{total1.amount_paid__sum}}</strong>
+               
             </li>
         </ul>
     </div>
@@ -127,7 +128,7 @@
                 <input type="hidden" name="next" value="/view">
                 <button type="submit" class="btn btn-primary"  name="view" value="view2" id="edi2" > View / Edit</button>
             </li>
-            <li> <strong> {{total2.amount_paid__sum}}</strong>
+            <li> <strong class="app1"> {{total2.amount_paid__sum}}</strong>
             </li>
         </ul>
     </div>
@@ -146,7 +147,7 @@
                 <button type="submit" class="btn btn-primary" name="download" value="3">Download</button>
             </li> {% endcomment %}
             <li>
-                <strong> {{total3.amount_paid__sum}}</strong>
+                <strong class ="app2"> {{total3.amount_paid__sum}}</strong>
             </li>
         </ul>
     </div>
@@ -165,7 +166,7 @@
                 <button type="submit" class="btn btn-primary" name="download" value="4">Download</button>
             </li> {% endcomment %}
             <li>
-                <strong> {{total4.amount_paid__sum}}</strong>
+                <strong class= "app3"> {{total4.amount_paid__sum}}</strong>
             </li>
         </ul>
     </div>
@@ -178,9 +179,84 @@
 
 {{ block.super }}
 <script>
+    var selectCars1 = document.getElementById("bonus");
+    var selectCars2 = document.getElementById("bonus1");
+    
+    // Don't use .onXys properties. Use .addEventListener
+    selectCars1.addEventListener("change", getValues);
+    selectCars2.addEventListener("change", getValues);  
+    
+    function getValues(){
+       // Do whatever here, but when done, pass both values to other function:   
+       doOtherWork(selectCars1.value, selectCars2.value);
+    }
+    
+    function doOtherWork(val1, val2){
+      
+      $.ajax({
+        type:"GET",
+        url: '/change',
+        data: {
+          'month': val1,
+          'year' : val2
+        },
+        dataType: 'json',
+        success: function (data) {
+            console.log(data.amount1.amount_paid__sum);
+            console.log(data.amount2.amount_paid__sum);
+            console.log(data.amount3.amount_paid__sum);
+            console.log(data.amount4.amount_paid__sum);
+            if (data.amount1.amount_paid__sum == null){
+              
+                $('.app').html("0");
+
+
+            }
+            else{
+            $('.app').html(data.amount1.amount_paid__sum);
+            }
+
+            if (data.amount2.amount_paid__sum == null){
+              
+                $('.app1').html("0");
+
+
+            }
+            else{
+            $('.app1').html(data.amount2.amount_paid__sum);
+            }
+
+            if (data.amount3.amount_paid__sum == null){
+              
+                $('.app2').html("0");
+
+
+            }
+            else{
+            $('.app2').html(data.amount3.amount_paid__sum);
+            }
+
+            if (data.amount4.amount_paid__sum == null){
+              
+                $('.app3').html("0");
+
+
+            }
+            else{
+            $('.app3').html(data.amount4.amount_paid__sum);
+            }
+
+         
+        }
+     
+    });  
+
+      
+    }
     $(document).ready(function(){
         $('#bonus').change(function() {
         var val=$("#bonus option:selected").val()
+        console.log("vvvvv",val)
 
     $.ajax({
         type:"GET",

@@ -113,7 +113,17 @@
 </style>
 </head>
 <body>
-  <div id="success"> </div>
+  <div id="success"> 
+
+    {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+  </div>
   {% if True in week_status %}
   <div id="successMessage"><b>Payroll is closed</b> </div>
   {%else%}
@@ -175,7 +185,7 @@
             {%endfor%}
         
         </select>
-     
+        
         </div>
         <div>
         <label style="display: grid;color: black;
@@ -191,7 +201,7 @@
         </select>
     </div>
     <input type="text"   value="" name="id" id="txt" hidden/>
-    <input type="text"   value="" name="amt"  id="txt1" hidden/>
+    <input type="text"   value="" name="amt"  id="txt1" hidden />
     </div>
 
     <!-- Modal footer -->
@@ -239,13 +249,94 @@
     <td>{{i.invoice}}</td>
 
    <td>
-
+    
      
      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" onclick='myTest3(this)' name="drop"  {% if i.status == True  and i.user_id == request.user.id %} disabled {%else%}  {%endif%} >
       Reschedule
     </button></td>
-
-    
+    <div class="modal" id="myModal">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+          <div class="modal-header text-center">
+              <h3 class="modal-title" id="exampleModalLabel">Are you not </h3><h3>paying<h3><h2 class="apps"></h2><h3>of this payroll? When do you want to reschedule it?</h3>   
+              <button  class="close" id="modalClose" aria-label="close">&times;</button>
+              
+            
+          </div>
+          <div class="modal-body">
+            {% comment %} <form method ="POST" class=""> {% endcomment %}
+              {%csrf_token%}
+          <div class="inner-clicker d-flex"style="justify-content: space-around;">
+              <div>
+          <label style="display: grid;color: black;
+          font-weight: 500;">Select Month: <select name="month" id="sort-item" style="margin-top:8px;"></label>
+              
+              <option value="Ja"> Month</option>
+          
+              <option value="January"  {% if month == "January" %} selected {%else %} {%endif%}  >January</option>
+              
+              <option value="February" {% if month == "February" %} selected {%else %} {%endif%} >February</option>
+              
+              <option value="March" {% if month == "March" %} selected {%else %} {%endif%}>March</option>
+          
+              <option value="April" {% if month == "April" %} selected {%else %} {%endif%}>April</option>
+          
+              <option value="May" {% if month == "May" %} selected {%else %} {%endif%}>May</option>
+          
+              <option value="June" {% if month == "June" %} selected {%else %} {%endif%}>June</option>
+              
+              <option value="July" {% if month == "July" %} selected {%else %} {%endif%}>July</option>
+          
+              <option value="August" {% if month == "August" %} selected {%else %} {%endif%}>August</option>
+              
+              <option value="September"{% if month == "September" %} selected {%else %} {%endif%}>September</option>
+              
+              <option value="October"{% if month == "October" %} selected {%else %} {%endif%}>October</option>
+          
+              <option value="November" {% if month == "November" %} selected {%else %} {%endif%}>November</option>
+              
+              <option value="December" {% if month == "December" %} selected {%else %} {%endif%}>December</option>
+          </select><br><br>
+          </div>
+          <div>
+          <label style="display: grid;color: black;
+          font-weight: 500;">Week <select name="week" id="sort-items2"style="margin-top:8px;"></label>
+           
+              <option value="">Week</option>
+              
+              {% for i in lst1 %}
+              
+              <option value="{{i}}" {% if year == i %} selected {%else %} {%endif%}  >{{i}}</option>
+              {%endfor%}
+          
+          </select>
+          
+          </div>
+          <div>
+          <label style="display: grid;color: black;
+          font-weight: 500;">Select Year: <select name="year" id="sort-items1"style="margin-top:8px;"></label>
+           
+              <option value="">Year</option>
+              
+              {% for i in lst %}
+              
+              <option value="{{i}}" {% if year == i %} selected {%else %} {%endif%}  >{{i}}</option>
+              {%endfor%}
+          
+          </select>
+      </div>
+      <input type="text"   value="" name="id" id="txt" hidden/>
+      <input type="text"   value="" name="amt"  id="txt1" hidden />
+      </div>
+  
+      <!-- Modal footer -->
+      <div class="modal-footer justify-content-center">
+        <input type='submit'  value='Save/Returns'  name="updt" onclick='myTest4(this)' class="btn btn-primary"/ >
+      </div>
+    {% comment %} </form> {% endcomment %}
+          </div>
+        
+          </div>
   
    
   </tr>
@@ -425,6 +516,8 @@ $(document).ready(function() {
  
           function myTest2(a)
           {
+            
+           
             month=$('#sort-item option:selected').text();
             year= $('#sort-items1 option:selected').text();
             week=$('#sort-items2 option:selected').text();
@@ -434,7 +527,7 @@ $(document).ready(function() {
             localStorage.setItem('week', week);
             localStorage.setItem('id', value);
             value1 = $("#txt1").val();
-
+           
             console.log(month,year,week,value)
             $.ajax({
                   type:"GET",
@@ -451,6 +544,7 @@ $(document).ready(function() {
                   success: function (data) {
                   console.log(data.record)
                   localStorage.setItem('user_id', data.user);
+                  $("#success").delay(1000).fadeOut(500);
                   window.location.href = "view";
 
                     
@@ -466,40 +560,98 @@ $(document).ready(function() {
               };
 
 
+              function myTest4(a)
+              {
+                month=$('#sort-item option:selected').text();
+                year= $('#sort-items1 option:selected').text();
+                week=$('#sort-items2 option:selected').text();
+                value = $("#txt").val(); 
+                localStorage.setItem('month', month);
+                localStorage.setItem('year', year);
+                localStorage.setItem('week', week);
+                localStorage.setItem('id', value);
+                value1 = $("#txt1").val();
+    
+                console.log(month,year,week,value)
+                $.ajax({
+                      type:"GET",
+                      url: 'save_value',
+                      data: {
+                        'id': value,
+                        'month':month,
+                        'year':year,
+                        'week':week,
+                        'amt':value1
+                        
+                      },
+                      dataType: 'json',
+                      success: function (data) {
+                      console.log(data.record)
+                      localStorage.setItem('user_id', data.user);
+                      $("#success").delay(1000).fadeOut(500);
+                      window.location.href = "view";
+    
+                        
+                        
+                      
+                      }
+                   
+                    }); 
+            
+                  
+              
+              
+                  };
+    
+    
+    
 
               function myTest3(a)
               {
+                
+                var currentRow=$(a).closest("tr");
+          
+                var bank_id = currentRow.find("td:eq(0) input").val();
+                console.log(bank_id)
+                var test1 = currentRow.find("td:eq(3) input").val();
+                console.log("testsssssssssssssssss",test1)
                 month= localStorage.getItem('month');
                 year= localStorage.getItem('year'); 
                 week=localStorage.getItem('week');
                 pro_id=localStorage.getItem('id');
                 pro_amt=localStorage.getItem('amtt');
+               
                 
   
-    
+                $('input[name=id]').val(bank_id);
+                $('input[name=amt]').val(test1);
+                $('input[name=upd]').val(bank_id);
                 console.log("ss",month,year,week)
+                
                  $.ajax({
                       type:"GET",
-                      url: 'res_value',
+                      url: 'get_value',
                       data: {
                         'id':pro_id,
                         'month':month,
                         'year':year,
                         'week':week,
-                        'amt':pro_amt
+                        'amt':pro_amt,
+                        'actual':test1
         
                         
                       },
                       dataType: 'json',
                       success: function (data) {
                       //window.location.href = "view";
-                      
+                  
+                      $('.apps').html(data.amount2);
                      
                       localStorage.removeItem("month")
                       localStorage.removeItem("year")
                       localStorage.removeItem("week")
-                      $("#successMessage").html("Your Payrol is Reschedule to  month " +month + " year "  +  year + "  and " + " week " + week).delay(5000).fadeOut('slow'); 
-                     
+
+                   
 
                    
                         
@@ -528,7 +680,8 @@ $(document).ready(function() {
             console.log("testsssssssssssssssss",test1)
             
           
-            $('input[name=id]').val(bank_id);
+          
+            
             $('input[name=amt]').val(test1);
             $('input[name=upd]').val(bank_id);
           

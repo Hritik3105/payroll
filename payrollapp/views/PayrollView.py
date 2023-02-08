@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.db.models import Sum
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
+from django.contrib import messages
 
 
 
@@ -65,10 +66,11 @@ def payroll(request):
     year=0
     total1=0
     total1=Providers.objects.filter(Q(user_id=request.user.id) & Q(week__gte=0,week__lte=1.75)).aggregate(Sum('amount_paid'))
+    # total122=Providers.objects.filter(Q(user_id=request.user.id) & Q(week__gte=0,week__lte=1.75)).values_list('amount_paid','month_of_payment','year_of_payment')
     total2=Providers.objects.filter(Q(user_id=request.user.id) & Q(week__gt=1.75,week__lte=3.75)).aggregate(Sum('amount_paid'))
     total3=Providers.objects.filter(Q(user_id=request.user.id) & Q(week__gt=3.75,week__lte=5.75)).aggregate(Sum('amount_paid'))
     total4=Providers.objects.filter(Q(user_id=request.user.id)   & Q(week__gt=5.75,week__lte=7.75 )|Q(week__gt=7.75)).aggregate(Sum('amount_paid'))
-    
+
     if month =="":
         
         month =""
@@ -458,14 +460,20 @@ def option_value(request):
 def rem_amt(request):
     pay_id=request.GET.get("id").replace(",","")
     pay_amt=request.GET.get("amt").replace(",","")
-
+    print("dfsffffffffff",pay_id)
+   
+    getval=request.GET.get("actual")
+    if getval:
+        getval.replace(",","")
     amt_diff=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=pay_id)).values_list("amount_paid",flat=True)
     chng= amt_diff[0]
+    print(chng)
     
     final_amt = chng - int(pay_amt)
 
     data={
-        "amount":final_amt
+        "amount":final_amt,
+        "amount2":getval
     }
 
     return JsonResponse(data)
@@ -476,33 +484,100 @@ def rem_amt(request):
 #Save the data into db after calculation
 @login_required 
 def save_data(request):
-   
+    print("submit button click")
     year=request.GET.get("year")
     month=request.GET.get("month")
     week=request.GET.get("week")
+    weekgot=request.GET.get("week")
     id=request.GET.get("id").replace(",","")
     pay_amt=request.GET.get("amt").replace(",","")
     user_id=request.user.id
-   
+    if week == "" or week == "Week":
+        week=0
+    if id == "" :
+        id =0
+    id_amt=request.GET.get("amt").replace(",","")   
+    
+    if week == "1":
+        week=1
+    elif week == "2":
+        week=2
+    elif week == "3":
+        week= 3.90
+    elif week == "4":
+        week =7
+
     request.session["upt_month"]=month  
     request.session["upt_year"]=year
     request.session["upt_week"]=week
     amt_diff=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=id)).values_list("amount_paid",flat=True)
+    
     chng= amt_diff[0]
    
     final_amt = chng - int(pay_amt)
     
     sav_data=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=id)).update(amount_paid=pay_amt)
-    
+    res_data=Providers.objects.filter(id=int(id)).values("business_name","invoice","payment_term")
+    if res_data:
+        inst_data=Providers.objects.filter(user_id=request.user.id).create(month_of_payment=month,year_of_payment=year,week=week,business_name=res_data[0]["business_name"],invoice=res_data[0]["invoice"],amount_paid=id_amt,user_id=request.user.id,payment_term=res_data[0]["payment_term"])
 
     data={
         "status":"success",
         "record":final_amt,
         "user":user_id
     }
-
+    messages.success(request, "Your Payrol is Reschedule to  month " + str(month) + " year "  + str(year) + "  and " + " week " + str(weekgot) )
     return JsonResponse(data)
 
+
+
+@login_required 
+def save_data2(request):
+    print("submits button click")
+    year=request.GET.get("year")
+    month=request.GET.get("month")
+    week=request.GET.get("week")
+    weekgot=request.GET.get("week")
+    
+    id=request.GET.get("id").replace(",","")
+    pay_amt=request.GET.get("amt").replace(",","")
+    user_id=request.user.id
+    if week == "" or week == "Week":
+        week=0
+    if id == "" :
+        id =0
+    id_amt=request.GET.get("amt").replace(",","")   
+    
+    if week == "1":
+        week=1
+    elif week == "2":
+        week=2
+    elif week == "3":
+        week= 3.90
+    elif week == "4":
+        week =7
+
+    request.session["upt_month"]=month  
+    request.session["upt_year"]=year
+    request.session["upt_week"]=week
+    amt_diff=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=id)).values_list("amount_paid",flat=True)
+    
+    chng= amt_diff[0]
+   
+    final_amt = chng - int(pay_amt)
+    
+    sav_data=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=id)).update(amount_paid=pay_amt)
+    res_data=Providers.objects.filter(id=int(id)).values("business_name","invoice","payment_term")
+    if res_data:
+        inst_data=Providers.objects.filter(user_id=request.user.id).create(month_of_payment=month,year_of_payment=year,week=week,business_name=res_data[0]["business_name"],invoice=res_data[0]["invoice"],amount_paid=id_amt,user_id=request.user.id,payment_term=res_data[0]["payment_term"])
+
+    data={
+        "status":"success",
+        "record":final_amt,
+        "user":user_id
+    }
+    messages.success(request, "Your Payrol is Reschedule to  month " + str(month) + " year "  + str(year) + "  and " + " week " + str(weekgot) )
+    return JsonResponse(data)
 
 
 #Reschedule payroll
@@ -534,6 +609,26 @@ def data_reschedule(request):
 
     data={
         "message":"hello"
+    }
+
+    return JsonResponse(data)
+
+
+@login_required 
+def rem_amt1(request):
+    pay_id=request.GET.get("month")
+    pay_amt=request.GET.get("year")
+    print("dfsffffffffff",pay_id,pay_amt)
+    total1=Providers.objects.filter(Q(user_id=request.user.id) & Q(week__gte=0,week__lte=1.75) & Q(month_of_payment=pay_id)& Q(year_of_payment=pay_amt)).aggregate(Sum('amount_paid'))
+    total2=Providers.objects.filter(Q(user_id=request.user.id) & Q(week__gt=1.75,week__lte=3.75) & Q(month_of_payment=pay_id)& Q(year_of_payment=pay_amt)).aggregate(Sum('amount_paid'))
+    total3=Providers.objects.filter(Q(user_id=request.user.id) & Q(week__gt=3.75,week__lte=5.75) & Q(month_of_payment=pay_id)& Q(year_of_payment=pay_amt)).aggregate(Sum('amount_paid'))
+    total4=Providers.objects.filter(Q(user_id=request.user.id) & Q(week__gt=5.75,week__lte=7.75) & Q(month_of_payment=pay_id)& Q(year_of_payment=pay_amt)).aggregate(Sum('amount_paid'))
+    data={
+        "amount1":total1,
+        "amount2":total2,
+        "amount3":total3,
+        "amount4":total4,
+     
     }
 
     return JsonResponse(data)
