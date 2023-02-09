@@ -107,24 +107,24 @@ def func2(request):
         stats3=Providers.objects.filter(user_id=request.user.id).values_list('week3',flat=True)
         stats4=Providers.objects.filter(user_id=request.user.id).values_list('week4',flat=True)
 
-
+        cal[1].remove(1)
         if True in stats4:
           
             cal[1].remove(4)
+           
 
         if True in stats3:
           
             cal[1].remove(3)
+            
         
         if True in stats2:
            
-            cal[1].remove(2)
+            cal[1].remove(2)  
+                  
         
-        if True in stats1:
-            
-            cal[1].remove(1)
-           
-       
+     
+
         else:
             cal[1]
            
@@ -193,23 +193,24 @@ def func2(request):
         stats3=Providers.objects.filter(user_id=request.user.id).values_list('week3',flat=True)
         stats4=Providers.objects.filter(user_id=request.user.id).values_list('week4',flat=True)
 
-
+        cal[1].remove(2)
         if True in stats4:
           
             cal[1].remove(4)
+           
 
         if True in stats3:
           
             cal[1].remove(3)
-        
-        if True in stats2:
            
-            cal[1].remove(2)
+     
+            
         
         if True in stats1:
             
             cal[1].remove(1)
-           
+            
+        
        
         else:
             cal[1]
@@ -275,23 +276,24 @@ def func2(request):
         stats2=Providers.objects.filter(user_id=request.user.id).values_list('week2',flat=True)
         stats3=Providers.objects.filter(user_id=request.user.id).values_list('week3',flat=True)
         stats4=Providers.objects.filter(user_id=request.user.id).values_list('week4',flat=True)
-
+        cal[1].remove(3)
 
         if True in stats4:
-          
+            
             cal[1].remove(4)
+           
 
-        if True in stats3:
-          
-            cal[1].remove(3)
+       
         
         if True in stats2:
            
             cal[1].remove(2)
+            
         
         if True in stats1:
-            
+          
             cal[1].remove(1)
+            
            
        
         else:
@@ -360,21 +362,24 @@ def func2(request):
         stats4=Providers.objects.filter(user_id=request.user.id).values_list('week4',flat=True)
 
 
-        if True in stats4:
+
           
-            cal[1].remove(4)
+        cal[1].remove(4)
 
         if True in stats3:
           
             cal[1].remove(3)
+            
         
         if True in stats2:
            
             cal[1].remove(2)
+            
         
         if True in stats1:
             
             cal[1].remove(1)
+     
 
         else:
             cal[1]
@@ -466,6 +471,7 @@ def rem_amt(request):
     if getval:
         getval.replace(",","")
     amt_diff=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=pay_id)).values_list("amount_paid",flat=True)
+    print(amt_diff)
     chng= amt_diff[0]
     print(chng)
     
@@ -484,21 +490,33 @@ def rem_amt(request):
 #Save the data into db after calculation
 @login_required 
 def save_data(request):
-    print("submit button click")
+
+    print("submitrr button click")
     year=request.GET.get("year")
+    print(year)
+    oll=request.GET.get("partial")
+    print("-0-0",oll)
+ 
     month=request.GET.get("month")
+  
     week=request.GET.get("week")
+
     weekgot=request.GET.get("week")
-    print("submit",weekgot)
+  
     id=request.GET.get("id").replace(",","")
-    print("idis",id)
+   
     pay_amt=request.GET.get("amt").replace(",","")
+    print("pay",pay_amt)
     user_id=request.user.id
+    btn=request.POST.get("partial")
+    print("btn",btn)
+
     if week == "" or week == "Week":
         week=0
     if id == "" :
         id =0
     id_amt=request.GET.get("amt").replace(",","")   
+    print("id+amr",id_amt)
 
     
     if week == "1":
@@ -514,16 +532,42 @@ def save_data(request):
     request.session["upt_year"]=year
     request.session["upt_week"]=week
     amt_diff=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=id)).values_list("amount_paid",flat=True)
-    print("amt_diffff",amt_diff)
 
     chng= amt_diff[0]
-   
+    print(chng)
     final_amt = chng - int(pay_amt)
+    print("--------------------",final_amt)
+    check=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gte=0,week__lte=1.75)).values_list("invoice",flat=True)
+    print("ss",check)
+    check2=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=1.75,week__lte=3.75)).values_list("invoice",flat=True)
+    check3=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=3.75,week__lte=5.75)).values_list("invoice",flat=True)
+    check4=Providers.objects.filter(Q(user_id=request.user.id) & Q(month_of_payment=month) & Q(year_of_payment=year) & Q(week__gt=5.75,week__lte=7.75)).values_list("invoice",flat=True)
     
     sav_data=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=id)).update(amount_paid=pay_amt)
-    res_data=Providers.objects.filter(id=int(id)).values("business_name","invoice","payment_term")
-    if res_data:
-        inst_data=Providers.objects.filter(user_id=request.user.id).create(month_of_payment=month,year_of_payment=year,week=week,business_name=res_data[0]["business_name"],invoice=res_data[0]["invoice"],amount_paid=id_amt,user_id=request.user.id,payment_term=res_data[0]["payment_term"])
+    res_data=Providers.objects.filter(id=int(id)).values("business_name","invoice","payment_term","provider_name")
+    
+   
+    get_inv=Providers.objects.filter(Q(user_id=request.user.id)& Q(invoice=res_data[0]["invoice"])& Q(insert_status=True)).values_list("id",flat=True)
+    print("genr",get_inv)
+    if len(get_inv) >1:
+        print(get_inv[1])
+       
+        upd_data=Providers.objects.filter(user_id=request.user.id,id=get_inv[1]).update(month_of_payment=month,year_of_payment=year,week=week)
+    
+    elif len(get_inv)==1 and oll == "part":
+        print("33333333333333")
+        upd_data=Providers.objects.filter(user_id=request.user.id,id=get_inv[0]).update(month_of_payment=month,year_of_payment=year,week=week,amount_paid=final_amt)
+    
+    elif res_data:
+        print("ertssssssss12")    
+        if oll == "part":
+            print("emntrrr")
+            inst_data=Providers.objects.filter(user_id=request.user.id).create(month_of_payment=month,year_of_payment=year,week=week,business_name=res_data[0]["business_name"],invoice=res_data[0]["invoice"],amount_paid=final_amt,user_id=request.user.id,payment_term=res_data[0]["payment_term"],provider_name=res_data[0]["provider_name"],insert_status=True)
+        else:
+            inst_data=Providers.objects.filter(user_id=request.user.id).create(month_of_payment=month,year_of_payment=year,week=week,business_name=res_data[0]["business_name"],invoice=res_data[0]["invoice"],amount_paid=id_amt,user_id=request.user.id,payment_term=res_data[0]["payment_term"],provider_name=res_data[0]["provider_name"],insert_status=True)
+            print("sdd",inst_data)
+
+
 
     data={
         "status":"success",
@@ -572,9 +616,18 @@ def save_data2(request):
     
     sav_data=Providers.objects.filter(Q(user_id=request.user.id) & Q(id=id)).update(amount_paid=pay_amt)
     res_data=Providers.objects.filter(id=int(id)).values("business_name","invoice","payment_term")
-    if res_data:
-        inst_data=Providers.objects.filter(user_id=request.user.id).create(month_of_payment=month,year_of_payment=year,week=week,business_name=res_data[0]["business_name"],invoice=res_data[0]["invoice"],amount_paid=id_amt,user_id=request.user.id,payment_term=res_data[0]["payment_term"])
+    get_inv=Providers.objects.filter(Q(user_id=request.user.id)& Q(invoice=res_data[0]["invoice"])& Q(insert_status=True)).values_list("id",flat=True)
 
+    if get_inv:
+        print(get_inv[1])
+       
+
+        upd_data=Providers.objects.filter(user_id=request.user.id,id=get_inv[1]).update(month_of_payment=month,year_of_payment=year,week=week)
+    
+    elif res_data:
+        print("ertssss3333")    
+
+        inst_data=Providers.objects.filter(user_id=request.user.id).create(month_of_payment=month,year_of_payment=year,week=week,business_name=res_data[0]["business_name"],invoice=res_data[0]["invoice"],amount_paid=id_amt,user_id=request.user.id,payment_term=res_data[0]["payment_term"],provider_name=res_data[0]["provider_name"],insert_status=True)
     data={
         "status":"success",
         "record":final_amt,
@@ -607,8 +660,9 @@ def data_reschedule(request):
     elif week == "4":
         week =7
     res_data=Providers.objects.filter(id=int(id)).values("business_name","invoice","payment_term")
-
+   
     if res_data:
+      
         inst_data=Providers.objects.filter(user_id=request.user.id).create(month_of_payment=month,year_of_payment=year,week=week,business_name=res_data[0]["business_name"],invoice=res_data[0]["invoice"],amount_paid=id_amt,user_id=request.user.id,payment_term=res_data[0]["payment_term"])
 
     data={

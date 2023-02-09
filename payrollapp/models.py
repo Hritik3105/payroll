@@ -67,6 +67,7 @@ class Providers(models.Model):
   week2=models.BooleanField(default=False)
   week3=models.BooleanField(default=False)
   week4=models.BooleanField(default=False)
+  insert_status=models.BooleanField(default=False)
 
 
 
