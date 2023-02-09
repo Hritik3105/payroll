@@ -496,7 +496,10 @@ def save_data(request):
     print(year)
     oll=request.GET.get("partial")
     print("-0-0",oll)
- 
+    
+    olt=request.GET.get("fully")
+    print("-0-0",olt)
+
     month=request.GET.get("month")
   
     week=request.GET.get("week")
@@ -547,16 +550,18 @@ def save_data(request):
     res_data=Providers.objects.filter(id=int(id)).values("business_name","invoice","payment_term","provider_name")
     
    
-    get_inv=Providers.objects.filter(Q(user_id=request.user.id)& Q(invoice=res_data[0]["invoice"])& Q(insert_status=True)).values_list("id",flat=True)
-    print("genr",get_inv)
-    if len(get_inv) >1:
+    get_inv=Providers.objects.filter(Q(user_id=request.user.id)& Q(invoice=res_data[0]["invoice"])).values_list("id",flat=True)
+    print("genr",len(get_inv))
+
+    if len(get_inv) > 1 and olt == "full":
+        print("fdsfsdfsdfsdfsdfsd")
         print(get_inv[1])
        
         upd_data=Providers.objects.filter(user_id=request.user.id,id=get_inv[1]).update(month_of_payment=month,year_of_payment=year,week=week)
     
-    elif len(get_inv)==1 and oll == "part":
+    elif len(get_inv)>1 and oll == "part":
         print("33333333333333")
-        upd_data=Providers.objects.filter(user_id=request.user.id,id=get_inv[0]).update(month_of_payment=month,year_of_payment=year,week=week,amount_paid=final_amt)
+        upd_data=Providers.objects.filter(user_id=request.user.id,id=get_inv[1]).update(month_of_payment=month,year_of_payment=year,week=week,amount_paid=final_amt)
     
     elif res_data:
         print("ertssssssss12")    
@@ -565,7 +570,7 @@ def save_data(request):
             inst_data=Providers.objects.filter(user_id=request.user.id).create(month_of_payment=month,year_of_payment=year,week=week,business_name=res_data[0]["business_name"],invoice=res_data[0]["invoice"],amount_paid=final_amt,user_id=request.user.id,payment_term=res_data[0]["payment_term"],provider_name=res_data[0]["provider_name"],insert_status=True)
         else:
             inst_data=Providers.objects.filter(user_id=request.user.id).create(month_of_payment=month,year_of_payment=year,week=week,business_name=res_data[0]["business_name"],invoice=res_data[0]["invoice"],amount_paid=id_amt,user_id=request.user.id,payment_term=res_data[0]["payment_term"],provider_name=res_data[0]["provider_name"],insert_status=True)
-            print("sdd",inst_data)
+           
 
 
 
