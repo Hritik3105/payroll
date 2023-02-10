@@ -62,7 +62,7 @@ def sii(request,siiusernae,password,month,year):
     dirspot = os.getcwd()
   
     options = webdriver.ChromeOptions()
-    options.add_argument('--headless=chrome')
+    # options.add_argument('--headless=chrome')
     prefs = {"download.default_directory" : z}
     options.add_experimental_option("prefs",prefs)
                                     
