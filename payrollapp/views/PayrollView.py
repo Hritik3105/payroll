@@ -554,19 +554,19 @@ def save_data(request):
     print("genr",len(get_inv))
 
     if len(get_inv) > 1 and olt == "full":
-        print("fdsfsdfsdfsdfsdfsd")
+        
         print(get_inv[1])
        
         upd_data=Providers.objects.filter(user_id=request.user.id,id=get_inv[1]).update(month_of_payment=month,year_of_payment=year,week=week)
     
     elif len(get_inv)>1 and oll == "part":
-        print("33333333333333")
+        
         upd_data=Providers.objects.filter(user_id=request.user.id,id=get_inv[1]).update(month_of_payment=month,year_of_payment=year,week=week,amount_paid=final_amt)
     
     elif res_data:
         print("ertssssssss12")    
         if oll == "part":
-            print("emntrrr")
+            
             inst_data=Providers.objects.filter(user_id=request.user.id).create(month_of_payment=month,year_of_payment=year,week=week,business_name=res_data[0]["business_name"],invoice=res_data[0]["invoice"],amount_paid=final_amt,user_id=request.user.id,payment_term=res_data[0]["payment_term"],provider_name=res_data[0]["provider_name"],insert_status=True)
         else:
             inst_data=Providers.objects.filter(user_id=request.user.id).create(month_of_payment=month,year_of_payment=year,week=week,business_name=res_data[0]["business_name"],invoice=res_data[0]["invoice"],amount_paid=id_amt,user_id=request.user.id,payment_term=res_data[0]["payment_term"],provider_name=res_data[0]["provider_name"],insert_status=True)

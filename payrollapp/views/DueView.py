@@ -21,7 +21,7 @@ def due_table(request):
     all_obj=Providers.objects.filter(user_id=request.user.id)
     len_obj=len(all_obj) 
     if request.method =="POST" and  'due' in request.POST:
-        filename=os.getcwd()+"/payrollapp/csv/RCV_COMPRA_REGISTRO_76750936-7_202211.csv" 
+        filename=os.getcwd()+"/payrollapp/csv/RCV_COMPRA_REGISTRO_76750936-7_202211.csv"  
         
         empexceldata = pd.read_csv(filename,error_bad_lines=False,sep=r';',usecols =[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18])
         zz=empexceldata.drop_duplicates(subset='Folio', keep="first")

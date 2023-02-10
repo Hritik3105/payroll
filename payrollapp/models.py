@@ -19,8 +19,9 @@ class User(AbstractBaseUser,PermissionsMixin):
     updated_at =  models.DateTimeField(auto_now=True)
     siiusername = models.CharField(max_length=255,default="",blank=True,null=True)
     siipassword = models.CharField(max_length=255,default="",blank=True,null=True)
-    startdate = models.DateField(blank=True,null=True)
-    enddate = models.DateField(blank=True,null=True)
+    month=models.CharField(max_length=250,null=True,blank=True)
+    year=models.CharField(max_length=250,null=True,blank=True)
+    
 
     USERNAME_FIELD 	='email'
     objects 		= CustomUserManager()

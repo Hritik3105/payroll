@@ -23,7 +23,7 @@ def user_signup(request):
                     form.cleaned_data.get('password')
                 )
             if form.save():
-                messages.success(request,'Account Added Successfully.')
+                # messages.success(request,'Account Added Successfully.')
                 return redirect('/login')
         else:
             return render(request,"user/signup.html",{'form':form})

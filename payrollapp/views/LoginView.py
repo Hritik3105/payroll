@@ -22,7 +22,7 @@ def user_login(request):
         login(request, user)
         return redirect("home")
       else:
-        messages.error(request,"Invalid username or password.")
+        print("Enter")
     else:
       return render(request,"user/login.html",{'form':form})
   form = LoginForm()

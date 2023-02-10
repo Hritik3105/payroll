@@ -1,12 +1,37 @@
 {% extends 'layout/admin.html' %}
 
+
 {%block content%}
+<style>
 
 
+p.new {
+    color: red;
+}
+
+p.comp {
+    color: green;
+}
+</style>
  <h1 class="credential_heading ">SII Credential</h1>
 <div class="container">
     <div class="row share_info">
         <div class="col-md-12 ">
+        {%for message in messages %}
+        {%if "company" in message.tags %}
+            <p class= "comp"><strong>{{message}}</strong></p>   
+        {%endif%}
+        {%endfor%}
+        </div>
+
+        <div class="row share_info">
+            <div class="col-md-12 ">
+                {%for message in messages %}
+                {%if "fraud" in message.tags %}
+              <p class ="new"><strong>{{message}}</strong> </p>   
+              {%endif%}
+            {%endfor%}
+            </div>
             <form method = "POST">
             {% csrf_token %}
                 <div class="infoshare">
@@ -22,18 +47,38 @@
                 </div>
                 <div class="datepickerclick d-flex mt-3">
                             <div class="form-check_datepik">
-                                <label for="date">Start-date</label>
+                                <label for="date">Month</label>
 
                                 <div class="input-group date" id="datepicker">
-                                <input type="date" class="form-control" id="date" name='startdate'value={{user.startdate|date:'Y-m-d'}} />
+                                    <select class="form-control ng-pristine ng-not-empty ng-valid ng-valid-required ng-touched" id="periodoMes" ng-model="periodoMes" required="" name="month">
+                                    <option value="">Mes</option><!-- ngRepeat: mes in meses -->
+                                    <option value="Enero" class="ng-binding ng-scope" style="">Enero</option>
+                                    <option  value="Febrero" class="ng-binding ng-scope">Febrero</option>
+                                    <option  value="Marzo" class="ng-binding ng-scope">Marzo</option>
+                                    <option  value="Abril" class="ng-binding ng-scope">Abril</option>
+                                    <option  value="Mayo" class="ng-binding ng-scope">Mayo</option>
+                                    <option  value="Junio" class="ng-binding ng-scope">Junio</option>
+                                    <option  value="Julio" class="ng-binding ng-scope">Julio</option>
+                                    <option  value="Agosto" class="ng-binding ng-scope">Agosto</option>
+                                    <option  value="Septiembre" class="ng-binding ng-scope">Septiembre</option>
+                                    <option  value="Octubre" class="ng-binding ng-scope">Octubre</option>
+                                    <option  value="Noviembre" class="ng-binding ng-scope">Noviembre</option>
+                                    <option  value="Diciembre" class="ng-binding ng-scope">Diciembre</option>
+                                    </select>
                              
                                 </div>
                             </div>
                             <div class="form-check_datepik">
-                                <label for="date" >End-Date</label>
+                                <label for="date">Month</label>
+
                                 <div class="input-group date" id="datepicker">
-                                <input type="date" class="form-control" id="date" name='enddate' value={{user.enddate|date:'Y-m-d'}} />
-                                
+                                    <select class="form-control ng-pristine ng-not-empty ng-valid ng-valid-required ng-touched" id="periodoMes" ng-model="periodoMes" required="" name="year" >
+                                    <option value="">Year</option>
+                                    {% for i in year %}      
+                
+                                    <option value="{{i}}" {% if year == i %} selected {%else %} {%endif%}>{{i}}</option>
+                                {%endfor%}
+                                    </select>                                                                                                                  
                                 </div>
                             </div>  
                         </div>
