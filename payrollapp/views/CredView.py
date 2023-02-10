@@ -46,7 +46,7 @@ def credential(request):
       print(enddate)
       user_upd=User.objects.filter(id =request.user.id).update(siiusername=siusername,siipassword=password,month=startdate,year=enddate,username=username)
       sii(request,siusername,password,startdate,enddate)
-      return redirect("cred")
+      return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val,"val_yr":enddate,"month":startdate})
 
     return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val})
 

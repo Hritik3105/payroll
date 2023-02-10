@@ -52,31 +52,31 @@ p.comp {
                                 <div class="input-group date" id="datepicker">
                                     <select class="form-control ng-pristine ng-not-empty ng-valid ng-valid-required ng-touched" id="periodoMes" ng-model="periodoMes" required="" name="month">
                                     <option value="">Mes</option><!-- ngRepeat: mes in meses -->
-                                    <option value="Enero" class="ng-binding ng-scope" style="">Enero</option>
-                                    <option  value="Febrero" class="ng-binding ng-scope">Febrero</option>
-                                    <option  value="Marzo" class="ng-binding ng-scope">Marzo</option>
-                                    <option  value="Abril" class="ng-binding ng-scope">Abril</option>
-                                    <option  value="Mayo" class="ng-binding ng-scope">Mayo</option>
-                                    <option  value="Junio" class="ng-binding ng-scope">Junio</option>
-                                    <option  value="Julio" class="ng-binding ng-scope">Julio</option>
-                                    <option  value="Agosto" class="ng-binding ng-scope">Agosto</option>
-                                    <option  value="Septiembre" class="ng-binding ng-scope">Septiembre</option>
-                                    <option  value="Octubre" class="ng-binding ng-scope">Octubre</option>
-                                    <option  value="Noviembre" class="ng-binding ng-scope">Noviembre</option>
-                                    <option  value="Diciembre" class="ng-binding ng-scope">Diciembre</option>
+                                    <option value="Enero" class="ng-binding ng-scope"  {% if month == "Enero" %} selected {%else %} {%endif%}>Enero</option>
+                                    <option  value="Febrero" class="ng-binding ng-scope"  {% if month == "Febrero" %} selected {%else %} {%endif%}>Febrero</option>
+                                    <option  value="Marzo" class="ng-binding ng-scope"  {% if month == "Marzo" %} selected {%else %} {%endif%}>Marzo</option>
+                                    <option  value="Abril" class="ng-binding ng-scope"  {% if month == "Abril" %} selected {%else %} {%endif%}>Abril</option>
+                                    <option  value="Mayo" class="ng-binding ng-scope"  {% if month == "Mayo" %} selected {%else %} {%endif%}>Mayo</option>
+                                    <option  value="Junio" class="ng-binding ng-scope"  {% if month == "Junio" %} selected {%else %} {%endif%}>Junio</option>
+                                    <option  value="Julio" class="ng-binding ng-scope"  {% if month == "Julio" %} selected {%else %} {%endif%}>Julio</option>
+                                    <option  value="Agosto" class="ng-binding ng-scope"  {% if month == "Agosto" %} selected {%else %} {%endif%}>Agosto</option>
+                                    <option  value="Septiembre" class="ng-binding ng-scope"  {% if month == "Septiembre" %} selected {%else %} {%endif%}>Septiembre</option>
+                                    <option  value="Octubre" class="ng-binding ng-scope"  {% if month == "Octubre" %} selected {%else %} {%endif%}>Octubre</option>
+                                    <option  value="Noviembre" class="ng-binding ng-scope"  {% if month == "Noviembre" %} selected {%else %} {%endif%}>Noviembre</option>
+                                    <option  value="Diciembre" class="ng-binding ng-scope"  {% if month == "Diciembre" %} selected {%else %} {%endif%}>Diciembre</option>
                                     </select>
                              
                                 </div>
                             </div>
                             <div class="form-check_datepik">
-                                <label for="date">Month</label>
+                                <label for="date">Year</label>
 
                                 <div class="input-group date" id="datepicker">
                                     <select class="form-control ng-pristine ng-not-empty ng-valid ng-valid-required ng-touched" id="periodoMes" ng-model="periodoMes" required="" name="year" >
                                     <option value="">Year</option>
                                     {% for i in year %}      
                 
-                                    <option value="{{i}}" {% if year == i %} selected {%else %} {%endif%}>{{i}}</option>
+                                    <option value="{{i}}" {% if val_yr == i %} selected {%else %} {%endif%}>{{i}}</option>
                                 {%endfor%}
                                     </select>                                                                                                                  
                                 </div>
