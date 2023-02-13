@@ -101,6 +101,6 @@ def sii(request,siiusernae,password,month,year):
     messages.success(request,"CSV Downloaded Successfull",extra_tags="company")
 
   except Exception as e:
-    return e
-    # messages.success(request,"No CSV Found",extra_tags="fraud")
+    
+    messages.success(request,e,extra_tags="fraud")
     
