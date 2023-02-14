@@ -55,11 +55,10 @@ def sii(request,siiusernae,password,month,year):
   
   try:
   
-    z=os.getcwd +'/payrollapp/csv'
+    z=os.getcwd() + "/payrollapp/csv"
     
 
     
-    print(os.getcwd())
   
     options = webdriver.ChromeOptions()
     options.add_argument('--headless=chrome')
