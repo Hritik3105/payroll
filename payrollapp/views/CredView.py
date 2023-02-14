@@ -62,13 +62,13 @@ def sii(request,siiusernae,password,month,year):
     
   
     options = webdriver.ChromeOptions()
-    options.add_argument('--headless=chrome')
-    prefs = {"download.default_directory" : z}
-    options.add_experimental_option("prefs",prefs)
+    options.add_argument('--headless') 
+    # prefs = {"download.default_directory" : z}
+    # options.add_experimental_option("prefs",prefs)
                                     
 
     serv_obj = Service()
-    driver = webdriver.Chrome("usr/bin/google-chrome-stable",options=options,service = serv_obj)
+    driver = webdriver.Chrome(options=options,service = serv_obj)
 
     # # Logging into LinkedIn
     driver.get("https://zeusr.sii.cl/AUT2000/InicioAutenticacion/IngresoRutClave.html?https://www4.sii.cl/consdcvinternetui/")
