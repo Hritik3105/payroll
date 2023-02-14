@@ -57,7 +57,7 @@ def sii(request,siiusernae,password,month,year):
   
   try:
   
-    z='home/nirmla/Desktop/payroll/payrollapp/csv'
+    z='/home/ubuntu/payroll/payrollapp'
     
     
 
