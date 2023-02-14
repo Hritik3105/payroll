@@ -55,9 +55,7 @@ def sii(request,siiusernae,password,month,year):
   
   try:
   
-    z=os.getcwd() + "/payrollapp/csv"
-    
-
+    z="/home/ubuntu/payroll/payrollapp/csv"
     
   
     options = webdriver.ChromeOptions()
