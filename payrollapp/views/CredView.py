@@ -68,7 +68,7 @@ def sii(request,siiusernae,password,month,year):
                                     
 
     serv_obj = Service()
-    driver = webdriver.Chrome(options=options,service = serv_obj)
+    driver = webdriver.Chrome("usr/bin/google-chrome-stable",options=options,service = serv_obj)
 
     # # Logging into LinkedIn
     driver.get("https://zeusr.sii.cl/AUT2000/InicioAutenticacion/IngresoRutClave.html?https://www4.sii.cl/consdcvinternetui/")
