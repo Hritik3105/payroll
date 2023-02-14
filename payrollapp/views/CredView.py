@@ -57,14 +57,14 @@ def sii(request,siiusernae,password,month,year):
   
   try:
   
-    # z='/home/ubuntu/payroll/payrollapp'
+    z='/home/nirmla/Desktop/payroll/payrollapp/csv'
     
     
 
     options = webdriver.ChromeOptions()
     options.add_argument('--headless=chrome')
-    # prefs = {"download.default_directory" : z}
-    # options.add_experimental_option("prefs",prefs)
+    prefs = {"download.default_directory" : z}
+    options.add_experimental_option("prefs",prefs)
                                     
     
     serv_obj = Service()
