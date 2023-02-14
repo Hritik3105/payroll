@@ -63,7 +63,7 @@ def sii(request,siiusernae,password,month,year):
 
     options = webdriver.ChromeOptions()
     options.add_argument('--headless=chrome')
-    prefs = {"download.default_directory" : "/home/ubuntu/payroll/payrollapp/Downloads"}
+    prefs = {"download.default_directory" : z}
     options.add_experimental_option("prefs",prefs)
                                     
     
