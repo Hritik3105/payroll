@@ -45,6 +45,7 @@ def credential(request):
       enddate=request.POST.get("year")  
       print(enddate)
       print(os.getcwd())
+    
       user_upd=User.objects.filter(id =request.user.id).update(siiusername=siusername,siipassword=password,month=startdate,year=enddate,username=username)
       sii(request,siusername,password,startdate,enddate)
       return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val,"val_yr":enddate,"month":startdate})
@@ -56,13 +57,14 @@ def sii(request,siiusernae,password,month,year):
   
   try:
   
-    # z="/home/ubuntu/payroll/payrollapp/csv"
+    z='home/nirmla/Desktop/payroll/payrollapp/csv'
     
-  
+    
+
     options = webdriver.ChromeOptions()
     options.add_argument('--headless=chrome')
-    # prefs = {"download.default_directory" : z}
-    # options.add_experimental_option("prefs",prefs)
+    prefs = {"download.default_directory" : z}
+    options.add_experimental_option("prefs",prefs)
                                     
     
     serv_obj = Service()
@@ -81,15 +83,15 @@ def sii(request,siiusernae,password,month,year):
     driver.find_element(By.ID,"bt_ingresar").click()
 
     driver.get('https://www4.sii.cl/consdcvinternetui/#/index')
-    time.sleep(10)
+    time.sleep(8)
 
     dropdown1 = Select(driver.find_element(By.ID,'periodoMes'))
     dropdown1.select_by_visible_text(month)
-    time.sleep(8)
+    time.sleep(6)
 
     dropdown2 = Select(driver.find_element(By.XPATH,"//select[@ng-model='periodoAnho']"))
     dropdown2.select_by_visible_text(year)
-    time.sleep(8)
+    time.sleep(6)
 
     driver.find_element(By.CLASS_NAME,"btn.btn-default.btn-xs-block.btn-block").click()
     time.sleep(3)
