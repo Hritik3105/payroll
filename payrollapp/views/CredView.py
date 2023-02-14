@@ -44,6 +44,7 @@ def credential(request):
       print(startdate)
       enddate=request.POST.get("year")  
       print(enddate)
+      print(os.getcwd())
       user_upd=User.objects.filter(id =request.user.id).update(siiusername=siusername,siipassword=password,month=startdate,year=enddate,username=username)
       sii(request,siusername,password,startdate,enddate)
       return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val,"val_yr":enddate,"month":startdate})
@@ -55,15 +56,15 @@ def sii(request,siiusernae,password,month,year):
   
   try:
   
-    z="/home/ubuntu/payroll/payrollapp/csv"
+    # z="/home/ubuntu/payroll/payrollapp/csv"
     
   
     options = webdriver.ChromeOptions()
     options.add_argument('--headless=chrome')
-    prefs = {"download.default_directory" : z}
-    options.add_experimental_option("prefs",prefs)
+    # prefs = {"download.default_directory" : z}
+    # options.add_experimental_option("prefs",prefs)
                                     
-
+    
     serv_obj = Service()
     driver = webdriver.Chrome(options=options,service = serv_obj)
 
