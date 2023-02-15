@@ -122,7 +122,7 @@ def sii(request,siiusernae,password,month,year):
 
     driver.find_element(By.XPATH,"//button[text()='Descargar Detalles']").click()
     time.sleep(3)
-    shutil.copyfile("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/Downloads")
+    shutil.copyfile("/home/ubuntu/payroll/payrollapp/csv", "/home/ubuntu/payroll/csv")
     messages.success(request,"CSV Downloaded Successfull",extra_tags="company")
 
   except Exception as e:
