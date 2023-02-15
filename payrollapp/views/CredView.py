@@ -57,7 +57,7 @@ def sii(request,siiusernae,password,month,year):
   
   try:
   
-    pathh="/home/nirmla/Desktop/payroll/payrollapp/csv1/"
+    pathh="/home/ubuntu/payroll/payrollapp/csv1/"
   
 
     options = webdriver.ChromeOptions()
