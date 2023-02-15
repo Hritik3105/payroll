@@ -117,7 +117,7 @@ def sii(request,siiusernae,password,month,year):
     time.sleep(3)
 
     messages.success(request,"CSV Downloaded Successfull",extra_tags="company")
-    shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/Downloads")
+    shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/csv")
 
   except Exception as e:
     
