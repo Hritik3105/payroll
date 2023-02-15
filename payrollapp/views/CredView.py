@@ -78,17 +78,10 @@ def sii(request,siiusernae,password,month,year):
     # options.add_experimental_option("prefs",prefs)
     options.add_argument("--headless=chrome")     
     options.add_argument("--disable-gpu")
-    options.add_argument("--window-size=1920,1080")
-    options.add_argument("--disable-notifications")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--verbose")
-    options.add_argument("--disable-dev-shm-usage")
-#     options.add_experimental_option("prefs", {
-#     "download.default_directory": download_path2,
-#     "download.prompt_for_download": False,
-#     "download.directory_upgrade": True,
-#     "safebrowsing.enabled": True
-# })
+    options.add_experimental_option("prefs", {
+    "download.default_directory": "/home/nirmla/Desktop/payroll/payrollapp/csv1",
+   
+})
                                   
     
     serv_obj = Service()
@@ -122,8 +115,9 @@ def sii(request,siiusernae,password,month,year):
 
     driver.find_element(By.XPATH,"//button[text()='Descargar Detalles']").click()
     time.sleep(3)
-    shutil.copytree("/home/ubuntu/payroll/payrollapp/csv1", "/home/ubuntu/payroll/csv1")
+
     messages.success(request,"CSV Downloaded Successfull",extra_tags="company")
+    shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/Downloads")
 
   except Exception as e:
     
