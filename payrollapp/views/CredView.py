@@ -11,6 +11,7 @@ import time
 import os
 import datetime
 from django.contrib import messages
+import shutil
 
 
 
@@ -56,24 +57,39 @@ def credential(request):
 def sii(request,siiusernae,password,month,year):
   
   try:
+    download_path1="/home/nirmla/Desktop/payroll/payrollapp/csv1"
+    download_path="/home/ubuntu/payroll/payrollapp/csv1/"
+    
   
-    pathh="/home/ubuntu/payroll/payrollapp/csv1/"
-  
-
+ 
     options = webdriver.ChromeOptions()
 
-    options.add_argument('--headless')
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
+    # options.add_argument('--headless')
+    # options.add_argument('--disable-gpu')
+    # options.add_argument("--no-sandbox")
+ 
 
-    prefs={"download.default_directory":pathh,"download.prompt_for_download": False,
-        "download.directory_upgrade": True,
-        "safebrowsing_for_trusted_sources_enabled": False,
-        "safebrowsing.enabled": False}
-    print(")))))",prefs)
+    # prefs={"download.default_directory":pathh,"download.prompt_for_download": False,
+    #     "download.directory_upgrade": True,
+    #     "safebrowsing_for_trusted_sources_enabled": False,
+    #     "safebrowsing.enabled": False}
+    # print(")))))",prefs)
     
-    options.add_experimental_option("prefs",prefs)
-                                    
+    # options.add_experimental_option("prefs",prefs)
+    options.add_argument("--headless=chrome")     
+    options.add_argument("--disable-gpu")
+    options.add_argument("--window-size=1920,1080")
+    options.add_argument("--disable-notifications")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--verbose")
+    options.add_argument("--disable-dev-shm-usage")
+#     options.add_experimental_option("prefs", {
+#     "download.default_directory": download_path2,
+#     "download.prompt_for_download": False,
+#     "download.directory_upgrade": True,
+#     "safebrowsing.enabled": True
+# })
+                                  
     
     serv_obj = Service()
     driver = webdriver.Chrome(options=options,service = serv_obj)
@@ -106,6 +122,7 @@ def sii(request,siiusernae,password,month,year):
 
     driver.find_element(By.XPATH,"//button[text()='Descargar Detalles']").click()
     time.sleep(3)
+    shutil.copyfile("home/ubuntu/Downloads", "home/ubuntu/payroll/Downloads")
     messages.success(request,"CSV Downloaded Successfull",extra_tags="company")
 
   except Exception as e:
