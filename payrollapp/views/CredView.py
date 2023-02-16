@@ -13,7 +13,7 @@ import datetime
 from django.contrib import messages
 import shutil
 from os.path import exists
-
+import pathlib
 
 
 def calculate():
@@ -118,10 +118,18 @@ def sii(request,siiusernae,password,month,year):
     time.sleep(3)
 
     messages.success(request,"CSV Downloaded Successfull",extra_tags="company")
-    file_exists = exists("/home/ubuntu/payroll/payrollapp/csv2")
+    file_exists = exists("/home/ubuntu/payroll/payrollapp/csv1")
     print(file_exists)
-
-    shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/csv2")
+    directory_path=r'/home/ubuntu/payroll/payrollapp/csv1'
+    
+    if file_exists == True:
+     
+      shutil.rmtree(directory_path, ignore_errors=True)
+      shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/csv1")
+    else:
+     
+      # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv", "/home/nirmla/Desktop/payroll/csv")
+      shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/csv1")
 
   except Exception as e:
     
