@@ -58,17 +58,10 @@ def credential(request):
 def sii(request,siiusernae,password,month,year):
   
   try:
-    download_path1="/home/nirmla/Desktop/payroll/payrollapp/csv1"
-    download_path="/home/ubuntu/payroll/payrollapp/csv1/"
-    
-  
- 
+   
     options = webdriver.ChromeOptions()
 
-    # options.add_argument('--headless')
-    # options.add_argument('--disable-gpu')
-    # options.add_argument("--no-sandbox")
- 
+   
 
     # prefs={"download.default_directory":pathh,"download.prompt_for_download": False,
     #     "download.directory_upgrade": True,
@@ -79,10 +72,10 @@ def sii(request,siiusernae,password,month,year):
     # options.add_experimental_option("prefs",prefs)
     options.add_argument("--headless=chrome")     
     options.add_argument("--disable-gpu")
-    options.add_experimental_option("prefs", {
-    "download.default_directory": "/home/nirmla/Desktop/payroll/payrollapp/csv1",
+#     options.add_experimental_option("prefs", {
+#     "download.default_directory": "/home/nirmla/Desktop/payroll/payrollapp/csv1",
    
-})
+# })
                                   
     
     serv_obj = Service()
