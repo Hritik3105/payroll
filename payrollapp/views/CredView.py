@@ -12,6 +12,7 @@ import os
 import datetime
 from django.contrib import messages
 import shutil
+from os.path import exists
 
 
 
@@ -117,6 +118,9 @@ def sii(request,siiusernae,password,month,year):
     time.sleep(3)
 
     messages.success(request,"CSV Downloaded Successfull",extra_tags="company")
+    file_exists = exists("/home/ubuntu/payroll/payrollapp/csv2")
+    print(file_exists)
+
     shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/csv2")
 
   except Exception as e:
