@@ -109,7 +109,7 @@ def sii(request,siiusernae,password,month,year):
     time.sleep(3)
 
     messages.success(request,"CSV Downloaded Successfull",extra_tags="company")
-    time.sleep(8)
+    time.sleep(10)
     file_exists = exists("/home/ubuntu/payroll/payrollapp/csv1")
     
  

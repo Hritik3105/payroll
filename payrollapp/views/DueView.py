@@ -40,10 +40,8 @@ def due_table(request):
             
             final_path=file_path.split("csv")[1]+"csv"
         
-        
-
-
-    # print(datetime.date.today())
+   
+    print(datetime.date.today())
     all_obj=Providers.objects.filter(user_id=request.user.id)
     len_obj=len(all_obj) 
     if request.method =="POST" and  'due' in request.POST:
