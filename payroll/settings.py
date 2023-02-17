@@ -113,7 +113,7 @@ DATABASES = {
         'PASSWORD':"AdMiN@1234",
         "PORT":"3306"
     }
-}   
+}
 
 USE_THOUSAND_SEPARATOR = True
 

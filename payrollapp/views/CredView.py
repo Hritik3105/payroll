@@ -70,12 +70,8 @@ def sii(request,siiusernae,password,month,year):
 
 
     options.add_argument('--headless')
-    options.add_argument('--disable-gpu')
-    
-    
-
-    
-    # prefs = {"download.default_directory" : z}
+    options.add_argument('--disable-gpu')  
+    prefs = {"download.default_directory" : "home/ubuntu/downloads"}
     # options.add_experimental_option("prefs",prefs)
 
                                   
@@ -125,7 +121,7 @@ def sii(request,siiusernae,password,month,year):
     else:
       print("hello")
       # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv", "/home/ubuntu/payroll/payrollapp/csv1")
-      # shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/csv1")
+      shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/csv1")
 
   except Exception as e:
     
