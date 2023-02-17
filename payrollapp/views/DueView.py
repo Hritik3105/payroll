@@ -13,9 +13,8 @@ import numpy
 from django.http import FileResponse
 import os
 import datetime
-
 from django.shortcuts import HttpResponse
-
+from os import path
 
 #get latest download file
 def get_latest_download_file(folder_path):
@@ -32,13 +31,14 @@ def get_latest_download_file(folder_path):
 # function to insert data
 @login_required 
 def due_table(request):
-    folder_path = r'/home/ubuntu/payroll/payrollapp/csv1'
-    file_path = get_latest_download_file(folder_path)
+    if path.exists("/home/ubuntu/payroll/payrollapp/csv1"):    
+        folder_path = r'/home/ubuntu/payroll/payrollapp/csv1'
+        file_path = get_latest_download_file(folder_path)
 
-    pro_obj=Providers()
-    if file_path:
-        
-        final_path=file_path.split("csv")[1]+"csv"
+    
+        if file_path:
+            
+            final_path=file_path.split("csv")[1]+"csv"
         
         
 
