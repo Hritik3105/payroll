@@ -18,27 +18,27 @@ from django.shortcuts import HttpResponse
 
 
 #get latest download file
-def get_latest_download_file(folder_path):
-    files = os.listdir(folder_path)
-    files = [os.path.join(folder_path, f) for f in files]
-    files = [(f, os.path.getmtime(f)) for f in files]
-    files = sorted(files, key=lambda x: -x[1])
-    if files:
-        return files[0][0]
-    else:
-        return None
+# def get_latest_download_file(folder_path):
+#     files = os.listdir(folder_path)
+#     files = [os.path.join(folder_path, f) for f in files]
+#     files = [(f, os.path.getmtime(f)) for f in files]
+#     files = sorted(files, key=lambda x: -x[1])
+#     if files:
+#         return files[0][0]
+#     else:
+#         return None
 
 
 # function to insert data
 @login_required 
 def due_table(request):
-    folder_path = r'/home/ubuntu/payroll/payrollapp/csv1'
-    file_path = get_latest_download_file(folder_path)
+    # folder_path = r'/home/ubuntu/payroll/payrollapp/csv1'
+    # file_path = get_latest_download_file(folder_path)
 
-    pro_obj=Providers()
-    if file_path:
+    # pro_obj=Providers()
+    # if file_path:
         
-        final_path=file_path.split("csv")[1]+"csv"
+    #     final_path=file_path.split("csv")[1]+"csv"
         
         
 
@@ -49,7 +49,7 @@ def due_table(request):
     if request.method =="POST" and  'due' in request.POST:
 
     
-        filename=os.getcwd()+"/payrollapp/csv1" + final_path  
+        filename=os.getcwd()+"/payrollapp/csv/RCV_COMPRA_REGISTRO_76750936-7_202211.csv" 
         
         empexceldata = pd.read_csv(filename,error_bad_lines=False,sep=r';',usecols =[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18])
         zz=empexceldata.drop_duplicates(subset='Folio', keep="first")
