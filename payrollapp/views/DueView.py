@@ -49,7 +49,7 @@ def due_table(request):
     if request.method =="POST" and  'due' in request.POST:
 
     
-        filename=os.getcwd()+"/payrollapp/csv1" + final_path 
+        filename=os.getcwd()+"/payrollapp/csv" + final_path 
         
         empexceldata = pd.read_csv(filename,error_bad_lines=False,sep=r';',usecols =[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18])
         zz=empexceldata.drop_duplicates(subset='Folio', keep="first")
