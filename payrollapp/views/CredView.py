@@ -99,7 +99,7 @@ def sii(request,siiusernae,password,month,year):
 
     dropdown2 = Select(driver.find_element(By.XPATH,"//select[@ng-model='periodoAnho']"))
     dropdown2.select_by_visible_text(year)
-    time.sleep(6)
+    time.sleep(4)
 
     driver.find_element(By.CLASS_NAME,"btn.btn-default.btn-xs-block.btn-block").click()
     time.sleep(3)
