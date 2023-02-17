@@ -117,6 +117,7 @@ def sii(request,siiusernae,password,month,year):
  
     # directory_path=r'/home/ubuntu/payroll/payrollapp/csv1'
     directory_path=r'/home/ubuntu/payroll/payrollapp/csv1'
+    print("true")
     if file_exists == True:
      
       shutil.rmtree(directory_path, ignore_errors=True)
@@ -124,7 +125,7 @@ def sii(request,siiusernae,password,month,year):
     else:
      
       # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv", "/home/ubuntu/payroll/payrollapp/csv1")
-      shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/csv1")
+      # shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/csv1")
 
   except Exception as e:
     
