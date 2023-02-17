@@ -109,19 +109,21 @@ def sii(request,siiusernae,password,month,year):
     time.sleep(3)
 
     messages.success(request,"CSV Downloaded Successfull",extra_tags="company")
-    # file_exists = exists("/home/ubuntu/payroll/payrollapp/csv1")
- 
-    # # directory_path=r'/home/ubuntu/payroll/payrollapp/csv1'
-    # directory_path=r'/home/ubuntu/payroll/payrollapp/csv1'
+    time.sleep(8)
+    file_exists = exists("/home/ubuntu/payroll/payrollapp/csv1")
     
-    # if file_exists == True:
-    #   print("true")
-    #   shutil.rmtree(directory_path, ignore_errors=True)
-    #   shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/csv1")
-    # else:
-    #   print("hello")
-    #   # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv", "/home/ubuntu/payroll/payrollapp/csv1")
-    #   shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/csv1")
+ 
+    # directory_path=r'/home/ubuntu/payroll/payrollapp/csv1'
+    directory_path=r'/home/ubuntu/payroll/payrollapp/csv1'
+    
+    if file_exists == True:
+      print("true")
+      shutil.rmtree(directory_path, ignore_errors=True)
+      shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/csv1")
+    else:
+      print("hello")
+      # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv", "/home/ubuntu/payroll/payrollapp/csv1")
+      shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/csv1")
 
   except Exception as e:
     
