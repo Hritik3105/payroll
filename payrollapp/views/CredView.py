@@ -65,7 +65,7 @@ def credential(request):
 def sii(request,siiusernae,password,month,year):
   
   try:
-    z='/home/nirmla/Desktop/payroll/payrollapp/csv'
+    # z='/home/nirmla/Desktop/payroll/payrollapp/csv'
     options = webdriver.ChromeOptions()
 
     options.add_argument("--headless=chrome")     
