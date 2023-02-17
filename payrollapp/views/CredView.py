@@ -16,6 +16,8 @@ from os.path import exists
 import pathlib
 
 
+
+#Function used to get year
 def calculate():
     lst=[]
     lst2=[]
@@ -30,6 +32,9 @@ def calculate():
     return lst
 
 
+
+
+# Function to enter SII Credential
 @login_required 
 def credential(request):
     val=calculate()
@@ -43,11 +48,10 @@ def credential(request):
       password=request.POST.get("password")  
       
       startdate=request.POST.get("month")
-      print(startdate)
+     
       enddate=request.POST.get("year")  
-      print(enddate)
-      print(os.getcwd())
-    
+     
+        
       user_upd=User.objects.filter(id =request.user.id).update(siiusername=siusername,siipassword=password,month=startdate,year=enddate,username=username)
       sii(request,siusername,password,startdate,enddate)
       return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val,"val_yr":enddate,"month":startdate})
@@ -55,27 +59,20 @@ def credential(request):
     return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val})
 
 
+
+
+#DOwnload csv file 
 def sii(request,siiusernae,password,month,year):
   
   try:
-   
+    z='/home/nirmla/Desktop/payroll/payrollapp/csv'
     options = webdriver.ChromeOptions()
 
-   
-
-    # prefs={"download.default_directory":pathh,"download.prompt_for_download": False,
-    #     "download.directory_upgrade": True,
-    #     "safebrowsing_for_trusted_sources_enabled": False,
-    #     "safebrowsing.enabled": False}
-    # print(")))))",prefs)
-    
-    # options.add_experimental_option("prefs",prefs)
     options.add_argument("--headless=chrome")     
     options.add_argument("--disable-gpu")
-#     options.add_experimental_option("prefs", {
-#     "download.default_directory": "/home/nirmla/Desktop/payroll/payrollapp/csv1",
-   
-# })
+    # prefs = {"download.default_directory" : z}
+    # options.add_experimental_option("prefs",prefs)
+
                                   
     
     serv_obj = Service()
@@ -112,16 +109,16 @@ def sii(request,siiusernae,password,month,year):
 
     messages.success(request,"CSV Downloaded Successfull",extra_tags="company")
     file_exists = exists("/home/ubuntu/payroll/payrollapp/csv1")
-    print(file_exists)
+ 
+    # directory_path=r'/home/ubuntu/payroll/payrollapp/csv1'
     directory_path=r'/home/ubuntu/payroll/payrollapp/csv1'
-    
     if file_exists == True:
      
       shutil.rmtree(directory_path, ignore_errors=True)
       shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/csv1")
     else:
      
-      # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv", "/home/nirmla/Desktop/payroll/csv")
+      # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv", "/home/ubuntu/payroll/payrollapp/csv1")
       shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/csv1")
 
   except Exception as e:

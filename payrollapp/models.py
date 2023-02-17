@@ -69,6 +69,7 @@ class Providers(models.Model):
   week3=models.BooleanField(default=False)
   week4=models.BooleanField(default=False)
   insert_status=models.BooleanField(default=False)
+  csv=models.CharField(blank=True,null=True,max_length=255)
 
 
 

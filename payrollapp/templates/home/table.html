@@ -38,12 +38,15 @@
     {%else%}  
     <form method="POST" enctype="multipart/form-data">
      {% csrf_token %}
-
+     
     <input type= 'file' name="image" style="width: 50%;" >
     <button type="submit" class="sbtn btn btn-secondary btn-c" onclick="spinner()" name="manual"> Manual Data</button>
+    <button type="submit" class="sbtn btn btn-secondary btn-c" onclick="spinner()" name="due">Insert Data</button>
     </form>
     <a  href="{% url 'update' %}"class="sbtn btn btn-secondary btn-c" onclick="spinner()"style="margin-left: -59px;">Update Data</a  >
-    {%endif%}
+    
+      
+      {%endif%}
  
 </div>
 <!-- Ajax Sourced Server-side -->

@@ -10,24 +10,53 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.service import Service
 import numpy
+from django.http import FileResponse
+import os
+import datetime
+
+from django.shortcuts import HttpResponse
 
 
+#get latest download file
+def get_latest_download_file(folder_path):
+    files = os.listdir(folder_path)
+    files = [os.path.join(folder_path, f) for f in files]
+    files = [(f, os.path.getmtime(f)) for f in files]
+    files = sorted(files, key=lambda x: -x[1])
+    if files:
+        return files[0][0]
+    else:
+        return None
 
-  
+
 # function to insert data
 @login_required 
 def due_table(request):
+    folder_path = r'/home/nirmla/Desktop/payroll/payrollapp/csv'
+    file_path = get_latest_download_file(folder_path)
+
+    pro_obj=Providers()
+    if file_path:
+        
+        final_path=file_path.split("csv")[1]+"csv"
+        
+        
+
+
     print(datetime.date.today())
     all_obj=Providers.objects.filter(user_id=request.user.id)
     len_obj=len(all_obj) 
     if request.method =="POST" and  'due' in request.POST:
-        filename=os.getcwd()+"/payrollapp/csv/RCV_COMPRA_REGISTRO_76750936-7_202211.csv"  
+
+    
+        filename=os.getcwd()+"/payrollapp/csv" + final_path  
         
         empexceldata = pd.read_csv(filename,error_bad_lines=False,sep=r';',usecols =[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18])
         zz=empexceldata.drop_duplicates(subset='Folio', keep="first")
        
         zz.columns = empexceldata.columns.str.replace(' ', '')
         val=zz.columns
+
         
         
         
@@ -46,7 +75,7 @@ def due_table(request):
             
             date1 = datetime.datetime.strptime(str(date), date_format1)
             exp2 = datetime.datetime.strptime(str(exp), date_format1)
-            print("22222222sddsd2",type(exp2.day/4))
+            
             week2=exp2 - date1
             weeks=exp2.day/4
 
@@ -60,6 +89,8 @@ def due_table(request):
             today= a-b
             
             pro_obj=Providers()
+            pro_obj.csv=final_path
+
             pro_obj.user_id=request.user.id
             pro_obj.issue_date=d
             pro_obj.provider_name=i.RUTProveedor
@@ -186,7 +217,15 @@ def due_table(request):
 #function to updade data
 vals=[]
 def update(request):
-    filename=os.getcwd()+"/payrollapp/csv/RCV_COMPRA_REGISTRO_76750936-7_202211.csv"              
+    z=Providers.objects.filter(user_id=request.user.id).exists()
+    print("=================",z)
+    
+    folder_path = r'/home/nirmla/Desktop/payroll/payrollapp/csv'
+    file_path = get_latest_download_file(folder_path)
+    if file_path:
+        
+        final_path=file_path.split("csv")[1]+"csv"
+    filename=os.getcwd()+"/payrollapp/csv" +final_path              
     empexceldata = pd.read_csv(filename,error_bad_lines=False,sep=r';',usecols =[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18])
     dup=empexceldata.drop_duplicates(subset='Folio', keep="first")
        
@@ -210,7 +249,7 @@ def update(request):
         a = datetime.datetime.strptime(str(datetime.datetime.now().date()), date_format)
         b = datetime.datetime.strptime(str(d), date_format)
         today= a-b      
-        Providers.objects.filter(id=ids[count]).update(user_id=request.user.id,days_overdue=today.days,issue_date=d,provider_name=i.RUTProveedor,invoice=i.Folio,expiration_date=exp,payment_week=4,month_of_payment=months,year_of_payment=years,business_name=i.RazonSocial,year=years,month=months,balance_payable=0,payment_policy=30)
+        Providers.objects.filter(id=ids[count]).update(user_id=request.user.id,days_overdue=today.days,issue_date=d,provider_name=i.RUTProveedor,invoice=i.Folio,expiration_date=exp,payment_week=4,month_of_payment=months,year_of_payment=years,business_name=i.RazonSocial,year=years,month=months,balance_payable=0,payment_policy=30,csv=final_path)
         count +=1
     return redirect("due")
 
