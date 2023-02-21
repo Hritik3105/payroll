@@ -30,7 +30,7 @@ DEBUG = True
 
 # ALLOWED_HOSTS =[]
 
-ALLOWED_HOSTS =['52.90.37.50']
+ALLOWED_HOSTS =['3.229.37.79']
 
 
 # Application definition
