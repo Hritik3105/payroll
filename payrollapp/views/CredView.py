@@ -110,7 +110,8 @@ def sii(request,siiusernae,password,month,year):
     driver.find_element(By.XPATH,"//button[text()='Descargar Detalles']").click()
     time.sleep(3)
     file_name = driver.current_url
-    print("345467",file_name)
+    print("file_name")
+    print("345467sss",file_name)
     
 
    
