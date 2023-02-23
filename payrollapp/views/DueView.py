@@ -33,11 +33,11 @@ def get_latest_download_file(folder_path):
 def due_table(request):
 
     
-    #if os.path.exists("/home/ubuntu/payroll/payrollapp/"+request.user.username): 
-    if os.path.exists("/home/nirmla/Desktop/payroll/payrollapp/"+request.user.username): 
+    if os.path.exists("/home/ubuntu/payroll/payrollapp/"+request.user.username): 
+    # if os.path.exists("/home/nirmla/Desktop/payroll/payrollapp/"+request.user.username): 
         print("Enter")   
-        # folder_path = r'/home/ubuntu/payroll/payrollapp/csv1'
-        folder_path = '/home/nirmla/Desktop/payroll/payrollapp/'+request.user.username
+        folder_path = r'/home/ubuntu/payroll/payrollapp/'+request.user.username
+        # folder_path = '/home/nirmla/Desktop/payroll/payrollapp/'+request.user.username
         file_path = get_latest_download_file(folder_path)
 
     
