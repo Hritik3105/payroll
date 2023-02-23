@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,HttpResponse
 from django.contrib.auth.decorators import login_required
 from payrollapp.models import *
 import os
@@ -14,6 +14,8 @@ from django.contrib import messages
 import shutil
 from os.path import exists
 import pathlib
+import requests
+
 
 
 
@@ -71,7 +73,7 @@ def sii(request,siiusernae,password,month,year):
 
     options.add_argument('--headless=chrome')
     options.add_argument('--disable-gpu')  
-    # prefs = {"download.default_directory" : "home/ubuntu/downloads"}
+    # prefs = {"download.default_directory" : "/home/nirmla/Desktop/payroll/payrollapp/csv"}
     # options.add_experimental_option("prefs",prefs)
 
                                   
@@ -111,21 +113,24 @@ def sii(request,siiusernae,password,month,year):
     messages.success(request,"CSV Downloaded Successfull",extra_tags="company")
     time.sleep(10)
     file_exists = exists("/home/ubuntu/payroll/payrollapp/csv1")
+    # file_exists = exists("/home/nirmla/Desktop/payroll/payrollapp/"+request.user.username)
     
  
-    # directory_path=r'/home/ubuntu/payroll/payrollapp/csv1'
-    directory_path=r'/home/ubuntu/payroll/payrollapp/csv1'
+    # directory_path="/home/nirmla/Desktop/payroll/payrollapp/"+request.user.username
+    directory_path=r'/home/ubuntu/payroll/payrollapp/'+request.user.username
     
     if file_exists == True:
       print("true")
       shutil.rmtree(directory_path, ignore_errors=True)
       shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/csv1")
+      # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv", "/home/nirmla/Desktop/payroll/payrollapp/"+request.user.username)
     else:
       print("hello")
-      # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv", "/home/ubuntu/payroll/payrollapp/csv1")
+      # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv", "/home/nirmla/Desktop/payroll/payrollapp/"+request.user.username)
       shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/csv1")
 
   except Exception as e:
     
     messages.success(request,e,extra_tags="fraud")
     
+

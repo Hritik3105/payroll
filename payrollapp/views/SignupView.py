@@ -4,12 +4,26 @@ from django.contrib import messages
 from payrollapp.forms.Loginform import *
 from payrollapp.forms.Signupform import *
 from django.contrib.auth.decorators import login_required
+import os
 
 
 #function to show home page
 @login_required 
 def home(request):
-    return render(request,"home/index.html")
+    z=os.path.exists("/home/ubuntu/payroll/payrollapp/"+request.user.username)
+  
+    if z == True:
+        return render(request,"home/index.html") 
+
+    else:
+        
+        directory = request.user.username
+        parent_dir = "/home/ubuntu/payroll/payrollapp/"
+        path = os.path.join(parent_dir, directory)
+        os.mkdir(path)
+
+        return render(request,"home/index.html")
+    
 
 
 

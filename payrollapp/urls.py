@@ -74,4 +74,6 @@ urlpatterns = [
     path("res_value",PayrollView.data_reschedule, name ="res_value"),
 
     path("change",PayrollView.rem_amt1, name ="change"),
+
+
 ]
