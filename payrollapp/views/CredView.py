@@ -109,13 +109,11 @@ def sii(request,siiusernae,password,month,year):
 
     driver.find_element(By.XPATH,"//button[text()='Descargar Detalles']").click()
     time.sleep(3)
-    download_location = driver.execute_script('return window.navigator.userAgent')
+    file_name = driver.current_url.split("/")[-1]
+    print("345467",file_name)
     
 
-    save_button = driver.find_element(By.XPATH,"//button[text()='Descargar Detalles']")
-    filename = 'new_filename.csv'   
-    save_button.send_keys("/home/ubuntu/Downloads" + '\\' + filename)
-
+   
     messages.success(request,"CSV Downloaded Successfull",extra_tags="company")
     time.sleep(10)
 
