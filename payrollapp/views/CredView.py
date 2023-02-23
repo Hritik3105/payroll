@@ -109,9 +109,14 @@ def sii(request,siiusernae,password,month,year):
 
     driver.find_element(By.XPATH,"//button[text()='Descargar Detalles']").click()
     time.sleep(3)
+
+    downloaded_file_name = "filename.csv"
+    downloaded_file_path = os.path.join("/home/ubuntu/Downloads/", downloaded_file_name)
     
     messages.success(request,"CSV Downloaded Successfull",extra_tags="company")
     time.sleep(10)
+
+
     file_exists = exists("/home/ubuntu/payroll/payrollapp/"+request.user.username)
     # file_exists = exists("/home/nirmla/Desktop/payroll/payrollapp/"+request.user.username)
     
