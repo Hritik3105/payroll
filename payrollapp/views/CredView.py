@@ -68,7 +68,7 @@ def sii(request,siiusernae,password,month,year):
   
   try:
 
-    # z='/home/nirmla/Desktop/payroll/payrollapp/csv'
+    
     options = webdriver.ChromeOptions()
     # download_dir = "/home/nirmla/Desktop/payroll/payrollapp/csv1"
     
@@ -118,11 +118,11 @@ def sii(request,siiusernae,password,month,year):
     time.sleep(3)
 
     driver.find_element(By.XPATH,"//button[text()='Descargar Detalles']").click()
-    time.sleep(3)
+    time.sleep(6)
 
     
     messages.success(request,"CSV Downloaded Successfull",extra_tags="company")
-    time.sleep(10)
+    time.sleep(12)
 
 
     file_exists = exists("/home/ubuntu/payroll/payrollapp/"+request.user.username)
