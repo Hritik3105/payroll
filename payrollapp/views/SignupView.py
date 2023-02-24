@@ -11,14 +11,16 @@ import os
 @login_required 
 def home(request):
     z=os.path.exists("/home/ubuntu/payroll/payrollapp/"+request.user.username)
-  
+    # z=os.path.exists("/home/nirmla/Desktop/payroll/payrollapp/"+request.user.username)
+ 
     if z == True:
         return render(request,"home/index.html") 
 
     else:
         
         directory = request.user.username
-        parent_dir = "/home/ubuntu/payroll/payrollapp/"
+        # parent_dir = "/home/ubuntu/payroll/payrollapp/"
+        parent_dir = "/home/nirmla/Desktop/payroll/payrollapp"
         path = os.path.join(parent_dir, directory)
         os.mkdir(path)
 

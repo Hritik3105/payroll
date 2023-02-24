@@ -67,14 +67,24 @@ def credential(request):
 def sii(request,siiusernae,password,month,year):
   
   try:
+
     # z='/home/nirmla/Desktop/payroll/payrollapp/csv'
     options = webdriver.ChromeOptions()
+    # download_dir = "/home/nirmla/Desktop/payroll/payrollapp/csv1"
+    
 
 
-    options.add_argument('--headless=chrome')
+    options.add_argument('--headless')
     options.add_argument('--disable-gpu')  
-    # prefs = {"download.default_directory" : "/home/nirmla/Desktop/payroll/payrollapp/csv"}
-    # options.add_experimental_option("prefs",prefs)
+  
+    options.add_argument("--no-sandbox") 
+ 
+    # options.add_experimental_option("prefs", {
+    # "download.default_directory": download_dir,
+    #  "download.prompt_for_download": False,
+    
+# })
+
 
                                   
     
@@ -94,7 +104,7 @@ def sii(request,siiusernae,password,month,year):
     driver.find_element(By.ID,"bt_ingresar").click()
 
     driver.get('https://www4.sii.cl/consdcvinternetui/#/index')
-    time.sleep(8)
+    time.sleep(10)
 
     dropdown1 = Select(driver.find_element(By.ID,'periodoMes'))
     dropdown1.select_by_visible_text(month)
@@ -109,31 +119,27 @@ def sii(request,siiusernae,password,month,year):
 
     driver.find_element(By.XPATH,"//button[text()='Descargar Detalles']").click()
     time.sleep(3)
-    file_name = driver.current_url
-    print("file_name")
-    print("345467sss",file_name)
-    
 
-   
+    
     messages.success(request,"CSV Downloaded Successfull",extra_tags="company")
     time.sleep(10)
 
 
     file_exists = exists("/home/ubuntu/payroll/payrollapp/"+request.user.username)
-    # file_exists = exists("/home/nirmla/Desktop/payroll/payrollapp/"+request.user.username)
+    # file_exists = exists("/home/nirmla/Desktop/payroll/payrollapp/csv1")
     
  
-    # directory_path="/home/nirmla/Desktop/payroll/payrollapp/"+request.user.username
+    # directory_path="/home/nirmla/Desktop/payroll/payrollapp/csv1"
     directory_path=r'/home/ubuntu/payroll/payrollapp/'+request.user.username
     
     if file_exists == True:
-      print("true")
+    
       shutil.rmtree(directory_path, ignore_errors=True)
       shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/"+request.user.username)
-      # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv", "/home/nirmla/Desktop/payroll/payrollapp/"+request.user.username)
+      # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv1", "/home/nirmla/Desktop/payroll/payrollapp/csv1")
     else:
-      print("hello")
-      # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv", "/home/nirmla/Desktop/payroll/payrollapp/"+request.user.username)
+    
+      # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv1", "/home/nirmla/Desktop/payroll/payrollapp/"+request.user.username)
       shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/"+request.user.username)
 
   except Exception as e:
