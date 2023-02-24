@@ -19,8 +19,8 @@ def home(request):
     else:
         
         directory = request.user.username
-        # parent_dir = "/home/ubuntu/payroll/payrollapp/"
-        parent_dir = "/home/nirmla/Desktop/payroll/payrollapp"
+        parent_dir = "/home/ubuntu/payroll/payrollapp/"
+        # parent_dir = "/home/nirmla/Desktop/payroll/payrollapp"
         path = os.path.join(parent_dir, directory)
         os.mkdir(path)
 
