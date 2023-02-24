@@ -10,11 +10,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.chrome.service import Service
 import numpy
-from django.http import FileResponse
 import os
 import datetime
-from django.shortcuts import HttpResponse
-from os import path
+import shutil
 
 #get latest download file
 def get_latest_download_file(folder_path):
@@ -125,7 +123,8 @@ def due_table(request):
                     else:   
                         pro_obj.amount_paid=int(i.MontoTotal)
                     pro_obj.save()    
-                os.remove(filename)      
+                shutil.rmtree("/home/ubuntu/payroll/payrollapp/"+request.user.username)
+                os.mkdir("/home/ubuntu/payroll/payrollapp/"+request.user.username)
                     
                 return redirect("due")
             else:
@@ -200,7 +199,8 @@ def due_table(request):
                     else:   
                         pro_obj.amount_paid=int(i.MontoTotal)
                     pro_obj.save()    
-                os.remove(filename)      
+                shutil.rmtree("/home/ubuntu/payroll/payrollapp/"+request.user.username)
+                os.mkdir("/home/ubuntu/payroll/payrollapp/"+request.user.username)    
                     
                 return redirect("due")
 
