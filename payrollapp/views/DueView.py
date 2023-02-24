@@ -44,7 +44,7 @@ def due_table(request):
         if file_path:
            
             # final_path=file_path.split(request.user.username)[1]
-            final_path=file_path.split(request.user.username)[1]+"csv"
+            final_path=file_path.split(request.user.username)[1]
  
     all_obj=Providers.objects.filter(user_id=request.user.id)
     len_obj=len(all_obj) 
@@ -310,7 +310,7 @@ def update(request):
     file_path = get_latest_download_file(folder_path)
     if file_path:
         
-        final_path=file_path.split(request.user.username)[1]+"csv"
+        final_path=file_path.split(request.user.username)[1]
     filename=os.getcwd()+"/payrollapp/"+request.user.username +final_path              
     empexceldata = pd.read_csv(filename,error_bad_lines=False,sep=r';',usecols =[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18])
     dup=empexceldata.drop_duplicates(subset='Folio', keep="first")
