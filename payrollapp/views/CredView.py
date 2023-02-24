@@ -41,6 +41,7 @@ def calculate():
 def credential(request):
     val=calculate()
     user_obj=User.objects.get(id =request.user.id)
+   
     
     obj_pro=Providers.objects.filter(user_id=request.user.id)
     if request.method == "POST":
@@ -48,15 +49,61 @@ def credential(request):
       siusername=request.POST.get("siiusername")
       username=request.POST.get("username")
       password=request.POST.get("password")  
-      
+      enddate=request.POST.get("year")
       startdate=request.POST.get("month")
+      
+    
      
-      enddate=request.POST.get("year")  
-     
+      if startdate == "Enero":
+        startdate1 = "01"
+
+      if startdate == "Febrero":
+        startdate1 = "02"
+
+      if startdate == "Marzo":
+        startdate1 = "03"
+
+      if startdate == "Abril":
+        startdate1 = "04"
+
+      if startdate == "Mayo":
+        startdate1 = "05"
+
+      if startdate == "Junio":
+        startdate1 = "06"
+
+      if startdate == "Julio":
+        startdate1= "07"
+
+      if startdate == "Agosto":
+        startdate1 = "08"
+
+      if startdate == "Septiembre":
+        startdate1 = "09"
+
+      if startdate == "Octubre":
+        startdate1 = "10"
+
+      if startdate == "Noviembre":
+        startdate1 = "11"
+
+      if startdate == "Diciembre":
+        startdate1 = "12"
+
+      today = datetime.datetime.now()
         
-      user_upd=User.objects.filter(id =request.user.id).update(siiusername=siusername,siipassword=password,month=startdate,year=enddate,username=username)
-      sii(request,siusername,password,startdate,enddate)
-      return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val,"val_yr":enddate,"month":startdate})
+      month1 = today.strftime("%m")
+      if int(month1) > int(startdate1):
+        messages.success(request,"Month is closed", extra_tags='suggest_upgrade')
+        print("enter")
+        return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val,"val_yr":enddate,"month":startdate})
+      else:
+  
+     
+      
+        user_upd=User.objects.filter(id =request.user.id).update(siiusername=siusername,siipassword=password,month=startdate,year=enddate,username=username)
+        sii(request,siusername,password,startdate,enddate)
+        return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val,"val_yr":enddate,"month":startdate})
 
     return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val})
 

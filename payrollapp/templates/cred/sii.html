@@ -14,8 +14,20 @@ p.comp {
 }
 </style>
  <h1 class="credential_heading ">SII Credential</h1>
+
 <div class="container">
     <div class="row share_info">
+        <div class="col-md-12 ">
+        {% for message in messages %}
+
+        {% if 'suggest_upgrade' in message.extra_tags %}
+        <p class ="new"><strong>{{message}}</strong> </p>  
+       
+        {% endif %}
+    
+    {% endfor %}
+    
+        </div>
         <div class="col-md-12 ">
         {%for message in messages %}
         {%if "company" in message.tags %}
@@ -52,7 +64,7 @@ p.comp {
                                 <div class="input-group date" id="datepicker">
                                     <select class="form-control ng-pristine ng-not-empty ng-valid ng-valid-required ng-touched" id="periodoMes" ng-model="periodoMes" required="" name="month">
                                     <option value="">Mes</option><!-- ngRepeat: mes in meses -->
-                                    <option value="Enero" class="ng-binding ng-scope"  {% if month == "Enero" %} selected {%else %} {%endif%}>Enero</option>
+                                    <option value="Enero" class="ng-binding ng-scope"  {% if month == "Enero"  %}  selected {%else %} {%endif%}>Enero</option>
                                     <option  value="Febrero" class="ng-binding ng-scope"  {% if month == "Febrero" %} selected {%else %} {%endif%}>Febrero</option>
                                     <option  value="Marzo" class="ng-binding ng-scope"  {% if month == "Marzo" %} selected {%else %} {%endif%}>Marzo</option>
                                     <option  value="Abril" class="ng-binding ng-scope"  {% if month == "Abril" %} selected {%else %} {%endif%}>Abril</option>

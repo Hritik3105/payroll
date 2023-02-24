@@ -10,8 +10,14 @@ import os
 #function to show home page
 @login_required 
 def home(request):
-    z=os.path.exists("/home/ubuntu/payroll/payrollapp/"+request.user.username)
-    # z=os.path.exists("/home/nirmla/Desktop/payroll/payrollapp/"+request.user.username)
+    from datetime import datetime
+  
+    today = datetime.now()
+        
+    month1 = today.strftime("%b")
+    print("Current Month Full Name:", month1)
+    # z=os.path.exists("/home/ubuntu/payroll/payrollapp/"+request.user.username)
+    z=os.path.exists("/home/nirmla/Desktop/payroll/payrollapp/"+request.user.username)
  
     if z == True:
         return render(request,"home/index.html") 
