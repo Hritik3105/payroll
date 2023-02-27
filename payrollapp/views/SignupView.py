@@ -14,7 +14,7 @@ def home(request):
   
 
     z=os.path.exists("/home/ubuntu/payroll/payrollapp/"+request.user.username)
-    # z=os.path.exists("/home/nirmla/Desktop/payroll/payrollapp/"+request.user.username)
+    # z=os.path.exists("/home/nirmla/Desktop/payroll/payrollapp/csv1")
  
     if z == True:
         return render(request,"home/index.html") 

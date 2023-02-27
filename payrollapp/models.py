@@ -70,6 +70,9 @@ class Providers(models.Model):
   week4=models.BooleanField(default=False)
   insert_status=models.BooleanField(default=False)
   csv=models.CharField(blank=True,null=True,max_length=255)
+  created_at = models.DateField(auto_now_add=True,null=True)
+  updated_at =  models.DateField(auto_now=True)
+  is_closed=models.BooleanField(default=False)
 
 
 

@@ -13,6 +13,11 @@ import datetime
 from django.contrib import messages
 import shutil
 from os.path import exists
+from dateutil.relativedelta import relativedelta
+
+
+
+
 
 
 
@@ -41,8 +46,23 @@ def calculate():
 def credential(request):
     val=calculate()
     user_obj=User.objects.get(id =request.user.id)
-   
+    # input_dt = datetime.datetime(2022, 9, 13)
+    # print('Input date:', input_dt.date())
+
+  
+    # next_month = input_dt.replace(day=28) + datetime.timedelta(days=4)
+
+ 
+    # next_month = next_month.replace(day=28) +datetime.timedelta(days=4)
+
+    # res = next_month - datetime.timedelta(days=next_month.day)
+    # print('Last day of the next month:', res.date())
+
+
+    updated_date=Providers.objects.filter(user_id=request.user.id).values_list("csv",flat=True)
     
+    
+  
     obj_pro=Providers.objects.filter(user_id=request.user.id)
     if request.method == "POST":
        
@@ -52,7 +72,7 @@ def credential(request):
       enddate=request.POST.get("year")
       startdate=request.POST.get("month")
       
-    
+
      
       if startdate == "Enero":
         startdate1 = "01"
@@ -93,10 +113,45 @@ def credential(request):
       today = datetime.datetime.now()
         
       month1 = today.strftime("%m")
-      if int(month1) > int(startdate1):
-        messages.success(request,"Month is closed", extra_tags='suggest_upgrade')
-        print("enter")
-        return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val,"val_yr":enddate,"month":startdate})
+      print("----------------",(month1,startdate1))
+      if "csv_pth"  in request.session:
+
+        get_csv=request.session["csv_pth"]
+        updated_date=Providers.objects.filter(user_id=request.user.id,csv=get_csv).values_list("created_at",flat=True)
+        if updated_date:
+          
+          res = updated_date[0] + relativedelta(day=31)
+          print("-----------",int(startdate1))
+         
+          # if "2023-03-01" != "2023-03-31" and  int(startdate1) > 3:
+          last=str(updated_date[0]).split("-")
+          valss=int(last[1])
+          print(valss+1)
+          print("---------------",updated_date[0])
+          if str(updated_date[0]) != str(res) and 3 == valss+1:
+            
+
+            messages.success(request,"You must update Previuos month to continue", extra_tags='suggest_upgrade')
+            return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val,"val_yr":enddate,"month":startdate})
+          elif str(updated_date[0]) == str(res):
+            updated_date2=Providers.objects.filter(user_id=request.user.id,csv=get_csv).update(is_closed=True)
+            messages.success(request,"Month closed", extra_tags='suggest_upgrade')
+          else:
+        
+            user_upd=User.objects.filter(id =request.user.id).update(siiusername=siusername,siipassword=password,month=startdate,year=enddate,username=username)
+            sii(request,siusername,password,startdate,enddate)
+            return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val,"val_yr":enddate,"month":startdate})
+        else:
+          user_upd=User.objects.filter(id =request.user.id).update(siiusername=siusername,siipassword=password,month=startdate,year=enddate,username=username)
+          sii(request,siusername,password,startdate,enddate)
+          return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val,"val_yr":enddate,"month":startdate})
+
+
+
+      # if int(month1) > int(startdate1):
+      #   messages.success(request,"you must update to continue", extra_tags='suggest_upgrade')
+ 
+      #   return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val,"val_yr":enddate,"month":startdate})
       else:
   
      
@@ -120,10 +175,12 @@ def sii(request,siiusernae,password,month,year):
     # download_dir = "/home/nirmla/Desktop/payroll/payrollapp/csv1"
     
 
-
-    options.add_argument('--headless=chrome')
     
-
+    paths='/home/nirmla/Desktop/payroll/payrollapp/csv1'
+    # options.add_argument('--headless=chrome')
+    
+    prefs = {"download.default_directory" : paths}
+    options.add_experimental_option("prefs",prefs)
     
     serv_obj = Service()
     driver = webdriver.Chrome(options=options,service = serv_obj)
@@ -162,22 +219,22 @@ def sii(request,siiusernae,password,month,year):
     time.sleep(10)
 
 
-    file_exists = exists("/home/ubuntu/payroll/payrollapp/"+request.user.username)
-    # # file_exists = exists("/home/nirmla/Desktop/payroll/payrollapp/csv1")
+    # file_exists = exists("/home/ubuntu/payroll/payrollapp/"+request.user.username)
+    # # # file_exists = exists("/home/nirmla/Desktop/payroll/payrollapp/csv1")
     
  
-    # # directory_path="/home/nirmla/Desktop/payroll/payrollapp/csv1"
-    directory_path=r'/home/ubuntu/payroll/payrollapp/'+request.user.username
+    # # # directory_path="/home/nirmla/Desktop/payroll/payrollapp/csv1"
+    # directory_path=r'/home/ubuntu/payroll/payrollapp/'+request.user.username
     
-    if file_exists == True:
+    # if file_exists == True:
     
-      shutil.rmtree(directory_path, ignore_errors=True)
-      shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/"+request.user.username)
-      # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv1", "/home/nirmla/Desktop/payroll/payrollapp/csv1")
-    else:
+    #   shutil.rmtree(directory_path, ignore_errors=True)
+    #   shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/"+request.user.username)
+    #   # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv1", "/home/nirmla/Desktop/payroll/payrollapp/csv1")
+    # else:
     
-      # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv1", "/home/nirmla/Desktop/payroll/payrollapp/"+request.user.username)
-      shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/"+request.user.username)
+    #   # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv1", "/home/nirmla/Desktop/payroll/payrollapp/"+request.user.username)
+    #   shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/"+request.user.username)
 
   except Exception as e:
     
