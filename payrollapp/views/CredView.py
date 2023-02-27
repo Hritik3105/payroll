@@ -172,15 +172,16 @@ def sii(request,siiusernae,password,month,year):
 
     
     options = webdriver.ChromeOptions()
-    # download_dir = "/home/nirmla/Desktop/payroll/payrollapp/csv1"
+    #download_dir = "/home/nirmla/Desktop/payroll/payrollapp/csv1"
     
 
     
-    paths='/home/nirmla/Desktop/payroll/payrollapp/csv1'
+    # paths='/home/nirmla/Desktop/payroll/payrollapp/csv1'
     # options.add_argument('--headless=chrome')
     
-    prefs = {"download.default_directory" : paths}
-    options.add_experimental_option("prefs",prefs)
+    
+    # prefs = {"download.default_directory" : paths}
+    # options.add_experimental_option("prefs",prefs)
     
     serv_obj = Service()
     driver = webdriver.Chrome(options=options,service = serv_obj)
@@ -219,22 +220,22 @@ def sii(request,siiusernae,password,month,year):
     time.sleep(10)
 
 
-    # file_exists = exists("/home/ubuntu/payroll/payrollapp/"+request.user.username)
-    # # # file_exists = exists("/home/nirmla/Desktop/payroll/payrollapp/csv1")
+    file_exists = exists("/home/ubuntu/payroll/payrollapp/"+request.user.username)
+    # # file_exists = exists("/home/nirmla/Desktop/payroll/payrollapp/csv1")
     
  
-    # # # directory_path="/home/nirmla/Desktop/payroll/payrollapp/csv1"
-    # directory_path=r'/home/ubuntu/payroll/payrollapp/'+request.user.username
+    # # directory_path="/home/nirmla/Desktop/payroll/payrollapp/csv1"
+    directory_path=r'/home/ubuntu/payroll/payrollapp/'+request.user.username
     
-    # if file_exists == True:
+    if file_exists == True:
     
-    #   shutil.rmtree(directory_path, ignore_errors=True)
-    #   shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/"+request.user.username)
-    #   # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv1", "/home/nirmla/Desktop/payroll/payrollapp/csv1")
-    # else:
+      shutil.rmtree(directory_path, ignore_errors=True)
+      shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/"+request.user.username)
+      # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv1", "/home/nirmla/Desktop/payroll/payrollapp/csv1")
+    else:
     
-    #   # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv1", "/home/nirmla/Desktop/payroll/payrollapp/"+request.user.username)
-    #   shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/"+request.user.username)
+      # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv1", "/home/nirmla/Desktop/payroll/payrollapp/"+request.user.username)
+      shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/"+request.user.username)
 
   except Exception as e:
     
