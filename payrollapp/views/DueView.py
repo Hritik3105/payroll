@@ -42,6 +42,7 @@ def due_table(request):
         if file_path:
            
             final_path=file_path.split(request.user.username)[1]
+            
             request.session["csv_pth"]=final_path
             print("sdd",request.session["csv_pth"])
             final_path=file_path.split(request.user.username)[1]
@@ -58,7 +59,7 @@ def due_table(request):
             print("-----------",chng)
             print("-----------",type(final_path))
             for i in chng:
-                print(type(i))
+                print(i)
                 if final_path not in i:
                     
             # if final_path  not in chng :
