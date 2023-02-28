@@ -56,12 +56,13 @@ def due_table(request):
             
             chng=Providers.objects.filter(user_id=request.user.id).values_list("csv",flat=True)
             print("-----------",chng)
-            print("-----------",final_path)
+            print("-----------",type(final_path))
             for i in chng:
+                print(type(i))
                 if final_path not in i:
                     
             # if final_path  not in chng :
-            
+                    print("----------------------------------------------------------------------------")    
                     empexceldata = pd.read_csv(filename,error_bad_lines=False,sep=r';',usecols =[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18])
                     zz=empexceldata.drop_duplicates(subset='Folio', keep="first")
                 
@@ -135,7 +136,7 @@ def due_table(request):
                         
                     return redirect("due")
             else:
-                print("enterrttr")
+                print("********************************************************************************************")
                 Providers.objects.filter(user_id=request.user.id,csv=final_path).delete()
                 empexceldata = pd.read_csv(filename,error_bad_lines=False,sep=r';',usecols =[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18])
                 zz=empexceldata.drop_duplicates(subset='Folio', keep="first")
