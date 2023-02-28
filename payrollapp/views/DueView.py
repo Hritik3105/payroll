@@ -58,7 +58,7 @@ def due_table(request):
             chng=Providers.objects.filter(user_id=request.user.id).values_list("csv",flat=True)
             print("-----------",chng)
             print("-----------",final_path)
-            x=final_path.split(" ")
+            x=final_path.split(" ")[0]
             lst=[]
             for i in chng:
                 z=i.split(" ")
