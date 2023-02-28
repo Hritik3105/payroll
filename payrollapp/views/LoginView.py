@@ -4,9 +4,10 @@ from django.shortcuts import render,redirect
 from django.contrib import messages
 from payrollapp.forms.Loginform import *
 from django.contrib import auth
-
+from payrollapp.views.helper import *
 
 #function for login user
+@guest_user
 def user_login(request):
   
   if request.method == "POST":
@@ -26,6 +27,9 @@ def user_login(request):
     else:
       return render(request,"user/login.html",{'form':form})
   form = LoginForm()
+ 
+  # if request.user.id  != None:
+  #    return redirect("home")   
   return render(request, "user/login.html",{"form":form})    
 
 

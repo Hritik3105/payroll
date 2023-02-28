@@ -16,14 +16,6 @@ from os.path import exists
 from dateutil.relativedelta import relativedelta
 
 
-
-
-
-
-
-
-
-
 #Function used to get year
 def calculate():
     lst=[]
@@ -113,7 +105,7 @@ def credential(request):
       today = datetime.datetime.now()
         
       month1 = today.strftime("%m")
-      print("----------------",(month1,startdate1))
+    
       if "csv_pth"  in request.session:
 
         get_csv=request.session["csv_pth"]
@@ -128,12 +120,13 @@ def credential(request):
           valss=int(last[1])
           print(valss+1)
           print("---------------",updated_date[0])
-          if str(updated_date[0]) != str(res) and 3 == valss+1:
-            
+          if str(updated_date[0]) != str(res) and int(month1) == valss+1:
+
 
             messages.success(request,"You must update Previuos month to continue", extra_tags='suggest_upgrade')
             return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val,"val_yr":enddate,"month":startdate})
-          elif str(updated_date[0]) == str(res):
+          elif str(updated_date[0]) == str(res) and int(startdate1) < valss:
+
             updated_date2=Providers.objects.filter(user_id=request.user.id,csv=get_csv).update(is_closed=True)
             messages.success(request,"Month closed", extra_tags='suggest_upgrade')
           else:
@@ -177,7 +170,7 @@ def sii(request,siiusernae,password,month,year):
 
     
     # paths='/home/nirmla/Desktop/payroll/payrollapp/csv1'
-    # options.add_argument('--headless=chrome')
+    options.add_argument('--headless=chrome')
     
     
     # prefs = {"download.default_directory" : paths}
@@ -217,7 +210,7 @@ def sii(request,siiusernae,password,month,year):
 
     
     messages.success(request,"CSV Downloaded Successfull",extra_tags="company")
-    time.sleep(10)
+    time.sleep(8)
 
 
     file_exists = exists("/home/ubuntu/payroll/payrollapp/"+request.user.username)

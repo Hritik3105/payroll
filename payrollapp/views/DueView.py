@@ -44,15 +44,15 @@ def due_table(request):
             final_path=file_path.split("csv1")[1]
             request.session["csv_pth"]=final_path
             print("sdd",request.session["csv_pth"])
-            # final_path=file_path.split(request.user.username)[1]
+            final_path=file_path.split(request.user.username)[1]
  
     all_obj=Providers.objects.filter(user_id=request.user.id)
     len_obj=len(all_obj) 
     if final_path:
         if request.method =="POST" and  'due' in request.POST:
         
-            # filename=os.getcwd()+"/payrollapp/" +request.user.username + final_path
-            filename=os.getcwd()+"/payrollapp/csv1"  + final_path 
+            filename=os.getcwd()+"/payrollapp/" +request.user.username + final_path
+            # filename=os.getcwd()+"/payrollapp/csv1"  + final_path 
             
             chng=Providers.objects.filter(user_id=request.user.id).values_list("csv",flat=True)
             if final_path  not in chng :
@@ -202,7 +202,7 @@ def due_table(request):
                         pro_obj.amount_paid=int(i.MontoTotal)
                     pro_obj.save()    
                 shutil.rmtree("/home/ubuntu/payroll/payrollapp/"+request.user.username)
-                ssos.mkdir("/home/ubuntu/payroll/payrollapp/"+request.user.username)    
+                os.mkdir("/home/ubuntu/payroll/payrollapp/"+request.user.username)    
                     
                 return redirect("due")
 
