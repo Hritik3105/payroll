@@ -42,8 +42,9 @@ def due_table(request):
         if file_path:
            
             final_path=file_path.split(request.user.username)[1]
+            updt=final_path.split(" ")[0]
+            request.session["csv_pth"]=updt
             
-            request.session["csv_pth"]=final_path
             print("sdd",request.session["csv_pth"])
             final_path=file_path.split(request.user.username)[1]
  
