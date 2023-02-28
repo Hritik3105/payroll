@@ -99,7 +99,7 @@ def due_table(request):
                     today= a-b
                     
                     pro_obj=Providers()
-                    pro_obj.csv=final_path
+                    pro_obj.csv=x
 
                     pro_obj.user_id=request.user.id
                     pro_obj.issue_date=d
@@ -175,7 +175,7 @@ def due_table(request):
                     today= a-b
                     
                     pro_obj=Providers()
-                    pro_obj.csv=final_path
+                    pro_obj.csv=x
 
                     pro_obj.user_id=request.user.id
                     pro_obj.issue_date=d
