@@ -62,7 +62,7 @@ def due_table(request):
             for i in chng:
                 z=i.split(" ")
                 print(z)
-                lst.append(i)
+                lst.append(z[0])
             print(lst)
             if final_path  not in lst :
                 print("----------------------------------------------------------------------------")    
