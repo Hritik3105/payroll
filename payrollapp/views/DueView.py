@@ -59,81 +59,81 @@ def due_table(request):
             print("-----------",final_path)
             for i in chng:
                 if final_path not in i:
-                    print("hritik")
-            if final_path  not in chng :
+                    
+            # if final_path  not in chng :
             
-                empexceldata = pd.read_csv(filename,error_bad_lines=False,sep=r';',usecols =[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18])
-                zz=empexceldata.drop_duplicates(subset='Folio', keep="first")
-            
-                zz.columns = empexceldata.columns.str.replace(' ', '')
-                val=zz.columns
-
+                    empexceldata = pd.read_csv(filename,error_bad_lines=False,sep=r';',usecols =[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18])
+                    zz=empexceldata.drop_duplicates(subset='Folio', keep="first")
                 
-                for i in zz.itertuples():
-                    z=Providers.objects.filter(user_id =request.user.id)
-            
-                    
-                    total = i.FechaDocto
-                    Begindate = datetime.datetime.strptime(total,"%d/%m/%Y").strftime('%Y-%m-%d')
-                    date=pd.to_datetime(Begindate).date()
-                    exp=date+pd.Timedelta(days=30)
-                    
-                    date_format1 = "%Y-%m-%d"
-                    
-                    date1 = datetime.datetime.strptime(str(date), date_format1)
-                    exp2 = datetime.datetime.strptime(str(exp), date_format1)
-                    
-                    week2=exp2 - date1
-                    weeks=exp2.day/4
+                    zz.columns = empexceldata.columns.str.replace(' ', '')
+                    val=zz.columns
 
-                    week=exp.day/4
-                    months=pd.to_datetime(exp).month_name()
-                    years=exp.strftime('%Y')
-                    d = datetime.datetime.strptime(i.FechaDocto,"%d/%m/%Y").strftime('%Y-%m-%d')
-                    date_format = "%Y-%m-%d"
-                    a = datetime.datetime.strptime(str(datetime.datetime.now().date()), date_format)
-                    b = datetime.datetime.strptime(str(d), date_format)
-                    today= a-b
                     
-                    pro_obj=Providers()
-                    pro_obj.csv=final_path
+                    for i in zz.itertuples():
+                        z=Providers.objects.filter(user_id =request.user.id)
+                
+                        
+                        total = i.FechaDocto
+                        Begindate = datetime.datetime.strptime(total,"%d/%m/%Y").strftime('%Y-%m-%d')
+                        date=pd.to_datetime(Begindate).date()
+                        exp=date+pd.Timedelta(days=30)
+                        
+                        date_format1 = "%Y-%m-%d"
+                        
+                        date1 = datetime.datetime.strptime(str(date), date_format1)
+                        exp2 = datetime.datetime.strptime(str(exp), date_format1)
+                        
+                        week2=exp2 - date1
+                        weeks=exp2.day/4
 
-                    pro_obj.user_id=request.user.id
-                    pro_obj.issue_date=d
-                    pro_obj.provider_name=i.RUTProveedor
-                    pro_obj.invoice=i.Folio
-                    pro_obj.expiration_date=exp
-                    if exp2.day/4 >=0 and exp2.day/4 <=1.75:
-                        pro_obj.payment_week=1
-                    elif exp2.day/4 >1.75 and exp2.day/4 <= 3.75:
-                        pro_obj.payment_week=2
-                    elif exp2.day/4 > 3.75 and exp2.day/4 <=5.75:
-                        pro_obj.payment_week=3
-                    elif exp2.day/4 >5.75 and exp2.day/4 <=7.75:
-                        pro_obj.payment_week=4
-                    pro_obj.month_of_payment=months
-                    pro_obj.year_of_payment=years
-                    pro_obj.days_overdue=today.days
-                    pro_obj.business_name=i.RazonSocial    
-                    if numpy.isnan(i.MontoTotal):
-                        pro_obj.total_amount_paid=0
-                    else:   
-                        pro_obj.total_amount_paid=int(i.MontoTotal)
-                    pro_obj.week=weeks
-                    pro_obj.year=years
-                    pro_obj.month=months
-                    pro_obj.balance_payable=0
-                    pro_obj.payment_policy=30
-                    pro_obj.payment_term=30
-                    if numpy.isnan(i.MontoTotal):
-                        pro_obj.amount_paid=0
-                    else:   
-                        pro_obj.amount_paid=int(i.MontoTotal)
-                    pro_obj.save()    
-                shutil.rmtree("/home/ubuntu/payroll/payrollapp/"+request.user.username)
-                os.mkdir("/home/ubuntu/payroll/payrollapp/"+request.user.username)
-                    
-                return redirect("due")
+                        week=exp.day/4
+                        months=pd.to_datetime(exp).month_name()
+                        years=exp.strftime('%Y')
+                        d = datetime.datetime.strptime(i.FechaDocto,"%d/%m/%Y").strftime('%Y-%m-%d')
+                        date_format = "%Y-%m-%d"
+                        a = datetime.datetime.strptime(str(datetime.datetime.now().date()), date_format)
+                        b = datetime.datetime.strptime(str(d), date_format)
+                        today= a-b
+                        
+                        pro_obj=Providers()
+                        pro_obj.csv=final_path
+
+                        pro_obj.user_id=request.user.id
+                        pro_obj.issue_date=d
+                        pro_obj.provider_name=i.RUTProveedor
+                        pro_obj.invoice=i.Folio
+                        pro_obj.expiration_date=exp
+                        if exp2.day/4 >=0 and exp2.day/4 <=1.75:
+                            pro_obj.payment_week=1
+                        elif exp2.day/4 >1.75 and exp2.day/4 <= 3.75:
+                            pro_obj.payment_week=2
+                        elif exp2.day/4 > 3.75 and exp2.day/4 <=5.75:
+                            pro_obj.payment_week=3
+                        elif exp2.day/4 >5.75 and exp2.day/4 <=7.75:
+                            pro_obj.payment_week=4
+                        pro_obj.month_of_payment=months
+                        pro_obj.year_of_payment=years
+                        pro_obj.days_overdue=today.days
+                        pro_obj.business_name=i.RazonSocial    
+                        if numpy.isnan(i.MontoTotal):
+                            pro_obj.total_amount_paid=0
+                        else:   
+                            pro_obj.total_amount_paid=int(i.MontoTotal)
+                        pro_obj.week=weeks
+                        pro_obj.year=years
+                        pro_obj.month=months
+                        pro_obj.balance_payable=0
+                        pro_obj.payment_policy=30
+                        pro_obj.payment_term=30
+                        if numpy.isnan(i.MontoTotal):
+                            pro_obj.amount_paid=0
+                        else:   
+                            pro_obj.amount_paid=int(i.MontoTotal)
+                        pro_obj.save()    
+                    shutil.rmtree("/home/ubuntu/payroll/payrollapp/"+request.user.username)
+                    os.mkdir("/home/ubuntu/payroll/payrollapp/"+request.user.username)
+                        
+                    return redirect("due")
             else:
                 print("enterrttr")
                 Providers.objects.filter(user_id=request.user.id,csv=final_path).delete()
