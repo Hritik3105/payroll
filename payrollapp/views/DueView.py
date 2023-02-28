@@ -58,13 +58,14 @@ def due_table(request):
             chng=Providers.objects.filter(user_id=request.user.id).values_list("csv",flat=True)
             print("-----------",chng)
             print("-----------",final_path)
+            x=final_path.split(" ")
             lst=[]
             for i in chng:
                 z=i.split(" ")
                 print(z)
                 lst.append(z[0])
-            print(lst)
-            if final_path  not in lst :
+        
+            if x  not in lst :
                 print("----------------------------------------------------------------------------")    
                 empexceldata = pd.read_csv(filename,error_bad_lines=False,sep=r';',usecols =[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18])
                 zz=empexceldata.drop_duplicates(subset='Folio', keep="first")
