@@ -57,10 +57,11 @@ def due_table(request):
             
             chng=Providers.objects.filter(user_id=request.user.id).values_list("csv",flat=True)
             print("-----------",chng)
-            print("-----------",type(final_path))
+            print("-----------",final_path)
             lst=[]
             for i in chng:
-                
+                z=i.split(" ")
+                print(z)
                 lst.append(i)
             print(lst)
             if final_path  not in lst :
