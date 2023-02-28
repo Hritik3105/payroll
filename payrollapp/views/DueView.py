@@ -56,13 +56,11 @@ def due_table(request):
             # filename=os.getcwd()+"/payrollapp/csv1"  + final_path 
             
             chng=Providers.objects.filter(user_id=request.user.id).values_list("csv",flat=True)
-            print("-----------",chng)
-            print("-----------",final_path)
+          
             x=final_path.split(" ")[0]
             lst=[]
             for i in chng:
                 z=i.split(" ")
-                print(z)
                 lst.append(z[0])
         
             if x  not in lst :
@@ -141,7 +139,7 @@ def due_table(request):
                 return redirect("due")
             else:
                 print("********************************************************************************************")
-                Providers.objects.filter(user_id=request.user.id,csv=final_path).delete()
+                Providers.objects.filter(user_id=request.user.id,csv=x).delete()
                 empexceldata = pd.read_csv(filename,error_bad_lines=False,sep=r';',usecols =[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18])
                 zz=empexceldata.drop_duplicates(subset='Folio', keep="first")
                 
