@@ -109,7 +109,7 @@ def credential(request):
       # if "csv_pth"  in request.session:
 
        
-      updated_date=Providers.objects.filter(user_id=request.user.id,csv=pat_fnl).values_list("created_at",flat=True)
+      updated_date=Providers.objects.filter(user_id=request.user.id).values_list("created_at",flat=True)
       if updated_date:
         
         res = updated_date[0] + relativedelta(day=31)
@@ -137,7 +137,7 @@ def credential(request):
         elif curr_mon > pre_month and int(startdate1) < int(valss):
          
 
-          updated_date2=Providers.objects.filter(user_id=request.user.id,csv=pat_fnl).update(is_closed=True)
+          updated_date2=Providers.objects.filter(user_id=request.user.id).update(is_closed=True)
           messages.success(request,"Month is already closed", extra_tags='suggest_upgrade')
         else:
         
