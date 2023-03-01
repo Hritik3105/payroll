@@ -140,10 +140,10 @@ def due_table(request):
                 lst_csv=Providers.objects.filter(user_id=request.user.id).last()
                 print(lst_csv)
                 if lst_csv:
-                    print("----------",lst_csv)
-                    for i in lst_csv:
-                        print(i.csv)
+                    
+                    print(lst_csv.csv)
                     return redirect("due")
+                return redirect("due")
             else:
                 print("********************************************************************************************")
                 Providers.objects.filter(user_id=request.user.id,csv=x).delete()
