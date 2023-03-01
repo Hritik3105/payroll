@@ -43,13 +43,16 @@ def calculate():
     return lst
 
 
-
+ 
 
 # Function to enter SII Credential
 @login_required 
 def credential(request):
+    request.session.modified = True
     print("Entertet---------------------")
     val=calculate()
+
+    
     
 
     
