@@ -64,22 +64,7 @@ def credential(request):
           final_path=file_path.split(request.user.username)[1]
           pat_fnl=final_path.split(" ")[0]
     user_obj=User.objects.get(id =request.user.id)
-    # input_dt = datetime.datetime(2022, 9, 13)
-    # print('Input date:', input_dt.date())
-
-  
-    # next_month = input_dt.replace(day=28) + datetime.timedelta(days=4)
-
- 
-    # next_month = next_month.replace(day=28) +datetime.timedelta(days=4)
-
-    # res = next_month - datetime.timedelta(days=next_month.day)
-    # print('Last day of the next month:', res.date())
-
-
     updated_date=Providers.objects.filter(user_id=request.user.id).values_list("csv",flat=True)
-    
-   
     obj_pro=Providers.objects.filter(user_id=request.user.id)
     if request.method == "POST":
        
@@ -181,11 +166,11 @@ def credential(request):
       #   messages.success(request,"you must update to continue", extra_tags='suggest_upgrade')
  
       #   return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val,"val_yr":enddate,"month":startdate})
-    else:
-      user_upd=User.objects.filter(id =request.user.id).update(siiusername=siusername,siipassword=password,month=startdate,year=enddate,username=username)
-      sii(request,siusername,password,startdate,enddate)
-      return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val,"val_yr":enddate,"month":startdate})
- 
+    # else:
+    #   user_upd=User.objects.filter(id =request.user.id).update(siiusername=siusername,siipassword=password,month=startdate,year=enddate,username=username)
+    #   sii(request,siusername,password,startdate,enddate)
+    #   return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val,"val_yr":enddate,"month":startdate})
+
     return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val})
 
 
