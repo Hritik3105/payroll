@@ -109,7 +109,7 @@ def credential(request):
         
       month1 = today.strftime("%m")
       lst_csv=Providers.objects.filter(user_id=request.user.id).last()
-      print(lst_csv.csv)
+      print(lst_csv)
       if lst_csv:
         updated_date=Providers.objects.filter(user_id=request.user.id,csv=lst_csv.csv).values_list("created_at",flat=True)
         if updated_date:
