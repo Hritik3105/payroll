@@ -58,12 +58,13 @@ def credential(request):
         folder_path = r'/home/ubuntu/payroll/payrollapp/'+request.user.username
         # folder_path = '/home/nirmla/Desktop/payroll/payrollapp/csv1'
         file_path = get_latest_download_file(folder_path)
-
+        print("-----------------",final_path)
     
         if file_path:
            
           final_path=file_path.split(request.user.username)[1]
           pat_fnl=final_path.split(" ")[0]
+
     
     user_obj=User.objects.get(id =request.user.id)
     updated_date=Providers.objects.filter(user_id=request.user.id).values_list("csv",flat=True)
