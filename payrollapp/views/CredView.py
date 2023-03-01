@@ -50,20 +50,7 @@ def calculate():
 def credential(request):
     print("Entertet---------------------")
     val=calculate()
-    pat_fnl=""
-    final_path =""
-    if os.path.exists("/home/ubuntu/payroll/payrollapp/"+request.user.username): 
-    # if os.path.exists("/home/nirmla/Desktop/payroll/payrollapp/csv1"): 
-        
-        folder_path = r'/home/ubuntu/payroll/payrollapp/'+request.user.username
-        # folder_path = '/home/nirmla/Desktop/payroll/payrollapp/csv1'
-        file_path = get_latest_download_file(folder_path)
-        print("-----------------",final_path)
     
-        if file_path:
-           
-          final_path=file_path.split(request.user.username)[1]
-          pat_fnl=final_path.split(" ")[0]
 
     
     user_obj=User.objects.get(id =request.user.id)
@@ -183,7 +170,7 @@ def credential(request):
 def sii(request,siiusernae,password,month,year):
   
   try:
-
+  
     
     options = webdriver.ChromeOptions()
     #download_dir = "/home/nirmla/Desktop/payroll/payrollapp/csv1"
@@ -250,7 +237,7 @@ def sii(request,siiusernae,password,month,year):
     
       # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv1", "/home/nirmla/Desktop/payroll/payrollapp/"+request.user.username)
       shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/"+request.user.username)
-
+      
   except Exception as e:
     
     messages.success(request,e,extra_tags="fraud")
