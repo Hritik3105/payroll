@@ -138,6 +138,7 @@ def due_table(request):
                 shutil.rmtree("/home/ubuntu/payroll/payrollapp/"+request.user.username)
                 os.mkdir("/home/ubuntu/payroll/payrollapp/"+request.user.username)
                 lst_csv=Providers.objects.filter(user_id=request.user.id).last()
+                print(lst_csv)
                 if lst_csv:
                     print("----------",lst_csv)
                     for i in lst_csv:
