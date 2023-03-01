@@ -108,12 +108,10 @@ def credential(request):
       today = datetime.datetime.now()
         
       month1 = today.strftime("%m")
-    
-      if "csv2"  in request.session:
-        print("i am here")
-        db_csv=request.session["csv2"]
-        print("sdfsdfsf------------------",db_csv)
-        updated_date=Providers.objects.filter(user_id=request.user.id,csv=db_csv).values_list("created_at",flat=True)
+      lst_csv=Providers.objects.filter(user_id=request.user.id).latest("id").csv
+      print(lst_csv)
+      if lst_csv:
+        updated_date=Providers.objects.filter(user_id=request.user.id,csv=lst_csv).values_list("created_at",flat=True)
         if updated_date:
           
           res = updated_date[0] + relativedelta(day=31)
@@ -141,7 +139,7 @@ def credential(request):
           elif curr_mon > pre_month and int(startdate1) < int(valss):
           
 
-            updated_date2=Providers.objects.filter(user_id=request.user.id,csv=db_csv).update(is_closed=True)
+            updated_date2=Providers.objects.filter(user_id=request.user.id,csv=lst_csv).update(is_closed=True)
             messages.success(request,"Month is already closed", extra_tags='suggest_upgrade')
           else:
           
