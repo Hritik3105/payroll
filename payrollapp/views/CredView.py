@@ -16,6 +16,18 @@ from os.path import exists
 from dateutil.relativedelta import relativedelta
 
 
+
+def get_latest_download_file(folder_path):
+    files = os.listdir(folder_path)
+    files = [os.path.join(folder_path, f) for f in files]
+    files = [(f, os.path.getmtime(f)) for f in files]
+    files = sorted(files, key=lambda x: -x[1])
+    if files:
+        return files[0][0]
+    else:
+        return None
+
+
 #Function used to get year
 def calculate():
     lst=[]
@@ -36,7 +48,21 @@ def calculate():
 # Function to enter SII Credential
 @login_required 
 def credential(request):
+    print("Entertet---------------------")
     val=calculate()
+    final_path =""
+    if os.path.exists("/home/ubuntu/payroll/payrollapp/"+request.user.username): 
+    # if os.path.exists("/home/nirmla/Desktop/payroll/payrollapp/csv1"): 
+        
+        folder_path = r'/home/ubuntu/payroll/payrollapp/'+request.user.username
+        # folder_path = '/home/nirmla/Desktop/payroll/payrollapp/csv1'
+        file_path = get_latest_download_file(folder_path)
+
+    
+        if file_path:
+           
+          final_path=file_path.split(request.user.username)[1]
+          print(final_path)
     user_obj=User.objects.get(id =request.user.id)
     # input_dt = datetime.datetime(2022, 9, 13)
     # print('Input date:', input_dt.date())
@@ -163,7 +189,7 @@ def credential(request):
         user_upd=User.objects.filter(id =request.user.id).update(siiusername=siusername,siipassword=password,month=startdate,year=enddate,username=username)
         sii(request,siusername,password,startdate,enddate)
         return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val,"val_yr":enddate,"month":startdate})
-
+ 
     return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val})
 
 
