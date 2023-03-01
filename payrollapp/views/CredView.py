@@ -62,7 +62,7 @@ def credential(request):
         if file_path:
            
           final_path=file_path.split(request.user.username)[1]
-          print(final_path)
+          pat_fnl=final_path.split(" ")[0]
     user_obj=User.objects.get(id =request.user.id)
     # input_dt = datetime.datetime(2022, 9, 13)
     # print('Input date:', input_dt.date())
@@ -131,50 +131,49 @@ def credential(request):
         
       month1 = today.strftime("%m")
     
-      if "csv_pth"  in request.session:
+      # if "csv_pth"  in request.session:
 
-        get_csv=request.session["csv_pth"]
-        print("***************",get_csv)
-        updated_date=Providers.objects.filter(user_id=request.user.id,csv=get_csv).values_list("created_at",flat=True)
-        if updated_date:
-          
-          res = updated_date[0] + relativedelta(day=31)
-          print("5555",res)
-          print("-----------",int(startdate1))
+       
+      updated_date=Providers.objects.filter(user_id=request.user.id,csv=pat_fnl).values_list("created_at",flat=True)
+      if updated_date:
+        
+        res = updated_date[0] + relativedelta(day=31)
+        print("5555",res)
+        print("-----------",int(startdate1))
 
-          zz=datetime.datetime.today().replace(day=1) - datetime.timedelta(1)
-          val_date=str(zz).split(" ")[0]
-          pre_month=val_date.split("-")[1]
-          print(int(pre_month))
-          # if "2023-03 -01" != "2023-03-31" and  int(startdate1) > 3:
-          last=str(updated_date[0]).split("-")
-          print(last)
-          valss=int(last[1])
-          print(valss)
-          print(int(month1))
-          print(valss+1)
-          curr_mon=str(updated_date[0]).split("-")[1]
-          print(int(curr_mon))
-          if str(updated_date[0]) != str(res) and int(startdate1) > int(valss) :
+        zz=datetime.datetime.today().replace(day=1) - datetime.timedelta(1)
+        val_date=str(zz).split(" ")[0]
+        pre_month=val_date.split("-")[1]
+        print(int(pre_month))
+        # if "2023-03 -01" != "2023-03-31" and  int(startdate1) > 3:
+        last=str(updated_date[0]).split("-")
+        print(last)
+        valss=int(last[1])
+        print(valss)
+        print(int(month1))
+        print(valss+1)
+        curr_mon=str(updated_date[0]).split("-")[1]
+        print(int(curr_mon))
+        if str(updated_date[0]) != str(res) and int(startdate1) > int(valss) :
 
 
-            messages.success(request,"You must update Previuos month to continue", extra_tags='suggest_upgrade')
-            return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val,"val_yr":enddate,"month":startdate})
-          elif curr_mon > pre_month and int(startdate1) < int(valss):
-            print(get_csv)
+          messages.success(request,"You must update Previuos month to continue", extra_tags='suggest_upgrade')
+          return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val,"val_yr":enddate,"month":startdate})
+        elif curr_mon > pre_month and int(startdate1) < int(valss):
+         
 
-            updated_date2=Providers.objects.filter(user_id=request.user.id,csv=get_csv).update(is_closed=True)
-            messages.success(request,"Month is already closed", extra_tags='suggest_upgrade')
-          else:
-          
-            user_upd=User.objects.filter(id =request.user.id).update(siiusername=siusername,siipassword=password,month=startdate,year=enddate,username=username)
-            sii(request,siusername,password,startdate,enddate)
-            return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val,"val_yr":enddate,"month":startdate})
+          updated_date2=Providers.objects.filter(user_id=request.user.id,csv=pat_fnl).update(is_closed=True)
+          messages.success(request,"Month is already closed", extra_tags='suggest_upgrade')
         else:
-
+        
           user_upd=User.objects.filter(id =request.user.id).update(siiusername=siusername,siipassword=password,month=startdate,year=enddate,username=username)
           sii(request,siusername,password,startdate,enddate)
           return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val,"val_yr":enddate,"month":startdate})
+      else:
+
+        user_upd=User.objects.filter(id =request.user.id).update(siiusername=siusername,siipassword=password,month=startdate,year=enddate,username=username)
+        sii(request,siusername,password,startdate,enddate)
+        return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val,"val_yr":enddate,"month":startdate})
 
 
 
@@ -182,13 +181,10 @@ def credential(request):
       #   messages.success(request,"you must update to continue", extra_tags='suggest_upgrade')
  
       #   return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val,"val_yr":enddate,"month":startdate})
-      else:
-  
-     
-      
-        user_upd=User.objects.filter(id =request.user.id).update(siiusername=siusername,siipassword=password,month=startdate,year=enddate,username=username)
-        sii(request,siusername,password,startdate,enddate)
-        return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val,"val_yr":enddate,"month":startdate})
+    else:
+      user_upd=User.objects.filter(id =request.user.id).update(siiusername=siusername,siipassword=password,month=startdate,year=enddate,username=username)
+      sii(request,siusername,password,startdate,enddate)
+      return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val,"val_yr":enddate,"month":startdate})
  
     return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val})
 
