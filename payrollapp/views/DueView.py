@@ -142,7 +142,7 @@ def due_table(request):
                 if lst_csv:
                     
                     print(lst_csv.csv)
-                    request.session["csv2"]=lst.scv
+                    request.session["csv2"]=lst_csv.csv
                     return redirect("due")
                 return redirect("due")
             else:
@@ -224,7 +224,7 @@ def due_table(request):
                 if lst_csv:
                     
                     print(lst_csv.csv)
-                    request.session["csv2"]=lst.scv
+                    request.session["csv2"]=lst_csv.csv
                     return redirect("due")
                 return redirect("due")
 
