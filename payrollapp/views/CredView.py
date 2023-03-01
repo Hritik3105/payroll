@@ -107,8 +107,9 @@ def credential(request):
       month1 = today.strftime("%m")
     
       if "csv2"  in request.session:
-
+        print("i am here")
         db_csv=request.session["csv2"]
+        print("sdfsdfsf------------------",db_csv)
         updated_date=Providers.objects.filter(user_id=request.user.id,csv=db_csv).values_list("created_at",flat=True)
         if updated_date:
           
@@ -132,7 +133,7 @@ def credential(request):
           if str(updated_date[0]) != str(res) and int(startdate1) > int(valss) :
 
 
-            messages.success(request,"You must update Previuos month to continue", extra_tags='suggest_upgrade')
+            messages.success(request,"You must update Previous month to continue", extra_tags='suggest_upgrade')
             return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val,"val_yr":enddate,"month":startdate})
           elif curr_mon > pre_month and int(startdate1) < int(valss):
           
