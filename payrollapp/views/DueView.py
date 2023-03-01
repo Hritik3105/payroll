@@ -142,6 +142,7 @@ def due_table(request):
                 if lst_csv:
                     
                     print(lst_csv.csv)
+                    request.session["csv2"]=lst.scv
                     return redirect("due")
                 return redirect("due")
             else:
@@ -218,7 +219,13 @@ def due_table(request):
                     pro_obj.save()    
                 shutil.rmtree("/home/ubuntu/payroll/payrollapp/"+request.user.username)
                 os.mkdir("/home/ubuntu/payroll/payrollapp/"+request.user.username)    
+                lst_csv=Providers.objects.filter(user_id=request.user.id).last()
+                print(lst_csv)
+                if lst_csv:
                     
+                    print(lst_csv.csv)
+                    request.session["csv2"]=lst.scv
+                    return redirect("due")
                 return redirect("due")
 
         if request.method =="POST" and "manual" in request.POST:
