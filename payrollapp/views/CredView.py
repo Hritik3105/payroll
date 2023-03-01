@@ -180,12 +180,12 @@ def sii(request,siiusernae,password,month,year):
     
 
     
-    paths='/home/nirmla/Desktop/payroll/payrollapp/csv1'
-    # options.add_argument('--headless=chrome')
+    # paths='/home/nirmla/Desktop/payroll/payrollapp/csv1'
+    options.add_argument('--headless=chrome')
     
     
-    prefs = {"download.default_directory" : paths}
-    options.add_experimental_option("prefs",prefs)
+    # prefs = {"download.default_directory" : paths}
+    # options.add_experimental_option("prefs",prefs)
     
     serv_obj = Service()
     driver = webdriver.Chrome(options=options,service = serv_obj)
