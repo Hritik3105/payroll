@@ -50,6 +50,7 @@ def calculate():
 def credential(request):
     print("Entertet---------------------")
     val=calculate()
+    pat_fnl=""
     final_path =""
     if os.path.exists("/home/ubuntu/payroll/payrollapp/"+request.user.username): 
     # if os.path.exists("/home/nirmla/Desktop/payroll/payrollapp/csv1"): 
@@ -63,6 +64,7 @@ def credential(request):
            
           final_path=file_path.split(request.user.username)[1]
           pat_fnl=final_path.split(" ")[0]
+    
     user_obj=User.objects.get(id =request.user.id)
     updated_date=Providers.objects.filter(user_id=request.user.id).values_list("csv",flat=True)
     obj_pro=Providers.objects.filter(user_id=request.user.id)
