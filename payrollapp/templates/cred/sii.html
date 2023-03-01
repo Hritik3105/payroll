@@ -14,28 +14,33 @@ p.comp {
 }
 </style>
  <h1 class="credential_heading ">SII Credential</h1>
+ 
 
-<div class="container">
-    <div class="row share_info">
-        <div class="col-md-12 ">
-        {% for message in messages %}
 
-        {% if 'suggest_upgrade' in message.extra_tags %}
-        <p class ="new"><strong>{{message}}</strong> </p>  
+    <div class="container">
+      
+            <div class="row share_info">
+                <div class="col-md-12 ">
+                
+                {% for message in messages %}
+
+                {% if 'suggest_upgrade' in message.extra_tags %}
+                <p class ="new" id ="msg"><strong>{{message}}</strong> </p>  
+            
+                {% endif %}
+            
+            {% endfor %}
+                  
+            </div>
+        
+            <div class="col-md-12 ">
+            {%for message in messages %}
+            {%if "company" in message.tags %}
+                <p class= "comp" id ="msg"><strong>{{message}}</strong></p>   
+            {%endif%}
+            {%endfor%}
+            </div>
        
-        {% endif %}
-    
-    {% endfor %}
-    
-        </div>
-        <div class="col-md-12 ">
-        {%for message in messages %}
-        {%if "company" in message.tags %}
-            <p class= "comp"><strong>{{message}}</strong></p>   
-        {%endif%}
-        {%endfor%}
-        </div>
-
         <div class="row share_info">
             <div class="col-md-12 ">
                 {%for message in messages %}
@@ -108,18 +113,22 @@ p.comp {
 </div>
 {%endblock%}
 
+{% block javascripts %}
+{{ block.super }}
+
 <script>
-    function myTest4(a)
-    {
-        alert("hello")
-  
+        $(document).ready(function() {
+     
+        var message_ele = document.getElementById("msg");
         
-    
-    
-        };
-
-
-
+        setTimeout(function() {
+          message_ele.style.display = "none";
+        }, 3000); 
+    });  // 2000 millisecond
 
 </script>
+
+
+
+{% endblock javascripts %}
 

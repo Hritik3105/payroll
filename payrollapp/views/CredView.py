@@ -53,8 +53,7 @@ def credential(request):
 
     updated_date=Providers.objects.filter(user_id=request.user.id).values_list("csv",flat=True)
     
-    
-  
+   
     obj_pro=Providers.objects.filter(user_id=request.user.id)
     if request.method == "POST":
        
@@ -101,7 +100,7 @@ def credential(request):
 
       if startdate == "Diciembre":
         startdate1 = "12"
-
+     
       today = datetime.datetime.now()
         
       month1 = today.strftime("%m")
@@ -109,32 +108,44 @@ def credential(request):
       if "csv_pth"  in request.session:
 
         get_csv=request.session["csv_pth"]
+        print("***************",get_csv)
         updated_date=Providers.objects.filter(user_id=request.user.id,csv=get_csv).values_list("created_at",flat=True)
         if updated_date:
           
           res = updated_date[0] + relativedelta(day=31)
+          print("5555",res)
           print("-----------",int(startdate1))
-         
-          # if "2023-03-01" != "2023-03-31" and  int(startdate1) > 3:
+
+          zz=datetime.datetime.today().replace(day=1) - datetime.timedelta(1)
+          val_date=str(zz).split(" ")[0]
+          pre_month=val_date.split("-")[1]
+          print(int(pre_month))
+          # if "2023-03 -01" != "2023-03-31" and  int(startdate1) > 3:
           last=str(updated_date[0]).split("-")
+          print(last)
           valss=int(last[1])
+          print(valss)
+          print(int(month1))
           print(valss+1)
-          print("---------------",updated_date[0])
-          if str(updated_date[0]) != str(res) and int(month1) == valss+1:
+          curr_mon=str(updated_date[0]).split("-")[1]
+          print(int(curr_mon))
+          if str(updated_date[0]) != str(res) and int(startdate1) > int(valss) :
 
 
             messages.success(request,"You must update Previuos month to continue", extra_tags='suggest_upgrade')
             return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val,"val_yr":enddate,"month":startdate})
-          elif str(updated_date[0]) == str(res) and int(startdate1) < valss:
+          elif curr_mon > pre_month and int(startdate1) < int(valss):
+            print(get_csv)
 
             updated_date2=Providers.objects.filter(user_id=request.user.id,csv=get_csv).update(is_closed=True)
-            messages.success(request,"Month closed", extra_tags='suggest_upgrade')
+            messages.success(request,"Month is already closed", extra_tags='suggest_upgrade')
           else:
-        
+          
             user_upd=User.objects.filter(id =request.user.id).update(siiusername=siusername,siipassword=password,month=startdate,year=enddate,username=username)
             sii(request,siusername,password,startdate,enddate)
             return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val,"val_yr":enddate,"month":startdate})
         else:
+
           user_upd=User.objects.filter(id =request.user.id).update(siiusername=siusername,siipassword=password,month=startdate,year=enddate,username=username)
           sii(request,siusername,password,startdate,enddate)
           return render(request,"cred/sii.html",{"user":user_obj,"obj":obj_pro,"year":val,"val_yr":enddate,"month":startdate})
@@ -169,12 +180,12 @@ def sii(request,siiusernae,password,month,year):
     
 
     
-    # paths='/home/nirmla/Desktop/payroll/payrollapp/csv1'
-    options.add_argument('--headless=chrome')
+    paths='/home/nirmla/Desktop/payroll/payrollapp/csv1'
+    # options.add_argument('--headless=chrome')
     
     
-    # prefs = {"download.default_directory" : paths}
-    # options.add_experimental_option("prefs",prefs)
+    prefs = {"download.default_directory" : paths}
+    options.add_experimental_option("prefs",prefs)
     
     serv_obj = Service()
     driver = webdriver.Chrome(options=options,service = serv_obj)

@@ -46,6 +46,7 @@ def due_table(request):
             request.session["csv_pth"]=updt
             
             print("sdd",request.session["csv_pth"])
+            # final_path=file_path.split(request.user.username)[1]
             final_path=file_path.split(request.user.username)[1]
  
     all_obj=Providers.objects.filter(user_id=request.user.id)
