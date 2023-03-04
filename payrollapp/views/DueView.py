@@ -115,7 +115,7 @@ def due_table(request):
                         
                         pro_obj=Providers()
                         
-                        final_csv_path=cv_fl.split("csv1")[1]
+                        final_csv_path=cv_fl.split(request.user.username)[1]
                        
                         pro_obj.csv=final_csv_path.split(" ")[0]
 
