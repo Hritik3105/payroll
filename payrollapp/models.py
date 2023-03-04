@@ -71,7 +71,7 @@ class Providers(models.Model):
   insert_status=models.BooleanField(default=False)
   csv=models.CharField(blank=True,null=True,max_length=255)
   created_at = models.DateField(auto_now_add=True,null=True)
-  updated_at =  models.DateField(auto_now=True)
+  updated_at =  models.DateField(null=True)
   is_closed=models.BooleanField(default=False)
 
 
@@ -86,4 +86,8 @@ class Amountpaid(models.Model):
   user=models.ForeignKey(User, on_delete=models.CASCADE)
   provider=models.ForeignKey(Providers, on_delete=models.CASCADE,null=True)
   amount_paid=models.IntegerField(null=True,blank=True)
+  status=models.BooleanField(default=False)
+
+class SII_Month(models.Model):
+  month=models.CharField(max_length=200,blank=True,null=True)
   status=models.BooleanField(default=False)

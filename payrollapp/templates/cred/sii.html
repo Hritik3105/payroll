@@ -12,9 +12,24 @@ p.new {
 p.comp {
     color: green;
 }
+
+.bootstrap-select .dropdown-toggle .filter-option {
+    background: white;
+}
 </style>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+
+
+
  <h1 class="credential_heading ">SII Credential</h1>
- 
+
+
+
 
 
     <div class="container">
@@ -67,7 +82,7 @@ p.comp {
                                 <label for="date">Month</label>
 
                                 <div class="input-group date" id="datepicker">
-                                    <select class="form-control ng-pristine ng-not-empty ng-valid ng-valid-required ng-touched" id="periodoMes" ng-model="periodoMes" required="" name="month">
+                                    <select class="form-control ng-pristine ng-not-empty ng-valid ng-valid-required ng-touched selectpicker" id="choices-multiple-remove-button" ng-model="periodoMes" required="" name="month"  data-none-selected-text="Month" multiple>
                                     <option value="">Mes</option><!-- ngRepeat: mes in meses -->
                                     <option value="Enero" class="ng-binding ng-scope"  {% if month == "Enero"  %}  selected {%else %} {%endif%}>Enero</option>
                                     <option  value="Febrero" class="ng-binding ng-scope"  {% if month == "Febrero" %} selected {%else %} {%endif%}>Febrero</option>
@@ -124,6 +139,10 @@ p.comp {
         setTimeout(function() {
           message_ele.style.display = "none";
         }, 3000); 
+
+
+       $('.selectpicker').selectpicker();
+      
     });  // 2000 millisecond
 
 </script>
@@ -131,4 +150,40 @@ p.comp {
 
 
 {% endblock javascripts %}
+ 
+{% comment %} 
 
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+ <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+ <div class="row d-flex justify-content-center mt-100">
+     <div class="col-md-6"> <select id="choices-multiple-remove-button" placeholder="Select upto 5 tags" multiple>
+             <option value="HTML">HTML</option>
+             <option value="Jquery">Jquery</option>
+             <option value="CSS">CSS</option>
+             <option value="Bootstrap 3">Bootstrap 3</option>
+             <option value="Bootstrap 4">Bootstrap 4</option>
+             <option value="Java">Java</option>
+             <option value="Javascript">Javascript</option>
+             <option value="Angular">Angular</option>
+             <option value="Python">Python</option>
+             <option value="Hybris">Hybris</option>
+             <option value="SQL">SQL</option>
+             <option value="NOSQL">NOSQL</option>
+             <option value="NodeJS">NodeJS</option>
+         </select> </div>
+ </div>
+
+ <script>
+    $(document).ready(function(){
+    
+        var multipleCancelButton = new Choices('#choices-multiple-remove-button', {
+           removeItemButton: true,
+           maxItemCount:10,
+           searchResultLimit:10,
+           renderChoiceLimit:10
+         }); 
+        
+        
+    });
+ </script> {% endcomment %}
