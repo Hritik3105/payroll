@@ -300,7 +300,7 @@ def sii(request,siiusernae,password,month,year):
         print("enterrr33",i)
         if "(1)" in i: 
           print(i)
-          os.remove("/home/ubuntu/Downloads" + i)
+          os.remove("/home/ubuntu/Downloads/" + i)
         
                 
       file_exists = exists("/home/ubuntu/payroll/payrollapp/"+request.user.username)
