@@ -298,7 +298,7 @@ def sii(request,siiusernae,password,month,year):
       print("--------------------",files_download)
       for i in files_download:
         print("enterrr33",i)
-        if "(1)" in i: 
+        if "(1)" not  in i: 
           print(i)
           os.remove("/home/ubuntu/Downloads/" + i)
         
