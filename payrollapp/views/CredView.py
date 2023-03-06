@@ -296,11 +296,12 @@ def sii(request,siiusernae,password,month,year):
 
       files_download = os.listdir("/home/ubuntu/Downloads")
       print("--------------------",files_download)
-      for i in files_download:
-        print("enterrr33",i)
-        if "(1)" not  in i: 
-          print(i)
-          os.remove("/home/ubuntu/Downloads/" + i)
+      if len(files_download) == 0:
+        for i in files_download:
+          print("enterrr33",i)
+          if "(1)" not  in i: 
+            print(i)
+            os.remove("/home/ubuntu/Downloads/" + i)
         
                 
       file_exists = exists("/home/ubuntu/payroll/payrollapp/"+request.user.username)
