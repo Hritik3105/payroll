@@ -297,7 +297,8 @@ def sii(request,siiusernae,password,month,year):
       files_download = os.listdir("/home/ubuntu/Downloads")
       print("--------------------",files_download)
       for i in files_download:
-        print("iiii",i)
+        os.remove(i)
+        
                 
       file_exists = exists("/home/ubuntu/payroll/payrollapp/"+request.user.username)
       # # file_exists = exists("/home/nirmla/Desktop/payroll/payrollapp/csv1")
