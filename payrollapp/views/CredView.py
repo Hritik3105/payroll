@@ -296,7 +296,7 @@ def sii(request,siiusernae,password,month,year):
 
       files_download = os.listdir("/home/ubuntu/Downloads")
       print("--------------------",files_download)
-      if len(files_download) == 0:
+      if len(files_download) != 0:
         for i in files_download:
           print("enterrr33",i)
           if "(1)" not  in i: 
