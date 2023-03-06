@@ -282,7 +282,9 @@ def due_table(request):
                         pro_obj.amount_paid=int(i.MontoTotal)
                     pro_obj.save()    
                 shutil.rmtree("/home/ubuntu/payroll/payrollapp/"+request.user.username)
-                os.mkdir("/home/ubuntu/payroll/payrollapp/"+request.user.username)    
+                os.mkdir("/home/ubuntu/payroll/payrollapp/"+request.user.username) 
+                shutil.rmtree("/home/ubuntu/Downloads")
+                os.mkdir("/home/ubuntu/Downloads")   
 
                 return redirect("due")
 
