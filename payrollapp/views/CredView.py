@@ -299,7 +299,7 @@ def sii(request,siiusernae,password,month,year):
     
       for i in files_download:
         print("enterrr33",len(i))
-        if "(" in i: 
+        if len(i) >41: 
             print("chckingg",i)
             os.remove("/home/ubuntu/Downloads/" + i)
         
