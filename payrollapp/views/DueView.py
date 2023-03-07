@@ -77,7 +77,7 @@ def due_table(request):
                 files = [os.path.join(folder_path, f) for f in sorted(files)]
                
                 for cv_fl in files:
-                   
+                    print(cv_fl)
                     empexceldata = pd.read_csv(cv_fl,error_bad_lines=False,sep=r';',usecols =[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18])
                     zz=empexceldata.drop_duplicates(subset='Folio', keep="first")
                 

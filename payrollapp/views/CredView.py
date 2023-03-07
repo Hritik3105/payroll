@@ -294,13 +294,13 @@ def sii(request,siiusernae,password,month,year):
       messages.success(request,"CSV Downloaded Successfull",extra_tags="company")
       time.sleep(8)
 
-      # files_download = os.listdir("/home/ubuntu/Downloads")
-      # print("--------------------",files_download)
+      files_download = os.listdir("/home/ubuntu/Downloads")
+      print("--------------------",files_download)
     
-      # for i in files_download:
-      #   print("enterrr33",i)
-      #   if "(1)" in i: 
-      #        os.remove("/home/ubuntu/Downloads/" + i)
+      for i in files_download:
+        print("enterrr33",i)
+        if "(1)" in i: 
+             os.remove("/home/ubuntu/Downloads/" + i)
         
         
                 
