@@ -14,6 +14,7 @@ import os
 import shutil
 from dateutil.relativedelta import relativedelta
 import re
+from os.path import exists
 
 #get latest download file
 def get_latest_download_file(folder_path):
@@ -180,7 +181,7 @@ def due_table(request):
                         startdate1= "07"
 
                     if months == "August":
-                        print("enter8") 
+                        
                         startdate1 = "08"
 
                     if months == "September":
@@ -386,41 +387,157 @@ def due_table(request):
 #function to updade data
 vals=[]
 def update(request):
-    z=Providers.objects.filter(user_id=request.user.id).exists()
-    print("=================",z)
+    # z=Providers.objects.filter(user_id=request.user.id).exists()
+    # print("=================",z)
     
-    folder_path = r'/home/ubuntu/payroll/payrollapp'+request.user.username
-    file_path = get_latest_download_file(folder_path)
-    if file_path:
+    # folder_path = r'/home/ubuntu/payroll/payrollapp'+request.user.username
+    # file_path = get_latest_download_file(folder_path)
+    # if file_path:
         
-        final_path=file_path.split(request.user.username)[1]
-    filename=os.getcwd()+"/payrollapp/"+request.user.username +final_path              
-    empexceldata = pd.read_csv(filename,error_bad_lines=False,sep=r';',usecols =[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18])
-    dup=empexceldata.drop_duplicates(subset='Folio', keep="first")
+    #     final_path=file_path.split(request.user.username)[1]
+    # filename=os.getcwd()+"/payrollapp/"+request.user.username +final_path              
+    # empexceldata = pd.read_csv(filename,error_bad_lines=False,sep=r';',usecols =[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18])
+    # dup=empexceldata.drop_duplicates(subset='Folio', keep="first")
        
-    dup.columns = dup.columns.str.replace(' ', '')
+    # dup.columns = dup.columns.str.replace(' ', '')
 
-    val=dup.columns
-    zz=Providers.objects.all()
-    ids = []                 
-    zz=Providers.objects.all().values_list("id",flat =True)
-    for i in zz:
-        ids.append(i)
-    count = 0
-    for i in dup.itertuples():
-        total = i.FechaDocto
-        date=pd.to_datetime(total).date()
-        exp=date+pd.Timedelta(days=30)
-        months=pd.to_datetime(exp).month_name()
-        years=exp.strftime('%Y')
-        d = datetime.datetime.strptime(i.FechaDocto,"%d/%m/%Y").strftime('%Y-%m-%d')
-        date_format = "%Y-%m-%d"
-        a = datetime.datetime.strptime(str(datetime.datetime.now().date()), date_format)
-        b = datetime.datetime.strptime(str(d), date_format)
-        today= a-b      
+    # val=dup.columns
+    # zz=Providers.objects.all()
+    # ids = []                 
+    # zz=Providers.objects.all().values_list("id",flat =True)
+    # for i in zz:
+    #     ids.append(i)
+    # count = 0
+    # for i in dup.itertuples():
+    #     total = i.FechaDocto
+    #     date=pd.to_datetime(total).date()
+    #     exp=date+pd.Timedelta(days=30)
+    #     months=pd.to_datetime(exp).month_name()
+    #     years=exp.strftime('%Y')
+    #     d = datetime.datetime.strptime(i.FechaDocto,"%d/%m/%Y").strftime('%Y-%m-%d')
+    #     date_format = "%Y-%m-%d"
+    #     a = datetime.datetime.strptime(str(datetime.datetime.now().date()), date_format)
+    #     b = datetime.datetime.strptime(str(d), date_format)
+    #     today= a-b      
         
-        Providers.objects.filter(id=ids[count]).update(user_id=request.user.id,days_overdue=today.days,issue_date=d,provider_name=i.RUTProveedor,invoice=i.Folio,expiration_date=exp,payment_week=4,month_of_payment=months,year_of_payment=years,business_name=i.RazonSocial,year=years,month=months,balance_payable=0,payment_policy=30,csv=final_path)
-        count +=1
-    return redirect("due")
+    #     Providers.objects.filter(id=ids[count]).update(user_id=request.user.id,days_overdue=today.days,issue_date=d,provider_name=i.RUTProveedor,invoice=i.Folio,expiration_date=exp,payment_week=4,month_of_payment=months,year_of_payment=years,business_name=i.RazonSocial,year=years,month=months,balance_payable=0,payment_policy=30,csv=final_path)
+    #     count +=1
+    # return redirect("due")
+    try:  
+        currentMonth = datetime.datetime.now()
+        curr_name=currentMonth.strftime("%B")
+        if  "January"  in curr_name:
+          curr_name = "Enero"
+
+        if  "february" in curr_name:
+          curr_name = "Febrero"
+
+        if   "March" in curr_name:
+          curr_name = "Marzo"
+
+        if  "April" in curr_name:
+          curr_name = "Abril"
+
+        if  "May" in curr_name:
+          curr_name = "Mayo"
+
+        if  "June" in curr_name:
+          curr_name = "Junio"
+
+        if  "July" in curr_name:
+          curr_name= "Julio"
+
+        if  "August" in curr_name:
+          curr_name = "Agosto"
+
+        if "September" in curr_name:
+          curr_name = "Septiembre"
+
+        if "October" in curr_name:
+          curr_name = "Octubre"
+
+        if  "November" in curr_name:
+          curr_name = "Noviembre"
+
+        if  "December" in curr_name:
+          curr_name = "Diciembre"
+
+        currentYear = datetime.datetime.now().year
+        print(currentYear)
+        options = webdriver.ChromeOptions()
+        
+        options.add_argument('--headless=chrome')
+        
+        
+        serv_obj = Service()
+        driver = webdriver.Chrome(options=options,service = serv_obj)
+
+        # # Logging into LinkedIn
+        driver.get("https://zeusr.sii.cl/AUT2000/InicioAutenticacion/IngresoRutClave.html?https://www4.sii.cl/consdcvinternetui/")
+        time.sleep(8)
+
+        username = driver.find_element(By.ID,"rutcntr")
+        username.send_keys("767509367")  # Enter Your Email Address #767509367
+
+        pword = driver.find_element(By.ID,"clave")
+        pword.send_keys("market9093")        # Enter Your Password #market9093
+
+        driver.find_element(By.ID,"bt_ingresar").click()
+
+        driver.get('https://www4.sii.cl/consdcvinternetui/#/index')
+        time.sleep(10)
+
+        dropdown1 = Select(driver.find_element(By.ID,'periodoMes'))
+        dropdown1.select_by_visible_text(curr_name)
+        time.sleep(6)
+
+        dropdown2 = Select(driver.find_element(By.XPATH,"//select[@ng-model='periodoAnho']"))
+        dropdown2.select_by_visible_text(str(currentYear))
+        time.sleep(6)
+
+        driver.find_element(By.CLASS_NAME,"btn.btn-default.btn-xs-block.btn-block").click()
+        time.sleep(3)
+
+        driver.find_element(By.XPATH,"//button[text()='Descargar Detalles']").click()
+        time.sleep(6)
 
 
+
+        
+
+        files_download = os.listdir("/home/ubuntu/Downloads")
+        print("--------------------",files_download)
+        
+        for i in files_download:
+            print("enterrr33",len(i))
+            if len(i) >41: 
+                print("chckingg",i)
+                os.remove("/home/ubuntu/Downloads/" + i)
+            
+            
+                    
+        file_exists = exists("/home/ubuntu/payroll/payrollapp/"+request.user.username)
+        # # file_exists = exists("/home/nirmla/Desktop/payroll/payrollapp/csv1")
+        
+    
+        # # directory_path="/home/nirmla/Desktop/payroll/payrollapp/csv1"
+        directory_path=r'/home/ubuntu/payroll/payrollapp/'+request.user.username
+        
+        if file_exists == True:
+            
+            shutil.rmtree(directory_path, ignore_errors=True)
+            shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/"+request.user.username)
+          
+          # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv1", "/home/nirmla/Desktop/payroll/payrollapp/csv1")
+            due_table(request)
+        else:
+        
+            # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv1", "/home/nirmla/Desktop/payroll/payrollapp/"+request.user.username)
+            shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/"+request.user.username)
+        
+
+
+    except Exception as e:
+        
+        print("-=-=-",e)
+        return redirect("due")
