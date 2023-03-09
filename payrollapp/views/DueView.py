@@ -520,7 +520,7 @@ def update(request):
         directory_path=r'/home/ubuntu/payroll/payrollapp/'+request.user.username
         
         if file_exists == True:
-            
+            print("file already exits")
             shutil.rmtree(directory_path, ignore_errors=True)
             shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/"+request.user.username)
             due_table(request)
@@ -528,12 +528,13 @@ def update(request):
           # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv1", "/home/nirmla/Desktop/payroll/payrollapp/csv1")
            
         else:
-            
+            print("enter in else part")
             # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv1", "/home/nirmla/Desktop/payroll/payrollapp/"+request.user.username)
             shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/"+request.user.username)
             folder_path = r'/home/ubuntu/payroll/payrollapp/'+request.user.username
             file_path = get_latest_download_file(folder_path)
             if file_path:
+
                 
                 final_path=file_path.split(request.user.username)[1]
             x=final_path.split(" ")[0]
