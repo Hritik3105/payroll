@@ -501,10 +501,6 @@ def update(request):
         driver.find_element(By.XPATH,"//button[text()='Descargar Detalles']").click()
         time.sleep(6)
 
-
-
-        
-        due_table(request)
         files_download = os.listdir("/home/ubuntu/Downloads")
         print("--------------------",files_download)
         
@@ -527,14 +523,16 @@ def update(request):
             
             shutil.rmtree(directory_path, ignore_errors=True)
             shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/"+request.user.username)
-          
+            due_table(request)
+            return redirect("due")
           # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv1", "/home/nirmla/Desktop/payroll/payrollapp/csv1")
            
         else:
         
             # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv1", "/home/nirmla/Desktop/payroll/payrollapp/"+request.user.username)
             shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/"+request.user.username)
-        
+            due_table(request)
+            return redirect("due")
 
 
     except Exception as e:
