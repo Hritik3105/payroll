@@ -504,7 +504,7 @@ def update(request):
 
 
         
-
+        due_table(request)
         files_download = os.listdir("/home/ubuntu/Downloads")
         print("--------------------",files_download)
         
@@ -529,7 +529,7 @@ def update(request):
             shutil.copytree("/home/ubuntu/Downloads", "/home/ubuntu/payroll/payrollapp/"+request.user.username)
           
           # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv1", "/home/nirmla/Desktop/payroll/payrollapp/csv1")
-            due_table(request)
+           
         else:
         
             # shutil.copytree("/home/nirmla/Desktop/payroll/payrollapp/csv1", "/home/nirmla/Desktop/payroll/payrollapp/"+request.user.username)
