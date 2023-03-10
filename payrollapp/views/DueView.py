@@ -276,6 +276,7 @@ def due_table(request):
 
 def update(request):
     try:  
+
         currentMonth = datetime.datetime.now()
         curr_name=currentMonth.strftime("%B")
         if  "January"  in curr_name:
@@ -328,11 +329,18 @@ def update(request):
         driver.get("https://zeusr.sii.cl/AUT2000/InicioAutenticacion/IngresoRutClave.html?https://www4.sii.cl/consdcvinternetui/")
         time.sleep(8)
 
+
+        sii_value=User.objects.filter(id=request.user.id).values("siipassword","siiusername")
+
+        sii_pass=sii_value[0]["siipassword"]
+        sii_user=sii_value[0]["siiusername"]
+
+
         username = driver.find_element(By.ID,"rutcntr")
-        username.send_keys("767509367")  # Enter Your Email Address #767509367
+        username.send_keys(sii_user)  # Enter Your Email Address #767509367
 
         pword = driver.find_element(By.ID,"clave")
-        pword.send_keys("market9093")        # Enter Your Password #market9093
+        pword.send_keys(sii_pass)        # Enter Your Password #market9093
 
         driver.find_element(By.ID,"bt_ingresar").click()
 
@@ -352,6 +360,7 @@ def update(request):
 
         driver.find_element(By.XPATH,"//button[text()='Descargar Detalles']").click()
         time.sleep(6)
+        return redirect("due")
 
         files_download = os.listdir("/home/ubuntu/Downloads")
         
