@@ -360,7 +360,7 @@ def update(request):
 
         driver.find_element(By.XPATH,"//button[text()='Descargar Detalles']").click()
         time.sleep(6)
-        return redirect("due")
+    
 
         files_download = os.listdir("/home/ubuntu/Downloads")
         

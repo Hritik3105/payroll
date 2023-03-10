@@ -249,8 +249,6 @@ def sii(request,siiusernae,password,month,year):
       options = webdriver.ChromeOptions()
       #download_dir = "/home/nirmla/Desktop/payroll/payrollapp/csv1"
       
-
-      
       # paths='/home/nirmla/Desktop/payroll/payrollapp/csv1'
       options.add_argument('--headless=chrome')
       
